@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 int main() {
@@ -23,6 +24,13 @@ int main() {
     glfwMakeContextCurrent(window);
 
     std::cout << "Window created..." << std::endl;
+
+    if (glewInit() != GLEW_OK) {
+        std::cout << "Unable to initialize glew!" << std::endl;
+        return -1;
+    }
+
+    std::cout << "glew initialized..." << std::endl;
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
