@@ -38,8 +38,15 @@ include_directories(lib/glfw/include)
 
 message(STATUS "Setting up glew...")
 add_library(glew STATIC IMPORTED GLOBAL)
+
+if (UNIX)
 set_target_properties(glew PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/lib/glew/lib/libGLEW.a )
 set_target_properties(glew PROPERTIES INCLUDE_DIRECTORIES ${CMAKE_SOURCE_DIR}/lib/glew/include )
+elseif (WIN32)
+    message(FATAL_ERROR "Detected platform is not supported!")
+else ()
+    message(FATAL_ERROR "Detected platform is not supported!")
+endif()
 
 add_compile_definitions(GLEW_STATIC)
 
