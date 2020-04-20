@@ -10,10 +10,14 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+project(OpenGL-Boilerplate VERSION 0.0.1 DESCRIPTION "Simple CMake setup for developing OpenGL programs in C++" LANGUAGES CXX)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/build/debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/build/release)
-
-project(OpenGL-Boilerplate VERSION 0.0.1 DESCRIPTION "Simple CMake setup for developing OpenGL programs in C++" LANGUAGES CXX)
+set(CMAKE_CURRENT_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 
 message(STATUS "Setting up glfw...")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -29,6 +33,9 @@ add_subdirectory(lib/glew/build/cmake)
 add_compile_definitions(GLEW_STATIC)
 
 include_directories(lib/glew/include)
+
+message(STATUS "Setting up glm...")
+include_directories(lib/glm/glm)
 
 if (UNIX)
     set_target_properties(glew PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/lib/glew/cmake-build-debug/lib/libglewd.a)

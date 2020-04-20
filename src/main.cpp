@@ -2,6 +2,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm.hpp>
 
 int main() {
     GLFWwindow * window;
@@ -31,6 +32,12 @@ int main() {
     }
 
     std::cout << "glew initialized..." << std::endl;
+
+    glm::vec2 glmTest = glm::vec2(1.0) + glm::vec2(0);
+
+    if (glmTest == glm::vec2(1.0)) {
+        std::cout << "glm present" << std::endl;
+    }
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
