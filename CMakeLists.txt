@@ -34,9 +34,6 @@ add_compile_definitions(GLEW_STATIC)
 
 include_directories(lib/glew/include)
 
-message(STATUS "Setting up glm...")
-include_directories(lib/glm/glm)
-
 if (UNIX)
     set_target_properties(glew PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/lib/glew/cmake-build-debug/lib/libglewd.a)
 elseif (WIN32)
@@ -48,6 +45,16 @@ elseif (WIN32)
 else ()
     message(FATAL_ERROR "Detected platform is not supported!")
 endif()
+
+message(STATUS "Setting up glm...")
+include_directories(lib/glm/glm)
+
+message(STATUS "Setting up stb...")
+add_compile_definitions(STB_IMAGE_IMPLEMENTATION)
+include_directories(lib/stb)
+
+message(STATUS "Copying resources...")
+file(COPY res DESTINATION ${CMAKE_BINARY_DIR})
 
 message(STATUS "Setting up build options...")
 set(CMAKE_CXX_STANDARD 17)
