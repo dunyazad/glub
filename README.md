@@ -12,6 +12,7 @@ Simple CMake setup for developing OpenGL programs in C++
 ## Supported platforms
 
 - Linux
+- Windows (not tested)
 
 # Setup
 ## Bash
