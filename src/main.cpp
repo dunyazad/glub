@@ -1,6 +1,13 @@
 #include <iostream>
 
-#include <GL/glew.h>
+#ifdef GLEW
+    #include <GL/glew.h>
+#endif
+
+#ifdef GLAD
+    #include <glad/glad.h>
+#endif
+
 #include <GLFW/glfw3.h>
 #include <glm.hpp>
 #include <stb_image.h>
@@ -27,12 +34,23 @@ int main() {
 
     std::cout << "Window created..." << std::endl;
 
-    if (glewInit() != GLEW_OK) {
-        std::cout << "Unable to initialize glew!" << std::endl;
-        return -1;
-    }
+    #ifdef GLAD
+        if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+            std::cout << "Unable to initialize glad!" << std::endl;
+            return -1;
+        }
 
-    std::cout << "glew initialized..." << std::endl;
+        std::cout << "glad initialized..." << std::endl;
+    #endif
+
+    #ifdef GLEW
+        if (glewInit() != GLEW_OK) {
+            std::cout << "Unable to initialize glew!" << std::endl;
+            return -1;
+        }
+
+        std::cout << "glew initialized..." << std::endl;
+    #endif
 
     glm::vec2 glmTest = glm::vec2(1.0) + glm::vec2(0);
 
