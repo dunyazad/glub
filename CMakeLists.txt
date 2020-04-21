@@ -34,18 +34,6 @@ add_compile_definitions(GLEW_STATIC)
 
 include_directories(lib/glew/include)
 
-if (UNIX)
-    set_target_properties(glew PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/lib/glew/cmake-build-debug/lib/libglewd.a)
-elseif (WIN32)
-    if ("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
-        set_target_properties(glew PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/out/build/x64-Debug/lib/libglew32d.lib)
-    else ()
-        message(FATAL_ERROR "32bit not supported")
-    endif()
-else ()
-    message(FATAL_ERROR "Detected platform is not supported!")
-endif()
-
 message(STATUS "Setting up glm...")
 include_directories(lib/glm/glm)
 
