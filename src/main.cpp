@@ -40,16 +40,15 @@ int main() {
         std::cout << "glm present..." << std::endl;
     }
 
-
     int width, height, channels;
-     unsigned char * img = stbi_load("res/OpenGL.png", &width, &height, &channels, 0);
+    unsigned char * img = stbi_load("res/OpenGL.png", &width, &height, &channels, 0);
 
-     if (img == nullptr) {
-         std::cout << "Unable to load image" << std::endl;
-         return 1;
-     }
+    if (img == nullptr) {
+        std::cout << "Unable to load image" << std::endl;
+        return 1;
+    }
 
-     std::cout << "Image loaded, stb_image working..." << std::endl;
+    std::cout << "Image loaded, stb_image working..." << std::endl;
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);

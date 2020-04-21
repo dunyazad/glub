@@ -58,7 +58,8 @@ file(COPY res DESTINATION ${CMAKE_BINARY_DIR})
 
 message(STATUS "Setting up build options...")
 set(CMAKE_CXX_STANDARD 17)
-add_executable(OpenGL-Boilerplate ./src/main.cpp)
+file(GLOB_RECURSE SRC_FILES "./src/*.h" "./src/*.cpp")
+add_executable(OpenGL-Boilerplate ${SRC_FILES})
 
 if (UNIX)
     target_compile_options(OpenGL-Boilerplate PUBLIC -Wall -Wextra -pedantic)
