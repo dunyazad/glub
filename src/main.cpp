@@ -1,7 +1,9 @@
 #include <iostream>
 
-#include "imgui.h"
-#include "imgui_impl_opengl3.h"
+#ifdef IMGUI
+    #include "imgui.h"
+    #include "imgui_impl_opengl3.h"
+#endif
 
 #ifdef GLEW
     #include <GL/glew.h>
@@ -12,8 +14,11 @@
 #endif
 
 #ifdef GLFW
-    #include "imgui_impl_glfw.h"
     #include <GLFW/glfw3.h>
+
+    #ifdef IMGUI
+        #include "imgui_impl_glfw.h"
+    #endif
 #endif
 
 #ifdef SDL
@@ -76,6 +81,10 @@ int main() {
         }
 
         std::cout << "glew initialized..." << std::endl;
+
+        if (glewIsSupported("GL_VERSION_3_3")) {
+            std::cout << "OpenGL 3.3 supported" << std::endl;
+        }
     #endif
 
     glm::vec2 glmTest = glm::vec2(1.0) + glm::vec2(0);
@@ -122,38 +131,47 @@ int main() {
         }
     #endif
 
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    (void) io;
-    ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330");
-    bool demoWindow = true;
+    #ifdef IMGUI
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO();
+        (void) io;
+        ImGui::StyleColorsDark();
+        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        ImGui_ImplOpenGL3_Init("#version 330");
+        bool demoWindow = true;
+    #endif
 
     #ifdef GLFW
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();
 
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-            ImGui::ShowDemoWindow(&demoWindow);
-            ImGui::Render();
+            #ifdef IMGUI
+                ImGui_ImplOpenGL3_NewFrame();
+                ImGui_ImplGlfw_NewFrame();
+                ImGui::NewFrame();
+                ImGui::ShowDemoWindow(&demoWindow);
+                ImGui::Render();
+            #endif
 
             int display_w, display_h;
             glfwGetFramebufferSize(window, &display_w, &display_h);
             glViewport(0, 0, display_w, display_h);
             glClearColor(0.2, 0.2, 0.2, 1);
             glClear(GL_COLOR_BUFFER_BIT);
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+            #ifdef IMGUI
+                ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            #endif
 
             glfwSwapBuffers(window);
         }
 
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
+        #ifdef IMGUI
+            ImGui_ImplOpenGL3_Shutdown();
+            ImGui_ImplGlfw_Shutdown();
+            ImGui::DestroyContext();
+        #endif
 
         glfwDestroyWindow(window);
         glfwTerminate();
