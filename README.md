@@ -7,6 +7,7 @@ Simple CMake setup for developing OpenGL programs in C++
 - [GLEW](http://glew.sourceforge.net/)
 - [GLAD](https://github.com/Dav1dde/glad)
 - [GLFW](https://www.glfw.org/)
+- [IMGUI](https://github.com/ocornut/imgui)
 - [SDL](https://www.libsdl.org/)
 - [GLM](https://glm.g-truc.net/0.9.9/index.html)
 - [STB Image](https://github.com/nothings/stb/blob/master/stb_image.h)
