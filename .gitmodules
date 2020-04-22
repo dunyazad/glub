@@ -13,3 +13,6 @@
 [submodule "lib/glad"]
 	path = lib/glad
 	url = https://github.com/Dav1dde/glad.git
+[submodule "lib/sdl"]
+	path = lib/sdl
+	url = https://github.com/SDL-mirror/SDL.git

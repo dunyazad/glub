@@ -8,31 +8,53 @@
     #include <glad/glad.h>
 #endif
 
-#include <GLFW/glfw3.h>
+#ifdef GLFW
+    #include <GLFW/glfw3.h>
+#endif
+
+#ifdef SDL
+    #include <SDL2/SDL.h>
+#endif
+
 #include <glm.hpp>
 #include <stb_image.h>
 
 int main() {
-    GLFWwindow * window;
+    #ifdef GLFW
+        GLFWwindow * window;
 
-    if (!glfwInit()) {
-        std::cout << "Unable to initialize glfw!" << std::endl;
-        return -1;
-    }
+        if (!glfwInit()) {
+            std::cout << "Unable to initialize glfw!" << std::endl;
+            return -1;
+        }
 
-    std::cout << "glfw initialized..." << std::endl;
+        std::cout << "glfw initialized..." << std::endl;
 
-    window = glfwCreateWindow(640, 480, "OpenGL Boilerplate", NULL, NULL);
+        window = glfwCreateWindow(640, 480, "OpenGL Boilerplate", NULL, NULL);
 
-    if (!window) {
-        std::cout << "Unable to create a window!" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
+        if (!window) {
+            std::cout << "Unable to create a window!" << std::endl;
+            glfwTerminate();
+            return -1;
+        }
 
-    glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(window);
 
-    std::cout << "Window created..." << std::endl;
+        std::cout << "Window created..." << std::endl;
+    #endif
+
+    #ifdef SDL
+        SDL_Window * window = SDL_CreateWindow("OpenGL Boilerplate", 0, 0, 640, 480, SDL_WINDOW_OPENGL);
+
+        if (!window) {
+            std::cout << "Unable to create a window!" << std::endl;
+            return -1;
+        }
+
+        SDL_GL_CreateContext(window);
+
+        std::cout << "Window created, sdl initialized..." << std::endl;
+    #endif
 
     #ifdef GLAD
         if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
@@ -68,13 +90,43 @@ int main() {
 
     std::cout << "Image loaded, stb_image working..." << std::endl;
 
-    while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+    #ifdef SDL
+        bool running = true;
 
-    glfwTerminate();
+        while (running) {
+            SDL_Event Event;
+
+            while (SDL_PollEvent(&Event)) {
+                if (Event.type == SDL_KEYDOWN) {
+                    switch (Event.key.keysym.sym) {
+                        case SDLK_ESCAPE:
+                            running = false;
+                            break;
+                        default:
+                            break;
+                    }
+                } else if (Event.type == SDL_QUIT) {
+                    running = false;
+                }
+            }
+
+            glViewport(0, 0, 640, 480);
+            glClearColor(0.2, 0.2, 0.2, 0.2);
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            SDL_GL_SwapWindow(window);
+        }
+    #endif
+
+    #ifdef GLFW
+        while (!glfwWindowShouldClose(window)) {
+            glClear(GL_COLOR_BUFFER_BIT);
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+        }
+
+        glfwTerminate();
+    #endif
 
     return 0;
 }
