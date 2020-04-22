@@ -81,10 +81,6 @@ int main() {
         }
 
         std::cout << "glew initialized..." << std::endl;
-
-        if (glewIsSupported("GL_VERSION_3_3")) {
-            std::cout << "OpenGL 3.3 supported" << std::endl;
-        }
     #endif
 
     glm::vec2 glmTest = glm::vec2(1.0) + glm::vec2(0);

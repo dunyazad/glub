@@ -62,8 +62,6 @@ endif()
 message(STATUS "Setting up glm...")
 include_directories(lib/glm/glm)
 
-set(IMGUI TRUE)
-
 if (IMGUI)
     message(STATUS "Setting up imgui...")
     include_directories(lib/imgui lib/imgui/examples)
