@@ -1,0 +1,106 @@
+body {
+    margin: 40px 0;
+    background-color: #1d1f21;
+    color: #c5c8c6;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+p {
+    background-color: #1d1f21;
+    font-size: 18px;
+    padding: 0 6px;
+}
+
+.wide {
+    width: 100%;
+}
+
+.outline {
+    border: 2px solid #c5c8c6;
+    border-radius: 10px;
+    padding: 16px 20px 12px;
+    position: relative;
+    transition: border-color 180ms ease;
+}
+
+.half-tile {
+    width: calc(50% - 12px);
+    display: inline-block;
+}
+
+input[type="text"] {
+    background-color: #1d1f21;
+    border: none;
+    border-bottom: 2px solid #c5c8c6;
+    outline: none;
+    transition: border-bottom-color 180ms ease;
+    color: #c5c8c6;
+    margin: 4px 0;
+}
+
+input[type="text"]:focus {
+    border-bottom: 2px solid rgba(25, 136, 68, .6);
+}
+
+::placeholder {
+    color: #969896;
+}
+
+.card-title {
+    display: inline-block;
+    position: absolute;
+    top: -14px;
+    left: 12px;
+    margin-bottom: 0;
+    transition: color 180ms ease;
+}
+
+#result {
+    word-break: break-word;
+    cursor: pointer;
+}
+
+.green {
+    color: rgba(25, 136, 68, .6);
+}
+
+.blue {
+    color: rgba(57, 113, 237, .6);
+}
+
+.yellow {
+    color: rgba(251, 169, 34, .6);
+}
+
+.option {
+    width: 100%;
+    background-color: #1d1f21;
+    color: #c5c8c6;
+    outline: none;
+    border: none;
+    text-align: left;
+    margin: 2px 0;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.option:hover, .option:focus {
+    color: #c5c8c6;
+    outline: none;
+    background-color: rgba(25, 136, 68, .6);
+    transition: all 180ms ease;
+}
+
+.option.active, option.selected.active {
+    background-color: #1d1f21;
+}
+
+.option.selected {
+    color: rgba(25, 136, 68, .6);
+    background-color: #1d1f21;
+}
+
+.option.selected:hover, .option.selected:focus {
+    color: rgba(57, 113, 237, .6);
+    background-color: rgba(25, 136, 68, .6);
+}

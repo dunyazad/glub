@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>OpenGL Boilerplate</title>
+        <meta name="description" content="Simple CMake setup for developing OpenGL programs in C++">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
+        <script src="index.js"></script>
+
+        <div class="container">
+            <div style="width: calc(50% - 5px); display: inline-block;">
+                <div style="margin: 0 12px 0 0">
+                    <div class="outline" style="margin-bottom: 24px; width: 100%">
+                        <p class="card-title">Project info</p>
+                        <div>
+                            <label style="width: calc(70% - 8px)">
+                                <input id="project-name" class="wide" style="margin-right: 8px" type="text" placeholder="OpenGL-Boilerplate" />
+                            </label>
+                            <label style="width: calc(30% - 8px)">
+                                <input id="project-version" class="wide" style="margin-left: 8px" type="text" placeholder="1.0.0" />
+                            </label>
+                        </div>
+                        <label class="wide">
+                            <input id="project-description" class="wide" type="text" placeholder="Simple CMake setup for developing OpenGL programs in C++" aria-multiline="true"/>
+                        </label>
+                    </div>
+                    <div class="outline half-tile" style="margin: 0 12px 24px 0; float: left">
+                        <p class="card-title">Loading library</p>
+                        <button id="glad" class="option">GLAD</button>
+                        <button id="glew" class="option">GLEW</button>
+                    </div>
+                    <div class="outline half-tile" style="margin-left: 12px; float: right">
+                        <p class="card-title">Utility</p>
+                        <button id="glfw" class="option">GLFW</button>
+                        <button id="imgui" class="option">Imgui</button>
+                        <button id="sdl" class="option">SDL</button>
+                        <button id="stb-img" class="option">STB Image</button>
+                    </div>
+                    <div class="outline half-tile" style="float: left">
+                        <p class="card-title">Math</p>
+                        <button id="glm" class="option">glm</button>
+                    </div>
+                </div>
+            </div>
+            <div style="width: calc(50% - 5px); display: inline-block; float: right" class="outline">
+                <p class="card-title">CMakeLists.txt</p>
+                <div id="result"></div>
+            </div>
+        </div>
+    </body>
+</html>
