@@ -267,7 +267,11 @@ target_link_libraries(${projectName} glad)` : ''}
     }
 
     function getMainString() {
-        let file = 'main/xlib.txt'
+        let file = 'main/xlib.txt';
+
+        if (glad) {
+            file = 'main/glfw-glad.txt';
+        }
 
         return $.get(file, (data) => {
             return data;
