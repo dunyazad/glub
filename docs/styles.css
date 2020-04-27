@@ -53,6 +53,17 @@ input[type="text"]:focus {
     left: 12px;
     margin-bottom: 0;
     transition: color 180ms ease;
+    user-select: none;
+    cursor: pointer;
+}
+
+.card-title.right {
+    left: unset;
+    right: 12px;
+}
+
+.card-title.selected {
+    color: rgba(25, 136, 68, .6);
 }
 
 #result {

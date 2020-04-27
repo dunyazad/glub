@@ -9,9 +9,21 @@ $(document).ready(() => {
     $('#result').on('click', () => {
         let $temp = $("<textarea>");
         $("body").append($temp);
-        $temp.val(getCmakeString()).select();
+        $temp.val($('#cmakelists').hasClass('selected') ? getCmakeString() : getMainString()).select();
         document.execCommand("copy");
         $temp.remove();
+    });
+
+    $('#cmakelists').on('click', () => {
+        $('#cmakelists').addClass('selected');
+        $('#main').removeClass('selected');
+        updateResult();
+    });
+
+    $('#main').on('click', () => {
+        $('#main').addClass('selected');
+        $('#cmakelists').removeClass('selected');
+        updateResult();
     });
 
     $('#glew').on('click', () => {
@@ -89,27 +101,28 @@ $(document).ready(() => {
     });
 
     function updateResult() {
-        $('#result').html(`
+        if ($('#cmakelists').hasClass('selected')) {
+            $('#result').html(`
             <div>cmake_minimum_required(<span class="blue">VERSION 3.15</span>)</div>
             <br>
             <div>project(<span class="green">${projectName}</span> <span class="blue">VERSION</span> <span class="green">${projectVersion}</span> <span class="blue">DESCRIPTION</span> <span class="green">"${projectDescription}"</span> <span class="blue">LANGUAGES</span> <span class="green">CXX</span>)</div>
             <br>
             ${glad ?
-            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up glad..."</span>)</div>
+                `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up glad..."</span>)</div>
             <div>add_subdirectory(<span class="green">lib/glad</span>)</div>
             <div>add_compile_definitions(<span class="green">GLAD</span>)</div>
             <div>include_directories(<span class="yellow">\${CMAKE_BINARY_DIR}</span><span class="green"/>lib/glad/include</span>)</div>
             <br>`
-            : ''}
+                : ''}
             ${glew ?
-            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up glew..."</span>)</div>
+                `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up glew..."</span>)</div>
             <div>add_subdirectory(<span class="green">lib/glew/build/cmake</span>)</div>
             <div>add_compile_definitions(<span class="green">GLEW_STATIC GLEW</span>)</div>
             <div>include_directories(<span class="green">lib/glew/include</span>)</div>
             <br>`
-            : ''}
+                : ''}
             ${glfw ?
-            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up glfw..."</span>)</div>
+                `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up glfw..."</span>)</div>
             <div>set(<span class="green">GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE</span>)</div>
             <div>set(<span class="green">GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE</span>)</div>
             <div>set(<span class="green">GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE</span>)</div>
@@ -117,33 +130,33 @@ $(document).ready(() => {
             <div>add_compile_definitions(<span class="green">GLFW</span>)</div>
             <div>include_directories(<span class="green"/>lib/glfw/include</span>)</div>
             <br>`
-            : ''}
+                : ''}
             ${imgui ?
-            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up imgui..."</span>)</div>
+                `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up imgui..."</span>)</div>
             <div>add_subdirectory(<span class="green">lib/imgui lib/imgui/examples</span>)</div>
             <div>add_compile_definitions(<span class="green">IMGUI</span>)</div>
             <div>file(<span class="blue">GLOB</span> <span class="yellow">IMGUI_FILES</span> <span class="green">"./lib/imgui/*.h" "./lib/imgui/*.cpp" "./lib/imgui/examples/imgui_impl_glfw.h" "./lib/imgui/examples/imgui_impl_glfw.cpp" "./lib/imgui/examples/imgui_impl_opengl3.h" "./lib/imgui/examples/imgui_impl_opengl3.cpp"</span>)</div>
             <br>`
-            : ''}
+                : ''}
             ${sdl ?
-            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up SDL..."</span>)</div>
+                `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up SDL..."</span>)</div>
             <div>add_subdirectory(<span class="green">lib/sdl</span>)</div>
             <div>add_compile_definitions(<span class="green">SDL</span>)</div>
             <div>include_directories(<span class="green"/>lib/sdl/include</span>)</div>
             <br>`
-            : ''}
+                : ''}
             ${stbImg ?
-            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up stb image..."</span>)</div>
+                `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up stb image..."</span>)</div>
             <div>add_compile_definitions(<span class="green">STB_IMAGE STB_IMAGE_IMPLEMENTATION</span>)</div>
             <div>include_directories(<span class="green"/>lib/stb</span>)</div>
             <br>`
-            : ''}
+                : ''}
             ${glm ?
-            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up glm..."</span>)</div>
+                `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up glm..."</span>)</div>
             <div>add_compile_definitions(<span class="green">GLM</span>)</div>
             <div>include_directories(<span class="green"/>lib/glm/glm</span>)</div>
             <br>`
-            : ''}
+                : ''}
             <div>message(<span class="blue">STATUS</span> <span class="green">"Copying resources..."</span>)</div>
             <div>file(<span class="blue">COPY</span> <span class="green">res</span> <span class="blue">DESTINATION</span> <span class="yellow">\${CMAKE_BINARY_DIR}</span>)</div>
             <br>
@@ -153,9 +166,9 @@ $(document).ready(() => {
             <div>add_executable(<span class="green">${projectName}</span> <span class="yellow">${"${SRC_FILES}"}${imgui ? " ${IMGUI_FILES}" : ""}</span>)</div>
             <br>
             ${sdl ?
-            `<div>target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span> <span class="green">-l SDL2 -lGL</span>)</div>
+                `<div>target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span> <span class="green">-l SDL2 -lGL</span>)</div>
             <br>`
-            : ''}
+                : ''}
             <div><span class="yellow">if</span>(<span class="blue">UNIX</span>)</div>
             <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span> <span class="green">-Wall -Wextra -pedantic</span>)</div>
             <div><span class="yellow">elseif</span>(<span class="blue">WIN32</span>)</div>
@@ -169,14 +182,210 @@ $(document).ready(() => {
             <div>find_package(<span class="green">OpenGL</span> <span class="blue">REQUIRED</span>)</div>
             <div>target_link_libraries(<span class="green">${projectName} OpenGL::GL</span>)</div>
             ${glad ?
-            `<div>target_link_libraries(<span class="green">${projectName} glad</span>)</div>` : ''}
+                `<div>target_link_libraries(<span class="green">${projectName} glad</span>)</div>` : ''}
             ${glew ?
-            `<div>target_link_libraries(<span class="green">${projectName} glew</span>)</div>` : ''}
+                `<div>target_link_libraries(<span class="green">${projectName} glew</span>)</div>` : ''}
             ${glfw ?
-            `<div>target_link_libraries(<span class="green">${projectName} glfw</span>)</div>` : ''}
+                `<div>target_link_libraries(<span class="green">${projectName} glfw</span>)</div>` : ''}
             ${sdl ?
-            `<div>target_link_libraries(<span class="green">${projectName} SDL2</span>)</div>` : ''}
+                `<div>target_link_libraries(<span class="green">${projectName} SDL2</span>)</div>` : ''}
 `);
+        } else {
+            $('#result').html(`#include <iostream>
+#include <cstring>
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+
+#include <GL/gl.h>
+#include <GL/glx.h>
+
+typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
+
+int main() {
+    std::cout << "Opening display...";
+
+    Display * display = XOpenDisplay(nullptr);
+
+    if (display == nullptr) {
+        std::cout << "FAILED" << std::endl;
+        return 1;
+    }
+
+    std::cout << "OK" << std::endl;
+
+    DefaultScreenOfDisplay(display);
+    int screenId = DefaultScreen(display);
+
+    std::cout << "Checking glx version...";
+    GLint majorGLX, minorGLX = 0;
+    glXQueryVersion(display, &majorGLX, &minorGLX);
+    
+    if (majorGLX <= 1 && minorGLX < 2) {
+        std::cout << "GLX 1.2 or greater is required" << std::endl;
+        XCloseDisplay(display);
+        return 1;
+    }
+
+    std::cout << majorGLX << "." << minorGLX << std::endl;
+
+    GLint glxAttribs[] = {
+            GLX_X_RENDERABLE, True,
+            GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
+            GLX_RENDER_TYPE, GLX_RGBA_BIT,
+            GLX_X_VISUAL_TYPE, GLX_TRUE_COLOR,
+            GLX_RED_SIZE, 8,
+            GLX_GREEN_SIZE, 8,
+            GLX_BLUE_SIZE, 8,
+            GLX_ALPHA_SIZE, 8,
+            GLX_DEPTH_SIZE, 24,
+            GLX_STENCIL_SIZE, 8,
+            GLX_DOUBLEBUFFER, True,
+            None
+    };
+
+    std::cout << "Retrieving framebuffer...";
+
+    int fbcount;
+    GLXFBConfig* fbc = glXChooseFBConfig(display, screenId, glxAttribs, &fbcount);
+
+    if (!fbc) {
+        std::cout << "FAILED" << std::endl;
+        XCloseDisplay(display);
+        return 1;
+    }
+
+    std::cout << "OK" << std::endl;
+
+    std::cout << "Searching for best visual...";
+
+    int best_fbc = -1, worst_fbc = -1, best_num_samp = -1, worst_num_samp = 999;
+
+    for (int i = 0; i < fbcount; ++i) {
+        XVisualInfo *vi = glXGetVisualFromFBConfig( display, fbc[i] );
+
+        if (vi) {
+            int samp_buf, samples;
+            glXGetFBConfigAttrib(display, fbc[i], GLX_SAMPLE_BUFFERS, &samp_buf);
+            glXGetFBConfigAttrib(display, fbc[i], GLX_SAMPLES, &samples);
+
+            if (best_fbc < 0 || (samp_buf && samples > best_num_samp)) {
+                best_fbc = i;
+                best_num_samp = samples;
+            }
+
+            if (worst_fbc < 0 || !samp_buf || samples < worst_num_samp) {
+                worst_fbc = i;
+            }
+
+            worst_num_samp = samples;
+        }
+
+        XFree( vi );
+    }
+
+    GLXFBConfig bestFbc = fbc[best_fbc];
+    XFree(fbc);
+
+    XVisualInfo * visual = glXGetVisualFromFBConfig(display, bestFbc);
+
+    if (!visual) {
+        std::cout << "FAILED" << std::endl;
+        XCloseDisplay(display);
+        return 1;
+    }
+
+    if (screenId != visual->screen) {
+        std::cout << "FAILED" << std::endl;
+        XCloseDisplay(display);
+        return 1;
+    }
+
+    std::cout << "OK" << std::endl;
+
+    std::cout << "Creating window...";
+
+    XSetWindowAttributes windowAttribs;
+    windowAttribs.border_pixel = BlackPixel(display, screenId);
+    windowAttribs.background_pixel = WhitePixel(display, screenId);
+    windowAttribs.override_redirect = True;
+    windowAttribs.colormap = XCreateColormap(display, RootWindow(display, screenId), visual->visual, AllocNone);
+    windowAttribs.event_mask = ExposureMask;
+    Window window = XCreateWindow(display, RootWindow(display, screenId), 0, 0, 640, 480, 0, visual->depth, InputOutput, visual->visual, CWBackPixel | CWColormap | CWBorderPixel | CWEventMask, &windowAttribs);
+    XStoreName(display, window, "OpenGL Boilerplate");
+
+    Atom atomWmDeleteWindow = XInternAtom(display, "WM_DELETE_WINDOW", False);
+    XSetWMProtocols(display, window, &atomWmDeleteWindow, 1);
+
+    std::cout << "OK" << std::endl << "Creating OpenGL context...";
+
+    glXCreateContextAttribsARBProc glXCreateContextAttribsARB = nullptr;
+    glXCreateContextAttribsARB = (glXCreateContextAttribsARBProc) glXGetProcAddressARB((const GLubyte *) "glXCreateContextAttribsARB");
+
+    int context_attribs[] = {
+            GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
+            GLX_CONTEXT_MINOR_VERSION_ARB, 2,
+            GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+            None
+    };
+
+    GLXContext context;
+    const char * glxExts = glXQueryExtensionsString( display,  screenId );
+
+    if (!strstr(glxExts, "GLX_ARB_create_context")) {
+        context = glXCreateNewContext( display, bestFbc, GLX_RGBA_TYPE, nullptr, True );
+    } else {
+        context = glXCreateContextAttribsARB( display, bestFbc, nullptr, true, context_attribs );
+    }
+
+    XSync( display, False );
+
+    glXMakeCurrent(display, window, context);
+
+    std::cout << "OK" << std::endl << std::endl;
+
+    std::cout << "GL Renderer: " << glGetString(GL_RENDERER) << std::endl << "GL Version: " << glGetString(GL_VERSION) << std::endl << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl << std::endl;
+
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    glViewport(0, 0, 640, 480);
+
+    XClearWindow(display, window);
+    XMapRaised(display, window);
+    XEvent ev;
+
+    while (true) {
+        if (XPending(display) > 0) {
+            XNextEvent(display, &ev);
+
+            if (ev.type == Expose) {
+                XWindowAttributes attribs;
+                XGetWindowAttributes(display, window, &attribs);
+                glViewport(0, 0, attribs.width, attribs.height);
+            }
+
+            if (ev.type == ClientMessage) {
+                if (ev.xclient.data.l[0] == atomWmDeleteWindow) {
+                    break;
+                }
+            } else if (ev.type == DestroyNotify) {
+                break;
+            }
+        }
+
+        glClear(GL_COLOR_BUFFER_BIT);
+        glXSwapBuffers(display, window);
+    }
+
+    glXDestroyContext(display, context);
+    XFree(visual);
+    XFreeColormap(display, windowAttribs.colormap);
+    XDestroyWindow(display, window);
+    XCloseDisplay(display);
+
+    return 0;
+}
+`);
+        }
     }
 
     function getCmakeString() {
@@ -236,6 +445,203 @@ target_link_libraries(${projectName} SDL2)` : ''}${glfw ? `
 target_link_libraries(${projectName} glfw)` : ''}${glew ? `
 target_link_libraries(${projectName} glew)` : ''}${glad ? `
 target_link_libraries(${projectName} glad)` : ''}
+`;
+    }
+
+    function getMainString() {
+        return `#include <iostream>
+#include <cstring>
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+
+#include <GL/gl.h>
+#include <GL/glx.h>
+
+typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
+
+int main() {
+    std::cout << "Opening display...";
+
+    Display * display = XOpenDisplay(nullptr);
+
+    if (display == nullptr) {
+        std::cout << "FAILED" << std::endl;
+        return 1;
+    }
+
+    std::cout << "OK" << std::endl;
+
+    DefaultScreenOfDisplay(display);
+    int screenId = DefaultScreen(display);
+
+    std::cout << "Checking glx version...";
+    GLint majorGLX, minorGLX = 0;
+    glXQueryVersion(display, &majorGLX, &minorGLX);
+    
+    if (majorGLX <= 1 && minorGLX < 2) {
+        std::cout << "GLX 1.2 or greater is required" << std::endl;
+        XCloseDisplay(display);
+        return 1;
+    }
+
+    std::cout << majorGLX << "." << minorGLX << std::endl;
+
+    GLint glxAttribs[] = {
+            GLX_X_RENDERABLE, True,
+            GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
+            GLX_RENDER_TYPE, GLX_RGBA_BIT,
+            GLX_X_VISUAL_TYPE, GLX_TRUE_COLOR,
+            GLX_RED_SIZE, 8,
+            GLX_GREEN_SIZE, 8,
+            GLX_BLUE_SIZE, 8,
+            GLX_ALPHA_SIZE, 8,
+            GLX_DEPTH_SIZE, 24,
+            GLX_STENCIL_SIZE, 8,
+            GLX_DOUBLEBUFFER, True,
+            None
+    };
+
+    std::cout << "Retrieving framebuffer...";
+
+    int fbcount;
+    GLXFBConfig* fbc = glXChooseFBConfig(display, screenId, glxAttribs, &fbcount);
+
+    if (!fbc) {
+        std::cout << "FAILED" << std::endl;
+        XCloseDisplay(display);
+        return 1;
+    }
+
+    std::cout << "OK" << std::endl;
+
+    std::cout << "Searching for best visual...";
+
+    int best_fbc = -1, worst_fbc = -1, best_num_samp = -1, worst_num_samp = 999;
+
+    for (int i = 0; i < fbcount; ++i) {
+        XVisualInfo *vi = glXGetVisualFromFBConfig( display, fbc[i] );
+
+        if (vi) {
+            int samp_buf, samples;
+            glXGetFBConfigAttrib(display, fbc[i], GLX_SAMPLE_BUFFERS, &samp_buf);
+            glXGetFBConfigAttrib(display, fbc[i], GLX_SAMPLES, &samples);
+
+            if (best_fbc < 0 || (samp_buf && samples > best_num_samp)) {
+                best_fbc = i;
+                best_num_samp = samples;
+            }
+
+            if (worst_fbc < 0 || !samp_buf || samples < worst_num_samp) {
+                worst_fbc = i;
+            }
+
+            worst_num_samp = samples;
+        }
+
+        XFree( vi );
+    }
+
+    GLXFBConfig bestFbc = fbc[best_fbc];
+    XFree(fbc);
+
+    XVisualInfo * visual = glXGetVisualFromFBConfig(display, bestFbc);
+
+    if (!visual) {
+        std::cout << "FAILED" << std::endl;
+        XCloseDisplay(display);
+        return 1;
+    }
+
+    if (screenId != visual->screen) {
+        std::cout << "FAILED" << std::endl;
+        XCloseDisplay(display);
+        return 1;
+    }
+
+    std::cout << "OK" << std::endl;
+
+    std::cout << "Creating window...";
+
+    XSetWindowAttributes windowAttribs;
+    windowAttribs.border_pixel = BlackPixel(display, screenId);
+    windowAttribs.background_pixel = WhitePixel(display, screenId);
+    windowAttribs.override_redirect = True;
+    windowAttribs.colormap = XCreateColormap(display, RootWindow(display, screenId), visual->visual, AllocNone);
+    windowAttribs.event_mask = ExposureMask;
+    Window window = XCreateWindow(display, RootWindow(display, screenId), 0, 0, 640, 480, 0, visual->depth, InputOutput, visual->visual, CWBackPixel | CWColormap | CWBorderPixel | CWEventMask, &windowAttribs);
+    XStoreName(display, window, "OpenGL Boilerplate");
+
+    Atom atomWmDeleteWindow = XInternAtom(display, "WM_DELETE_WINDOW", False);
+    XSetWMProtocols(display, window, &atomWmDeleteWindow, 1);
+
+    std::cout << "OK" << std::endl << "Creating OpenGL context...";
+
+    glXCreateContextAttribsARBProc glXCreateContextAttribsARB = nullptr;
+    glXCreateContextAttribsARB = (glXCreateContextAttribsARBProc) glXGetProcAddressARB((const GLubyte *) "glXCreateContextAttribsARB");
+
+    int context_attribs[] = {
+            GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
+            GLX_CONTEXT_MINOR_VERSION_ARB, 2,
+            GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+            None
+    };
+
+    GLXContext context;
+    const char * glxExts = glXQueryExtensionsString( display,  screenId );
+
+    if (!strstr(glxExts, "GLX_ARB_create_context")) {
+        context = glXCreateNewContext( display, bestFbc, GLX_RGBA_TYPE, nullptr, True );
+    } else {
+        context = glXCreateContextAttribsARB( display, bestFbc, nullptr, true, context_attribs );
+    }
+
+    XSync( display, False );
+
+    glXMakeCurrent(display, window, context);
+
+    std::cout << "OK" << std::endl << std::endl;
+
+    std::cout << "GL Renderer: " << glGetString(GL_RENDERER) << std::endl << "GL Version: " << glGetString(GL_VERSION) << std::endl << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl << std::endl;
+
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    glViewport(0, 0, 640, 480);
+
+    XClearWindow(display, window);
+    XMapRaised(display, window);
+    XEvent ev;
+
+    while (true) {
+        if (XPending(display) > 0) {
+            XNextEvent(display, &ev);
+
+            if (ev.type == Expose) {
+                XWindowAttributes attribs;
+                XGetWindowAttributes(display, window, &attribs);
+                glViewport(0, 0, attribs.width, attribs.height);
+            }
+
+            if (ev.type == ClientMessage) {
+                if (ev.xclient.data.l[0] == atomWmDeleteWindow) {
+                    break;
+                }
+            } else if (ev.type == DestroyNotify) {
+                break;
+            }
+        }
+
+        glClear(GL_COLOR_BUFFER_BIT);
+        glXSwapBuffers(display, window);
+    }
+
+    glXDestroyContext(display, context);
+    XFree(visual);
+    XFreeColormap(display, windowAttribs.colormap);
+    XDestroyWindow(display, window);
+    XCloseDisplay(display);
+
+    return 0;
+}
 `;
     }
 })
