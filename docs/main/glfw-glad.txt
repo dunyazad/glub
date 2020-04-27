@@ -19,7 +19,7 @@ int main() {
 
     std::cout << "Creating window...";
 
-    GLFWwindow * window = glfwCreateWindow(640, 480, "OpenGL Boilerplate", nullptr, nullptr);
+    GLFWwindow * window = glfwCreateWindow(640, 480, "PROJECT_NAME", nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     if (!window) {
