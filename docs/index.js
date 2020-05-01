@@ -52,6 +52,12 @@ $(document).ready(() => {
     $('#glfw').on('click', () => {
         glfw = !glfw;
         $('#glfw').toggleClass('selected');
+
+        if (!glfw) {
+            $('#glad').removeClass('selected');
+            glad = false;
+        }
+
         updateResult();
     });
 
@@ -268,6 +274,10 @@ target_link_libraries(${projectName} glad)` : ''}
 
     function getMainString() {
         let file = 'main/xlib.txt';
+
+        if (glfw) {
+            file = 'main/glfw.txt';
+        }
 
         if (glad) {
             file = 'main/glfw-glad.txt';

@@ -1,0 +1,37 @@
+#include <iostream>
+#include <GLFW/glfw3.h>
+
+int main() {
+    GLFWwindow * window;
+
+    std::cout << "Initializing glfw...";
+
+    if (!glfwInit()) {
+        std::cout << "FAILED" << std::endl;
+        return -1;
+    }
+
+    std::cout << "OK" << std::endl << "Creating window...";
+
+    window = glfwCreateWindow(640, 480, "PROJECT_NAME", NULL, NULL);
+
+    if (!window) {
+        std::cout << "FAILED" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+
+    glfwMakeContextCurrent(window);
+
+    std::cout << "OK" << std::endl;
+
+    while (!glfwWindowShouldClose(window)) {
+        glfwPollEvents();
+        glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glfwSwapBuffers(window);
+    }
+
+    glfwTerminate();
+    return 0;
+}
