@@ -277,6 +277,12 @@ target_link_libraries(${projectName} glad)` : ''}
 
         if (glfw) {
             file = 'main/glfw.txt';
+
+            if (glew) {
+                file = 'main/glfw-glew.txt';
+            }
+        } else if (glew) {
+            file = 'main/xlib-glew.txt';
         }
 
         if (glad) {
