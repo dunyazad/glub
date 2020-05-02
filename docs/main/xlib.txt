@@ -1,15 +1,11 @@
 #include <iostream>
 #include <cstring>
+XLIB_GLEW_IMPORTXLIB_IMPORT
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+typedef GLXContext (*glXCreateContextAttribsARBProc)(Display *, GLXFBConfig, GLXContext, Bool, const int *);
+typedef Bool (*glXMakeContextCurrentARBProc)(Display *, GLXDrawable, GLXDrawable, GLXContext);
 
-#include <GL/gl.h>
-#include <GL/glx.h>
-
-typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
-
-int main() {
+int main (){
     std::cout << "Opening display...";
 
     Display * display = XOpenDisplay(nullptr);
@@ -36,7 +32,9 @@ int main() {
 
     std::cout << majorGLX << "." << minorGLX << std::endl;
 
-    GLint glxAttribs[] = {
+    std::cout << "Retrieving framebuffer...";
+
+    static int glxAttribs[] = {
             GLX_X_RENDERABLE, True,
             GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
             GLX_RENDER_TYPE, GLX_RGBA_BIT,
@@ -51,10 +49,8 @@ int main() {
             None
     };
 
-    std::cout << "Retrieving framebuffer...";
-
     int fbcount;
-    GLXFBConfig* fbc = glXChooseFBConfig(display, screenId, glxAttribs, &fbcount);
+    GLXFBConfig * fbc = glXChooseFBConfig(display, screenId, glxAttribs, &fbcount);
 
     if (!fbc) {
         std::cout << "FAILED" << std::endl;
@@ -149,8 +145,8 @@ int main() {
 
     glXMakeCurrent(display, window, context);
 
-    std::cout << "OK" << std::endl << std::endl;
-
+    std::cout << "OK" << std::endl;
+    GLEW_INIT
     std::cout << "GL Renderer: " << glGetString(GL_RENDERER) << std::endl << "GL Version: " << glGetString(GL_VERSION) << std::endl << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl << std::endl;
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);

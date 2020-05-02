@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream>GLEW_IMPORT
 #include <GLFW/glfw3.h>
 
 int main() {
@@ -13,7 +13,7 @@ int main() {
 
     std::cout << "OK" << std::endl << "Creating window...";
 
-    window = glfwCreateWindow(640, 480, "PROJECT_NAME", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "PROJECT_NAME", nullptr, nullptr);
 
     if (!window) {
         std::cout << "FAILED" << std::endl;
@@ -23,7 +23,7 @@ int main() {
 
     glfwMakeContextCurrent(window);
 
-    std::cout << "OK" << std::endl;
+    std::cout << "OK" << std::endl;GLEW_INIT
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();

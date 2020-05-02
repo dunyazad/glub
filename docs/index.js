@@ -16,7 +16,7 @@ $(document).ready(() => {
             $temp.remove();
         } else {
             getMainString().then((data) => {
-                $temp.val(data.toString().replace('PROJECT_NAME', projectName)).select();
+                $temp.val(data.toString()).select();
                 document.execCommand("copy");
                 $temp.remove();
             });
@@ -187,7 +187,7 @@ $(document).ready(() => {
             <br>`
                 : ''}
             <div><span class="yellow">if</span>(<span class="blue">UNIX</span>)</div>
-            <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span> <span class="green">-Wall -Wextra -pedantic</span>)</div>
+            <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span> <span class="green">-Wall -Wextra -pedantic${glfw ? '' : ' -lX11 -lGL'}</span>)</div>
             <div><span class="yellow">elseif</span>(<span class="blue">WIN32</span>)</div>
             <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span>)</div>
             <div style="margin-left: 20px">set_target_properties(<span class="green">${projectName}</span> <span class="blue">PROPERTIES COMPILE_DEFINITIONS BUILDER_STATIC_DEFINE</span>)</div>
@@ -197,13 +197,16 @@ $(document).ready(() => {
             <br>
             <div>message(<span class="blue">STATUS</span> <span class="green">"Linking..."</span>)</div>
             <div>find_package(<span class="green">OpenGL</span> <span class="blue">REQUIRED</span>)</div>
-            <div>target_link_libraries(<span class="green">${projectName} OpenGL::GL</span>)</div>
+            ${glfw ? '' : `
+            <div>find_package(<span class="green">X11</span> <span class="blue">REQUIRED</span>)</div>`}
+            <div>target_link_libraries(<span class="green">${projectName} OpenGL</span>)</div>
             ${glad ?
                 `<div>target_link_libraries(<span class="green">${projectName} glad</span>)</div>` : ''}
             ${glew ?
                 `<div>target_link_libraries(<span class="green">${projectName} glew</span>)</div>` : ''}
             ${glfw ?
-                `<div>target_link_libraries(<span class="green">${projectName} glfw</span>)</div>` : ''}
+                `<div>target_link_libraries(<span class="green">${projectName} glfw</span>)</div>` : `
+                <div>target_link_libraries(<span class="green">${projectName} X11</span>)</div>`}
             ${sdl ?
                 `<div>target_link_libraries(<span class="green">${projectName} SDL2</span>)</div>` : ''}
 `);
@@ -254,7 +257,7 @@ file(GLOB_RECURSE SRC_FILES "./src/*.h" "./src/*.cpp")
 add_executable(${projectName} \${SRC_FILES}${imgui ? ' ${IMGUI_FILES}' : ''})
 ${sdl ? `target_compile_options(${projectName} PUBLIC -l SDL2 -lGL)` : ''}
 if (UNIX)
-    target_compile_options(${projectName} PUBLIC -Wall -Wextra -pedantic)
+    target_compile_options(${projectName} PUBLIC -Wall -Wextra -pedantic${glfw ? '' : ' -lX11 -lGL'})
 elseif (WIN32)
     target_compile_options(${projectName} PUBLIC)
     set_target_properties(${projectName} PROPERTIES COMPILE_DEFINITIONS BUILDER_STATIC_DEFINE)
@@ -263,10 +266,12 @@ else ()
 endif()
 
 message(STATUS "Linking...")
-find_package(OpenGL REQUIRED)
+find_package(OpenGL REQUIRED)${glfw ? '' : `
+find_package(X11 REQUIRED)`}
 target_link_libraries(${projectName} OpenGL::GL)${sdl ? `
 target_link_libraries(${projectName} SDL2)` : ''}${glfw ? `
-target_link_libraries(${projectName} glfw)` : ''}${glew ? `
+target_link_libraries(${projectName} glfw)` : `
+target_link_libraries(${projectName} X11)`}${glew ? `
 target_link_libraries(${projectName} glew)` : ''}${glad ? `
 target_link_libraries(${projectName} glad)` : ''}
 `;
@@ -277,20 +282,45 @@ target_link_libraries(${projectName} glad)` : ''}
 
         if (glfw) {
             file = 'main/glfw.txt';
-
-            if (glew) {
-                file = 'main/glfw-glew.txt';
-            }
-        } else if (glew) {
-            file = 'main/xlib-glew.txt';
         }
 
         if (glad) {
             file = 'main/glfw-glad.txt';
         }
 
-        return $.get(file, (data) => {
-            return data;
-        }, 'text');
+        let glewInit = `std::cout << "Initializing glew...";
+
+    if (glewInit() != GLEW_OK){
+        std::cout << "FAILED" << std::endl;
+    }
+
+    std::cout << "OK" << std::endl;
+    `;
+        let xlibGlewImport = `
+#include <GL/glew.h>
+#include <X11/Xlib.h>
+#include <GL/glx.h>`;
+
+        let glewImport = `
+#include <GL/glew.h>`;
+
+        let xlibImport = `
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+
+#include <GL/gl.h>
+#include <GL/glx.h>`;
+
+        return $.get(file).then((data) => {
+            let main = data.replace('PROJECT_NAME', projectName);
+
+            if (glew) {
+                main = main.replace('GLEW_INIT', glewInit).replace('XLIB_GLEW_IMPORT', xlibGlewImport).replace('GLEW_IMPORT', glewImport).replace('XLIB_IMPORT', '');
+            } else {
+                main = main.replace('GLEW_INIT', '').replace('XLIB_GLEW_IMPORT', '').replace('GLEW_IMPORT', '').replace('XLIB_IMPORT', xlibImport);
+            }
+
+            return main;
+        });
     }
 })
