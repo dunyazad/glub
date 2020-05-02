@@ -38,12 +38,16 @@ $(document).ready(() => {
     $('#glew').on('click', () => {
         glew = !glew;
         $('#glew').toggleClass('selected');
+        glad = false;
+        $('#glad').removeClass('selected');     // glad and glew are not compatible together
         updateResult();
     });
 
     $('#glad').on('click', () => {
         glad = !glad;
         $('#glad').toggleClass('selected');
+        glew = false;
+        $('#glew').removeClass('selected');     // glad and glew are not compatible together
         glfw = true;
         $('#glfw').addClass('selected');        // glad requires glad/gl.h and glad/glx.h to be generated in order to work directly with xlib
         updateResult();
