@@ -7,7 +7,7 @@ $(document).ready(() => {
     updateResult();
 
     $('#result').on('click', () => {
-        let $temp = $("<textarea>");
+        let $temp = $("<textarea style='opacity: 0'>");
         $("body").append($temp);
 
         if ($('#cmakelists').hasClass('selected')) {
