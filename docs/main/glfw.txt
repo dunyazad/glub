@@ -1,4 +1,4 @@
-#include <iostream>GLEW_IMPORT
+#include <iostream>GLEW_IMPORTGLAD_IMPORT
 #include <GLFW/glfw3.h>
 
 int main() {
@@ -24,7 +24,7 @@ int main() {
     glfwMakeContextCurrent(window);
 
     std::cout << "OK" << std::endl;
-    GLEW_INIT
+    GLEW_INITGLAD_INIT
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);

@@ -284,10 +284,6 @@ target_link_libraries(${projectName} glad)` : ''}
             file = 'main/glfw.txt';
         }
 
-        if (glad) {
-            file = 'main/glfw-glad.txt';
-        }
-
         let glewInit = `
         std::cout << "Initializing glew...";
 
@@ -313,13 +309,41 @@ target_link_libraries(${projectName} glad)` : ''}
 #include <GL/gl.h>
 #include <GL/glx.h>`;
 
+        let gladImport = `
+        #include <glad/glad.h>`;
+
+        let gladInit = `
+        std::cout << "Initializing glad...";
+
+    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+        std::cout << "FAILED" << std::endl;
+        return -1;
+    }
+
+    std::cout << "OK" << std::endl;
+    `;
+
         return $.get(file).then((data) => {
             let main = data.replace('PROJECT_NAME', projectName);
 
+            if (!glfw) {
+                if (glew) {
+                    main = main.replace('XLIB_IMPORT', '').replace('XLIB_GLEW_IMPORT', xlibGlewImport);
+                } else {
+                    main = main.replace('XLIB_IMPORT', xlibImport).replace('XLIB_GLEW_IMPORT', '');
+                }
+            }
+
             if (glew) {
-                main = main.replace('GLEW_INIT', glewInit).replace('XLIB_GLEW_IMPORT', xlibGlewImport).replace('GLEW_IMPORT', glewImport).replace('XLIB_IMPORT', '');
+                main = main.replace('GLEW_INIT', glewInit).replace('GLEW_IMPORT', glewImport);
             } else {
-                main = main.replace('GLEW_INIT', '').replace('XLIB_GLEW_IMPORT', '').replace('GLEW_IMPORT', '').replace('XLIB_IMPORT', xlibImport);
+                main = main.replace('GLEW_INIT', '').replace('GLEW_IMPORT', '');
+            }
+
+            if (glad) {
+                main = main.replace('GLAD_IMPORT', gladImport).replace('GLAD_INIT', gladInit);
+            } else {
+                main = main.replace('GLAD_IMPORT', '').replace('GLAD_INIT', '');
             }
 
             return main;
