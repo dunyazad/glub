@@ -288,7 +288,8 @@ target_link_libraries(${projectName} glad)` : ''}
             file = 'main/glfw-glad.txt';
         }
 
-        let glewInit = `std::cout << "Initializing glew...";
+        let glewInit = `
+        std::cout << "Initializing glew...";
 
     if (glewInit() != GLEW_OK){
         std::cout << "FAILED" << std::endl;
@@ -296,6 +297,7 @@ target_link_libraries(${projectName} glad)` : ''}
 
     std::cout << "OK" << std::endl;
     `;
+
         let xlibGlewImport = `
 #include <GL/glew.h>
 #include <X11/Xlib.h>
