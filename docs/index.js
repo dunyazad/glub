@@ -2,7 +2,7 @@ $(document).ready(() => {
     let projectName = "OpenGL-Boilerplate";
     let projectVersion = "1.0.0";
     let projectDescription = "Simple CMake setup for developing OpenGL programs in C++";
-    let glew = false, glad = false, glfw = false, stbImg = false, imgui = false, sdl = false, glm = false;
+    let glew = false, glad = false, glfw = false, stbImg = false, imgui = false, sdl = false, glm = false, xlib = true;
 
     updateResult();
 
@@ -40,6 +40,8 @@ $(document).ready(() => {
         $('#glew').toggleClass('selected');
         glad = false;
         $('#glad').removeClass('selected');     // glad and glew are not compatible together
+        sdl = false;
+        $('#sdl').removeClass('selected');
         updateResult();
     });
 
@@ -50,17 +52,28 @@ $(document).ready(() => {
         $('#glew').removeClass('selected');     // glad and glew are not compatible together
         glfw = true;
         $('#glfw').addClass('selected');        // glad requires glad/gl.h and glad/glx.h to be generated in order to work directly with xlib
+        sdl = false;
+        $('#sdl').removeClass('selected');
+
+        if (glad) {
+            xlib = false;
+        }
+
         updateResult();
     });
 
     $('#glfw').on('click', () => {
         glfw = !glfw;
+        xlib = !glfw;
         $('#glfw').toggleClass('selected');
 
         if (!glfw) {
             $('#glad').removeClass('selected');
             glad = false;
         }
+
+        sdl = false;
+        $('#sdl').removeClass('selected');
 
         updateResult();
     });
@@ -79,7 +92,14 @@ $(document).ready(() => {
 
     $('#sdl').on('click', () => {
         sdl = !sdl;
+        xlib = !sdl;
         $('#sdl').toggleClass('selected');
+        glfw = false;
+        $('#glfw').removeClass('selected');
+        glew = false;
+        $('#glew').removeClass('selected');
+        glad = false;
+        $('#glad').removeClass('selected');
         updateResult();
     });
 
@@ -191,7 +211,7 @@ $(document).ready(() => {
             <br>`
                 : ''}
             <div><span class="yellow">if</span>(<span class="blue">UNIX</span>)</div>
-            <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span> <span class="green">-Wall -Wextra -pedantic${glfw ? '' : ' -lX11 -lGL'}</span>)</div>
+            <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span> <span class="green">-Wall -Wextra -pedantic${xlib ? ' -lX11 -lGL' : ''}</span>)</div>
             <div><span class="yellow">elseif</span>(<span class="blue">WIN32</span>)</div>
             <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span>)</div>
             <div style="margin-left: 20px">set_target_properties(<span class="green">${projectName}</span> <span class="blue">PROPERTIES COMPILE_DEFINITIONS BUILDER_STATIC_DEFINE</span>)</div>
@@ -201,16 +221,17 @@ $(document).ready(() => {
             <br>
             <div>message(<span class="blue">STATUS</span> <span class="green">"Linking..."</span>)</div>
             <div>find_package(<span class="green">OpenGL</span> <span class="blue">REQUIRED</span>)</div>
-            ${glfw ? '' : `
-            <div>find_package(<span class="green">X11</span> <span class="blue">REQUIRED</span>)</div>`}
+            ${xlib ? `
+            <div>find_package(<span class="green">X11</span> <span class="blue">REQUIRED</span>)</div>` : ''}
             <div>target_link_libraries(<span class="green">${projectName} OpenGL</span>)</div>
+            ${xlib ? `
+                <div>target_link_libraries(<span class="green">${projectName} X11</span>)</div>` : ''}
             ${glad ?
                 `<div>target_link_libraries(<span class="green">${projectName} glad</span>)</div>` : ''}
             ${glew ?
                 `<div>target_link_libraries(<span class="green">${projectName} glew</span>)</div>` : ''}
             ${glfw ?
-                `<div>target_link_libraries(<span class="green">${projectName} glfw</span>)</div>` : `
-                <div>target_link_libraries(<span class="green">${projectName} X11</span>)</div>`}
+                `<div>target_link_libraries(<span class="green">${projectName} glfw</span>)</div>` : ''}
             ${sdl ?
                 `<div>target_link_libraries(<span class="green">${projectName} SDL2</span>)</div>` : ''}
 `);
@@ -261,7 +282,7 @@ file(GLOB_RECURSE SRC_FILES "./src/*.h" "./src/*.cpp")
 add_executable(${projectName} \${SRC_FILES}${imgui ? ' ${IMGUI_FILES}' : ''})
 ${sdl ? `target_compile_options(${projectName} PUBLIC -l SDL2 -lGL)` : ''}
 if (UNIX)
-    target_compile_options(${projectName} PUBLIC -Wall -Wextra -pedantic${glfw ? '' : ' -lX11 -lGL'})
+    target_compile_options(${projectName} PUBLIC -Wall -Wextra -pedantic${xlib ? ' -lX11 -lGL' : ''})
 elseif (WIN32)
     target_compile_options(${projectName} PUBLIC)
     set_target_properties(${projectName} PROPERTIES COMPILE_DEFINITIONS BUILDER_STATIC_DEFINE)
@@ -270,12 +291,12 @@ else ()
 endif()
 
 message(STATUS "Linking...")
-find_package(OpenGL REQUIRED)${glfw ? '' : `
-find_package(X11 REQUIRED)`}
-target_link_libraries(${projectName} OpenGL::GL)${sdl ? `
+find_package(OpenGL REQUIRED)${xlib ? `
+find_package(X11 REQUIRED)` : ''}
+target_link_libraries(${projectName} OpenGL::GL)${xlib ? `
+target_link_libraries(${projectName} X11)` : ''}${sdl ? `
 target_link_libraries(${projectName} SDL2)` : ''}${glfw ? `
-target_link_libraries(${projectName} glfw)` : `
-target_link_libraries(${projectName} X11)`}${glew ? `
+target_link_libraries(${projectName} glfw)` : ''}${glew ? `
 target_link_libraries(${projectName} glew)` : ''}${glad ? `
 target_link_libraries(${projectName} glad)` : ''}
 `;
@@ -286,6 +307,10 @@ target_link_libraries(${projectName} glad)` : ''}
 
         if (glfw) {
             file = 'main/glfw.txt';
+        }
+
+        if (sdl) {
+            file = 'main/sdl.txt';
         }
 
         let glewInit = `
