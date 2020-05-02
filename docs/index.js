@@ -352,6 +352,17 @@ target_link_libraries(${projectName} glad)` : ''}
     std::cout << "OK" << std::endl;
     `;
 
+        let glmImport = `
+        #include <glm.hpp>`;
+
+        let glmTest = `
+        glm::vec2 glmTest = glm::vec2(1.0) + glm::vec2(0);
+
+    if (glmTest == glm::vec2(1.0)) {
+        std::cout << "glm present..." << std::endl;
+    }
+    `;
+
         return $.get(file).then((data) => {
             let main = data.replace('PROJECT_NAME', projectName);
 
@@ -373,6 +384,12 @@ target_link_libraries(${projectName} glad)` : ''}
                 main = main.replace('GLAD_IMPORT', gladImport).replace('GLAD_INIT', gladInit);
             } else {
                 main = main.replace('GLAD_IMPORT', '').replace('GLAD_INIT', '');
+            }
+
+            if (glm) {
+                main = main.replace('GLM_IMPORT', glmImport).replace('GLM_TEST', glmTest);
+            } else {
+                main = main.replace('GLM_IMPORT', '').replace('GLM_TEST', '');
             }
 
             return main;

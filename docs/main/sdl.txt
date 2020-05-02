@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SDL2/SDL.h>
+#include <SDL2/SDL.h>GLM_IMPORT
 
 int main() {
     SDL_Window * window = SDL_CreateWindow("OpenGL Boilerplate", 0, 0, 640, 480, SDL_WINDOW_OPENGL);
@@ -14,7 +14,7 @@ int main() {
     SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255);
 
     std::cout << "Window created, sdl initialized..." << std::endl;
-
+    GLM_TEST
     bool running = true;
 
     while (running) {
