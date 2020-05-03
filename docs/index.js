@@ -40,8 +40,6 @@ $(document).ready(() => {
         $('#glew').toggleClass('selected');
         glad = false;
         $('#glad').removeClass('selected');     // glad and glew are not compatible together
-        sdl = false;
-        $('#sdl').removeClass('selected');
         updateResult();
     });
 
@@ -50,10 +48,11 @@ $(document).ready(() => {
         $('#glad').toggleClass('selected');
         glew = false;
         $('#glew').removeClass('selected');     // glad and glew are not compatible together
-        glfw = true;
-        $('#glfw').addClass('selected');        // glad requires glad/gl.h and glad/glx.h to be generated in order to work directly with xlib
-        sdl = false;
-        $('#sdl').removeClass('selected');
+
+        if (!sdl) {
+            glfw = true;
+            $('#glfw').addClass('selected');        // glad requires glad/gl.h and glad/glx.h to be generated in order to work directly with xlib
+        }
 
         if (glad) {
             xlib = false;
@@ -87,6 +86,17 @@ $(document).ready(() => {
     $('#imgui').on('click', () => {
         imgui = !imgui;
         $('#imgui').toggleClass('selected');
+
+        if (imgui) {
+            if (!glew && !glad) {
+                $('#glew').trigger('click');
+            }
+
+            if (!sdl && !glfw) {
+                $('#glfw').trigger('click');
+            }
+        }
+
         updateResult();
     });
 
@@ -96,10 +106,12 @@ $(document).ready(() => {
         $('#sdl').toggleClass('selected');
         glfw = false;
         $('#glfw').removeClass('selected');
-        glew = false;
-        $('#glew').removeClass('selected');
-        glad = false;
-        $('#glad').removeClass('selected');
+
+        if (!sdl) {
+            glad = false;
+            $('#glad').removeClass('selected');
+        }
+
         updateResult();
     });
 
@@ -176,7 +188,7 @@ $(document).ready(() => {
                 `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up imgui..."</span>)</div>
             <div>add_subdirectory(<span class="green">lib/imgui lib/imgui/examples</span>)</div>
             <div>add_compile_definitions(<span class="green">IMGUI</span>)</div>
-            <div>file(<span class="blue">GLOB</span> <span class="yellow">IMGUI_FILES</span> <span class="green">"./lib/imgui/*.h" "./lib/imgui/*.cpp" "./lib/imgui/examples/imgui_impl_glfw.h" "./lib/imgui/examples/imgui_impl_glfw.cpp" "./lib/imgui/examples/imgui_impl_opengl3.h" "./lib/imgui/examples/imgui_impl_opengl3.cpp"</span>)</div>
+            <div>file(<span class="blue">GLOB</span> <span class="yellow">IMGUI_FILES</span> <span class="green">"./lib/imgui/*.h" "./lib/imgui/*.cpp" "./lib/imgui/examples/imgui_impl_${glfw ? 'glfw' : 'sdl'}.h" "./lib/imgui/examples/imgui_impl_${glfw ? 'glfw' : 'sdl'}.cpp" "./lib/imgui/examples/imgui_impl_opengl3.h" "./lib/imgui/examples/imgui_impl_opengl3.cpp"</span>)</div>
             <br>`
                 : ''}
             ${sdl ?
@@ -211,7 +223,7 @@ $(document).ready(() => {
             <br>`
                 : ''}
             <div><span class="yellow">if</span>(<span class="blue">UNIX</span>)</div>
-            <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span> <span class="green">-Wall -Wextra -pedantic${xlib ? ' -lX11 -lGL' : ''}</span>)</div>
+            <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span> <span class="green">${imgui && glad ? '-DIMGUI_IMPL_OPENGL_LOADER_GLAD ' : ''}-Wall -Wextra -pedantic${xlib ? ' -lX11 -lGL' : ''}</span>)</div>
             <div><span class="yellow">elseif</span>(<span class="blue">WIN32</span>)</div>
             <div style="margin-left: 20px">target_compile_options(<span class="green">${projectName}</span> <span class="blue">PUBLIC</span>)</div>
             <div style="margin-left: 20px">set_target_properties(<span class="green">${projectName}</span> <span class="blue">PROPERTIES COMPILE_DEFINITIONS BUILDER_STATIC_DEFINE</span>)</div>
@@ -227,7 +239,7 @@ $(document).ready(() => {
             ${xlib ? `
                 <div>target_link_libraries(<span class="green">${projectName} X11</span>)</div>` : ''}
             ${glad ?
-                `<div>target_link_libraries(<span class="green">${projectName} glad</span>)</div>` : ''}
+                `<div>target_link_libraries(<span class="green">${projectName} glad</span> <span class="yellow">\${CMAKE_DL_LIBS}</span>)</div>` : ''}
             ${glew ?
                 `<div>target_link_libraries(<span class="green">${projectName} glew</span>)</div>` : ''}
             ${glfw ?
@@ -263,7 +275,7 @@ include_directories(lib/glfw/include)` : ''}${imgui ? `
 message(STATUS "Setting up imgui...")
     include_directories(lib/imgui lib/imgui/examples)
     add_compile_definitions(IMGUI)
-    file(GLOB IMGUI_FILES "./lib/imgui/*.h" "./lib/imgui/*.cpp" "./lib/imgui/examples/imgui_impl_glfw.h" "./lib/imgui/examples/imgui_impl_glfw.cpp" "./lib/imgui/examples/imgui_impl_opengl3.h" "./lib/imgui/examples/imgui_impl_opengl3.cpp")` : ''}${sdl ? `
+    file(GLOB IMGUI_FILES "./lib/imgui/*.h" "./lib/imgui/*.cpp" "./lib/imgui/examples/imgui_impl_${glfw ? 'glfw' : 'sdl'}.h" "./lib/imgui/examples/imgui_impl_${glfw ? 'glfw' : 'sdl'}.cpp" "./lib/imgui/examples/imgui_impl_opengl3.h" "./lib/imgui/examples/imgui_impl_opengl3.cpp")` : ''}${sdl ? `
     message(STATUS "Setting up sdl...")
     add_subdirectory(lib/sdl)
     include_directories(lib/sdl/include)
@@ -282,7 +294,7 @@ file(GLOB_RECURSE SRC_FILES "./src/*.h" "./src/*.cpp")
 add_executable(${projectName} \${SRC_FILES}${imgui ? ' ${IMGUI_FILES}' : ''})
 ${sdl ? `target_compile_options(${projectName} PUBLIC -l SDL2 -lGL)` : ''}
 if (UNIX)
-    target_compile_options(${projectName} PUBLIC -Wall -Wextra -pedantic${xlib ? ' -lX11 -lGL' : ''})
+    target_compile_options(${projectName} PUBLIC ${imgui && glad ? '-DIMGUI_IMPL_OPENGL_LOADER_GLAD ' : ''}-Wall -Wextra -pedantic${xlib ? ' -lX11 -lGL' : ''})
 elseif (WIN32)
     target_compile_options(${projectName} PUBLIC)
     set_target_properties(${projectName} PROPERTIES COMPILE_DEFINITIONS BUILDER_STATIC_DEFINE)
@@ -298,7 +310,7 @@ target_link_libraries(${projectName} X11)` : ''}${sdl ? `
 target_link_libraries(${projectName} SDL2)` : ''}${glfw ? `
 target_link_libraries(${projectName} glfw)` : ''}${glew ? `
 target_link_libraries(${projectName} glew)` : ''}${glad ? `
-target_link_libraries(${projectName} glad)` : ''}
+target_link_libraries(${projectName} glad \${CMAKE_DL_LIBS})` : ''}
 `;
     }
 
@@ -344,7 +356,7 @@ target_link_libraries(${projectName} glad)` : ''}
         let gladInit = `
         std::cout << "Initializing glad...";
 
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+    if (!gladLoadGLLoader((GLADloadproc) ${glfw ? 'glfwGetProcAddress' : 'SDL_GL_GetProcAddress'})) {
         std::cout << "FAILED" << std::endl;
         return -1;
     }
@@ -377,6 +389,41 @@ target_link_libraries(${projectName} glad)` : ''}
 
     std::cout << "Image loaded, stb_image working..." << std::endl;
     `;
+
+        let imguiImport = `
+        #include <imgui.h>
+#include <imgui_impl_${glfw ? 'glfw' : 'sdl'}.h>
+#include <imgui_impl_opengl3.h>`;
+
+        let imguiInit = `
+        std::cout << "Initializing imgui...";
+    
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO();
+        (void) io;
+        ImGui::StyleColorsDark();
+        ${glfw ? 'ImGui_ImplGlfw_InitForOpenGL(window, true);' : 'ImGui_ImplSDL2_InitForOpenGL(window, context);'}
+        ImGui_ImplOpenGL3_Init("#version 330");
+        bool demoWindow = true;
+    
+        std::cout << "OK" << std::endl;
+        `;
+
+        let imguiRender = `
+        ImGui_ImplOpenGL3_NewFrame();
+        ${glfw ? 'ImGui_ImplGlfw_NewFrame();' : 'ImGui_ImplSDL2_NewFrame(window);'}
+        ImGui::NewFrame();
+        ImGui::ShowDemoWindow(&demoWindow);
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        `;
+
+        let imguiCleanup = `
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_Impl${glfw ? 'Glfw' : 'SDL2'}_Shutdown();
+        ImGui::DestroyContext();
+        `;
 
         return $.get(file).then((data) => {
             let main = data.replace('PROJECT_NAME', projectName);
@@ -411,6 +458,12 @@ target_link_libraries(${projectName} glad)` : ''}
                 main = main.replace('STB_IMG_IMPORT', stbImgImport).replace('STB_IMG_TEST', stbImgTest);
             } else {
                 main = main.replace('STB_IMG_IMPORT', '').replace('STB_IMG_TEST', '');
+            }
+
+            if (imgui) {
+                main = main.replace('IMGUI_IMPORT', imguiImport).replace('IMGUI_INIT', imguiInit).replace('IMGUI_RENDER', imguiRender).replace('IMGUI_CLEANUP', imguiCleanup);
+            } else {
+                main = main.replace('IMGUI_IMPORT', '').replace('IMGUI_INIT', '').replace('IMGUI_RENDER', '').replace('IMGUI_CLEANUP', '');
             }
 
             return main;

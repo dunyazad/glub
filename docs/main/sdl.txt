@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SDL2/SDL.h>GLM_IMPORTSTB_IMG_IMPORT
+#include <SDL2/SDL.h>IMGUI_IMPORTGLAD_IMPORTGLEW_IMPORTGLM_IMPORTSTB_IMG_IMPORT
 
 int main() {
     SDL_Window * window = SDL_CreateWindow("OpenGL Boilerplate", 0, 0, 640, 480, SDL_WINDOW_OPENGL);
@@ -9,12 +9,12 @@ int main() {
         return -1;
     }
 
-    SDL_GL_CreateContext(window);
+    void * context = SDL_GL_CreateContext(window);
     SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255);
 
     std::cout << "Window created, sdl initialized..." << std::endl;
-    GLM_TESTSTB_IMG_TEST
+    GLAD_INITGLEW_INITGLM_TESTSTB_IMG_TESTIMGUI_INIT
     bool running = true;
 
     while (running) {
@@ -33,12 +33,13 @@ int main() {
                 running = false;
             }
         }
-
+        IMGUI_RENDER
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
         SDL_GL_SwapWindow(window);
     }
-
+    IMGUI_CLEANUP
+    SDL_GL_DeleteContext(context);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
