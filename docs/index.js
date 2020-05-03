@@ -363,6 +363,21 @@ target_link_libraries(${projectName} glad)` : ''}
     }
     `;
 
+        let stbImgImport = `
+        #include <stb_image.h>`;
+
+        let stbImgTest = `
+        int width, height, channels;
+    unsigned char * img = stbi_load("res/OpenGL.png", &width, &height, &channels, 0);
+
+    if (img == nullptr) {
+        std::cout << "Unable to load image" << std::endl;
+        return 1;
+    }
+
+    std::cout << "Image loaded, stb_image working..." << std::endl;
+    `;
+
         return $.get(file).then((data) => {
             let main = data.replace('PROJECT_NAME', projectName);
 
@@ -390,6 +405,12 @@ target_link_libraries(${projectName} glad)` : ''}
                 main = main.replace('GLM_IMPORT', glmImport).replace('GLM_TEST', glmTest);
             } else {
                 main = main.replace('GLM_IMPORT', '').replace('GLM_TEST', '');
+            }
+
+            if (stbImg) {
+                main = main.replace('STB_IMG_IMPORT', stbImgImport).replace('STB_IMG_TEST', stbImgTest);
+            } else {
+                main = main.replace('STB_IMG_IMPORT', '').replace('STB_IMG_TEST', '');
             }
 
             return main;
