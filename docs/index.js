@@ -2,7 +2,9 @@ $(document).ready(() => {
     let projectName = "glub";
     let projectVersion = "1.0.0";
     let projectDescription = "Simple CMake setup for developing OpenGL programs in C++";
-    let glew = false, glad = false, glfw = false, stbImg = false, imgui = false, sdl = false, glm = false, xlib = true;
+    let glew = true, glad = false, glfw = true, stbImg = true, imgui = false, sdl = false, glm = true, xlib = false;
+
+    $('#glew, #glfw, #stb-img, #glm').addClass('selected');
 
     updateResult();
 
