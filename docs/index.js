@@ -1,5 +1,5 @@
 $(document).ready(() => {
-    let projectName = "OpenGL-Boilerplate";
+    let projectName = "glub";
     let projectVersion = "1.0.0";
     let projectDescription = "Simple CMake setup for developing OpenGL programs in C++";
     let glew = false, glad = false, glfw = false, stbImg = false, imgui = false, sdl = false, glm = false, xlib = true;
@@ -133,7 +133,7 @@ $(document).ready(() => {
         $('#project-name').val(projectName);
 
         if (!projectName) {
-            projectName = "OpenGL-Boilerplate";
+            projectName = "glub";
         }
 
         updateResult();

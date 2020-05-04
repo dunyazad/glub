@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>IMGUI_IMPORTGLAD_IMPORTGLEW_IMPORTGLM_IMPORTSTB_IMG_IMPORT
 
 int main() {
-    SDL_Window * window = SDL_CreateWindow("OpenGL Boilerplate", 0, 0, 640, 480, SDL_WINDOW_OPENGL);
+    SDL_Window * window = SDL_CreateWindow("PROJECT_NAME", 0, 0, 640, 480, SDL_WINDOW_OPENGL);
 
     if (!window) {
         std::cout << "Unable to create a window!" << std::endl;
