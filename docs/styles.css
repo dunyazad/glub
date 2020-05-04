@@ -94,6 +94,18 @@ input[type="text"]:focus {
     color: rgba(25, 136, 68, .6);
 }
 
+.cmake-card {
+    width: calc(50% - 5px);
+    display: inline-block;
+    float: right;
+    margin-bottom: 100px;
+}
+
+.setting-cards {
+    width: calc(50% - 5px);
+    display: inline-block;
+}
+
 #result {
     word-break: break-word;
     cursor: pointer;
@@ -181,4 +193,40 @@ input[type="text"]:focus {
 #gh-tooltip {
     right: 14px;
     max-width: 130px;
+}
+
+@media screen and (max-width: 991px) {
+    .cmake-card {
+        width: 100%;
+        margin: 24px 0 40px;
+        float: none;
+    }
+
+    .setting-cards {
+        width: 100%;
+    }
+
+    .title-group {
+        text-align: center;
+    }
+
+    .title-group h1 {
+        margin-top: 32px;
+        display: block;
+    }
+
+    #main-tooltip {
+        right: -14px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .half-tile {
+        display: block;
+        width: 100%;
+    }
+
+    .half-tile.math {
+        margin-top: 24px;
+    }
 }
