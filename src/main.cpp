@@ -1,87 +1,41 @@
 #include <iostream>
 
-#ifdef IMGUI
-    #include "imgui.h"
-    #include "imgui_impl_opengl3.h"
-#endif
-
-#ifdef GLEW
-    #include <GL/glew.h>
-#endif
-
-#ifdef GLAD
-    #include <glad/glad.h>
-#endif
-
-#ifdef GLFW
-    #include <GLFW/glfw3.h>
-
-    #ifdef IMGUI
-        #include "imgui_impl_glfw.h"
-    #endif
-#endif
-
-#ifdef SDL
-    #include <SDL2/SDL.h>
-#endif
-
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <glm.hpp>
 #include <stb_image.h>
 
 int main() {
-    #ifdef GLFW
-        GLFWwindow * window;
+    GLFWwindow * window;
 
-        if (!glfwInit()) {
-            std::cout << "Unable to initialize glfw!" << std::endl;
-            return -1;
-        }
+    std::cout << "Initializing glfw...";
 
-        std::cout << "glfw initialized..." << std::endl;
+    if (!glfwInit()) {
+        std::cout << "FAILED" << std::endl;
+        return -1;
+    }
 
-        window = glfwCreateWindow(640, 480, "OpenGL Boilerplate", NULL, NULL);
+    std::cout << "OK" << std::endl << "Creating window...";
 
-        if (!window) {
-            std::cout << "Unable to create a window!" << std::endl;
-            glfwTerminate();
-            return -1;
-        }
+    window = glfwCreateWindow(640, 480, "glub", nullptr, nullptr);
 
-        glfwMakeContextCurrent(window);
+    if (!window) {
+        std::cout << "FAILED" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
 
-        std::cout << "Window created..." << std::endl;
-    #endif
+    glfwMakeContextCurrent(window);
 
-    #ifdef SDL
-        SDL_Window * window = SDL_CreateWindow("OpenGL Boilerplate", 0, 0, 640, 480, SDL_WINDOW_OPENGL);
+    std::cout << "OK" << std::endl;
 
-        if (!window) {
-            std::cout << "Unable to create a window!" << std::endl;
-            return -1;
-        }
+    std::cout << "Initializing glew...";
 
-        SDL_GL_CreateContext(window);
+    if (glewInit() != GLEW_OK){
+        std::cout << "FAILED" << std::endl;
+    }
 
-        std::cout << "Window created, sdl initialized..." << std::endl;
-    #endif
-
-    #ifdef GLAD
-        if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-            std::cout << "Unable to initialize glad!" << std::endl;
-            return -1;
-        }
-
-        std::cout << "glad initialized..." << std::endl;
-    #endif
-
-    #ifdef GLEW
-        if (glewInit() != GLEW_OK) {
-            std::cout << "Unable to initialize glew!" << std::endl;
-            return -1;
-        }
-
-        std::cout << "glew initialized..." << std::endl;
-    #endif
+    std::cout << "OK" << std::endl;
 
     glm::vec2 glmTest = glm::vec2(1.0) + glm::vec2(0);
 
@@ -90,7 +44,7 @@ int main() {
     }
 
     int width, height, channels;
-    unsigned char * img = stbi_load("res/OpenGL.png", &width, &height, &channels, 0);
+    unsigned char * img = stbi_load("res/glub.png", &width, &height, &channels, 0);
 
     if (img == nullptr) {
         std::cout << "Unable to load image" << std::endl;
@@ -99,79 +53,18 @@ int main() {
 
     std::cout << "Image loaded, stb_image working..." << std::endl;
 
-    #ifdef SDL
-        bool running = true;
+    while (!glfwWindowShouldClose(window)) {
+        glfwPollEvents();
+        glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-        while (running) {
-            SDL_Event Event;
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        glfwSwapBuffers(window);
+    }
 
-            while (SDL_PollEvent(&Event)) {
-                if (Event.type == SDL_KEYDOWN) {
-                    switch (Event.key.keysym.sym) {
-                        case SDLK_ESCAPE:
-                            running = false;
-                            break;
-                        default:
-                            break;
-                    }
-                } else if (Event.type == SDL_QUIT) {
-                    running = false;
-                }
-            }
-
-            glViewport(0, 0, 640, 480);
-            glClearColor(0.2, 0.2, 0.2, 0.2);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            SDL_GL_SwapWindow(window);
-        }
-    #endif
-
-    #ifdef IMGUI
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO();
-        (void) io;
-        ImGui::StyleColorsDark();
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
-        ImGui_ImplOpenGL3_Init("#version 330");
-        bool demoWindow = true;
-    #endif
-
-    #ifdef GLFW
-        while (!glfwWindowShouldClose(window)) {
-            glfwPollEvents();
-
-            #ifdef IMGUI
-                ImGui_ImplOpenGL3_NewFrame();
-                ImGui_ImplGlfw_NewFrame();
-                ImGui::NewFrame();
-                ImGui::ShowDemoWindow(&demoWindow);
-                ImGui::Render();
-            #endif
-
-            int display_w, display_h;
-            glfwGetFramebufferSize(window, &display_w, &display_h);
-            glViewport(0, 0, display_w, display_h);
-            glClearColor(0.2, 0.2, 0.2, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            #ifdef IMGUI
-                ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-            #endif
-
-            glfwSwapBuffers(window);
-        }
-
-        #ifdef IMGUI
-            ImGui_ImplOpenGL3_Shutdown();
-            ImGui_ImplGlfw_Shutdown();
-            ImGui::DestroyContext();
-        #endif
-
-        glfwDestroyWindow(window);
-        glfwTerminate();
-    #endif
-
+    glfwDestroyWindow(window);
+    glfwTerminate();
     return 0;
 }

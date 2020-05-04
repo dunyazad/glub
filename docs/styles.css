@@ -161,6 +161,7 @@ input[type="text"]:focus {
     max-height: 32px;
     right: 20px;
     cursor: pointer;
+    z-index: 10;
 }
 
 .gh-link {
