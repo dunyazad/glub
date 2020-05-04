@@ -33,6 +33,14 @@ $(document).ready(() => {
         $('#main-tooltip').css({ display: 'none' });
     });
 
+    $('#gh-link').on('mouseover', () => {
+        $('#gh-tooltip').css({ display: 'block' });
+    });
+
+    $('#gh-link').on('mouseout', () => {
+        $('#gh-tooltip').css({ display: 'none' });
+    });
+
     $('#glew').on('click', () => {
         glew = !glew;
         $('#glew').toggleClass('selected');
