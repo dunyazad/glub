@@ -1,7 +1,7 @@
 $(document).ready(() => {
     let projectName = "glub";
     let projectVersion = "1.0.0";
-    let projectDescription = "Simple CMake setup for developing OpenGL programs in C++";
+    let projectDescription = "Easy to use CMake boilerplate for developing OpenGL programs in C++";
     let glew = true, glad = false, glfw = true, stbImg = true, imgui = false, sdl = false, glm = true, xlib = false;
 
     $('#glew, #glfw, #stb-img, #glm').addClass('selected');
@@ -155,7 +155,7 @@ $(document).ready(() => {
         projectDescription = $('#project-description').val();
 
         if (!projectDescription) {
-            projectDescription = "Simple CMake setup for developing OpenGL programs in C++";
+            projectDescription = "Easy to use CMake boilerplate for developing OpenGL programs in C++";
         }
 
         updateResult();
