@@ -11,6 +11,20 @@ p {
     padding: 0 6px;
 }
 
+.title-group {
+    padding: 40px 0 60px;
+}
+
+.title-group h1 {
+    display: inline-block;
+    font-size: 46px;
+}
+
+.title-group img {
+    max-width: 140px;
+    margin-top: -18px;
+}
+
 .wide {
     width: 100%;
 }
@@ -114,4 +128,26 @@ input[type="text"]:focus {
 .option.selected:hover, .option.selected:focus {
     color: rgba(57, 113, 237, .6);
     background-color: rgba(25, 136, 68, .6);
+}
+
+.cpp {
+    position: absolute;
+    max-height: 32px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: absolute;
+    display: none;
+    opacity: 1;
+    top: 60px;
+    max-width: 180px;
+    text-align: center;
+    right: -60px;
+    background-color: #1d1f21;
+    border-radius: 10px;
+    padding: 14px;
+    border: 2px solid #c5c8c6;
+    font-family: 'Share Tech Mono', monospace;
 }

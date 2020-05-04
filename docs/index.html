@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>OpenGL Boilerplate</title>
         <meta name="description" content="Simple CMake setup for developing OpenGL programs in C++">
+        <link rel="icon" href="img/glub.svg" sizes="any" type="image/svg+xml">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="styles.css">
@@ -14,6 +15,10 @@
         <script src="index.js"></script>
 
         <div class="container">
+            <div class="title-group">
+                <a href="https://github.com/Drgy/glub" target="_blank"><img src="img/glub.svg"  alt="glub logo"/></a>
+                <h1>openGL's Ultimate Boilerplate</h1>
+            </div>
             <div style="width: calc(50% - 5px); display: inline-block;">
                 <div style="margin: 0 12px 0 0">
                     <div class="outline" style="margin-bottom: 24px; width: 100%">
@@ -49,8 +54,9 @@
                 </div>
             </div>
             <div style="width: calc(50% - 5px); display: inline-block; float: right" class="outline">
-                <p class="card-title selected" id="cmakelists">CMakeLists.txt</p>
-                <p class="card-title right" id="main">main.cpp</p>
+                <p class="card-title">CMakeLists.txt</p>
+                <img src="img/cpp.svg" class="cpp" id="main" alt="main.cpp file" />
+                <div class="tooltip" id="main-tooltip">Copy basic main.cpp file to clipboard</div>
                 <div id="result"></div>
             </div>
         </div>
