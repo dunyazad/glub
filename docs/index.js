@@ -182,6 +182,24 @@ $(document).ready(() => {
         <br>
         <div>project(<span class="green">${projectName}</span> <span class="blue">VERSION</span> <span class="green">${projectVersion}</span> <span class="blue">DESCRIPTION</span> <span class="green">"${projectDescription}"</span> <span class="blue">LANGUAGES</span> <span class="green">CXX</span>)</div>
         <br>
+        <div>find_package(<span class="green">Git</span>)</div>
+        <br>
+        <div><span class="yellow">if</span>(<span class="green">GIT_FOUND</span> <span class="blue">AND EXISTS</span> <span class="green">"</span><span class="yellow">\${PROJECT_SOURCE_DIR}</span><span class="green">/.git"</span>)</div>
+        <div style="margin-left: 20px">message(<span class="blue">STATUS</span> <span class="green">"Updating git submodules..."</span>)</div>
+        <div style="margin-left: 20px">set(<span class="yellow">SUBMODULES</span> ${glew ? `<span class="green">lib/glew</span><span class="yellow">;</span>` : ''}${glad ? `<span class="green">lib/glad</span><span class="yellow">;</span>` : ''}${glfw ? `<span class="green">lib/glfw</span><span class="yellow">;</span>` : ''}${stbImg ? `<span class="green">lib/stb</span><span class="yellow">;</span>` : ''}${imgui ? `<span class="green">lib/imgui</span><span class="yellow">;</span>` : ''}${sdl ? `<span class="green">lib/sdl</span><span class="yellow">;</span>` : ''}${glm ? `<span class="green">lib/glm</span><span class="yellow">;</span>` : ''})</div>
+        <br>
+        <div style="margin-left: 20px"><span class="yellow">foreach</span>(<span class="yellow">UPD_SUB</span> <span class="blue">IN LISTS</span> <span class="yellow">SUBMODULES</span>)</div>
+        <div style="margin-left: 40px">message(<span class="blue">STATUS</span> <span class="green">"Updating </span><span class="yellow">\${UPD_SUB}</span><span class="green">..."</span>)</div>
+        <div style="margin-left: 40px">execute_process(<span class="blue">COMMAND</span> <span class="yellow">\${GIT_EXECUTABLE}</span> <span class="green">submodule update --init --recursive -- </span><span class="yellow">\${UPD_SUB}</span> <span class="blue">WORKING_DIRECTORY</span> <span class="yellow">\${PROJECT_SOURCE_DIR}</span> <span class="blue">RESULT_VARIABLE</span> <span class="yellow">GIT_SUBMOD_RESULT</span>)</div>
+        <br>
+        <div style="margin-left: 40px"><span class="yellow">if</span>(<span class="blue">NOT</span> <span class="yellow">GIT_SUBMOD_RESULT</span> <span class="blue">EQUAL</span> <span class="green">"0"</span>)</div>
+        <div style="margin-left: 60px">message(<span class="blue">WARNING</span> <span class="green">"Unable to update submodule</span> <span class="yellow">\${UPD_SUB}</span><span class="green">"</span>)</div>
+        <div style="margin-left: 40px"><span class="yellow">endif</span>()</div>
+        <div style="margin-left: 20px"><span class="yellow">endforeach</span>()</div>
+        <div><span class="yellow">else</span>()</div>
+        <div style="margin-left: 20px">message(<span class="blue">WARNING</span> <span class="green">"Unable to update git submodules, please update them manually."</span>)</div>
+        <div><span class="yellow">endif</span>()</div>
+        <br>
         ${glad ?
             `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up glad..."</span>)</div>
         <div>add_subdirectory(<span class="green">lib/glad</span>)</div>
@@ -275,6 +293,27 @@ $(document).ready(() => {
         return `cmake_minimum_required(VERSION 3.15)
 
 project(${projectName} VERSION ${projectVersion} DESCRIPTION "${projectDescription}" LANGUAGES CXX)
+
+find_package(Git)
+
+if(GIT_FOUND AND EXISTS "\${PROJECT_SOURCE_DIR}/.git")
+    message(STATUS "Updating git submodules...")
+
+    set(SUBMODULES ${glew ? 'lib/glew;' : ''}${glad ? 'lib/glad;' : ''}${glfw ? 'lib/glfw;' : ''}${stbImg ? 'lib/stb;' : ''}${imgui ? 'lib/imgui;' : ''}${sdl ? 'lib/sdl;' : ''}${glm ? 'lib/glm;' : ''})
+    foreach(UPD_SUB IN LISTS SUBMODULES)
+        message(STATUS "Updating \${UPD_SUB}...")
+
+        execute_process(COMMAND \${GIT_EXECUTABLE} submodule update --init --recursive -- \${UPD_SUB} WORKING_DIRECTORY \${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
+
+        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(WARNING "Unable to update submodule \${UPD_SUB}")
+        endif()
+
+    endforeach()
+else()
+    message(WARNING "Unable to update git submodules, please update them manually.")
+endif()
+
 ${glad ? `
 message(STATUS "Setting up glad...")
     add_subdirectory(lib/glad)

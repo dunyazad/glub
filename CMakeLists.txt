@@ -2,6 +2,27 @@ cmake_minimum_required(VERSION 3.15)
 
 project(glub VERSION 1.0.0 DESCRIPTION "Easy to use CMake boilerplate for developing OpenGL programs in C++" LANGUAGES CXX)
 
+find_package(Git)
+
+if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+    message(STATUS "Updating git submodules...")
+
+    set(SUBMODULES lib/glew;lib/glfw;lib/stb;lib/glm;)
+    foreach(UPD_SUB IN LISTS SUBMODULES)
+        message(STATUS "Updating ${UPD_SUB}...")
+
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive -- ${UPD_SUB} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
+
+        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(WARNING "Unable to update submodule ${UPD_SUB}")
+        endif()
+
+    endforeach()
+else()
+    message(WARNING "Unable to update git submodules, please update them manually.")
+endif()
+
+
 message(STATUS "Setting up glew...")
 add_subdirectory(lib/glew/build/cmake)
 add_compile_definitions(GLEW_STATIC GLEW)
