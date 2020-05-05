@@ -74,6 +74,10 @@ input[type="text"]:focus {
     color: #969896;
 }
 
+.settings-container {
+    margin: 0 12px 0 0;
+}
+
 .card-title {
     display: inline-block;
     position: absolute;
@@ -156,6 +160,11 @@ input[type="text"]:focus {
     background-color: rgba(25, 136, 68, .6);
 }
 
+.loading-library {
+    margin: 0 12px 24px 0;
+    float: left;
+}
+
 .cpp {
     position: absolute;
     max-height: 32px;
@@ -217,6 +226,10 @@ input[type="text"]:focus {
         float: none;
     }
 
+    .settings-container {
+        margin: 0;
+    }
+
     .setting-cards {
         width: 100%;
     }
@@ -235,7 +248,7 @@ input[type="text"]:focus {
     }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 475px) {
     .half-tile {
         display: block;
         width: 100%;
@@ -243,5 +256,13 @@ input[type="text"]:focus {
 
     .half-tile.math {
         margin-top: 24px;
+    }
+
+    .loading-library {
+        margin: 0 0 24px;
+    }
+
+    #result {
+        margin-top: 50px;
     }
 }
