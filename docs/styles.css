@@ -196,6 +196,20 @@ input[type="text"]:focus {
     max-width: 130px;
 }
 
+.toast {
+    position: fixed;
+    right: -300px;
+    bottom: 20px;
+    opacity: 1;
+    max-width: 240px;
+    text-align: center;
+    background-color: #1d1f21;
+    border-radius: 10px;
+    padding: 14px;
+    border: 2px solid #c5c8c6;
+    font-family: 'Share Tech Mono', monospace;
+}
+
 @media screen and (max-width: 991px) {
     .cmake-card {
         width: 100%;

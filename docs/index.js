@@ -14,6 +14,13 @@ $(document).ready(() => {
         $temp.val(getCmakeString()).select();
         document.execCommand("copy");
         $temp.remove();
+        let $toast = $("<div class=\"toast\">CMakeLists.txt contents copied to clipboard</div>");
+        $("body").append($toast);
+        $toast.animate({ right: "20px" }, 180, "swing", () => {
+            $toast.animate({ opacity: 0}, 2500, "swing", () => {
+                $toast.remove();
+            });
+        });
     });
 
     $('#main').on('click', () => {
@@ -24,6 +31,14 @@ $(document).ready(() => {
             $temp.val(data.toString()).select();
             document.execCommand("copy");
             $temp.remove();
+
+            let $toast = $("<div class=\"toast\">main.cpp contents copied to clipboard</div>");
+            $("body").append($toast);
+            $toast.animate({ right: "20px" }, 180, "swing", () => {
+                $toast.animate({ opacity: 0}, 3000, "swing", () => {
+                    $toast.remove();
+                });
+            });
         });
     });
 
