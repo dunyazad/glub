@@ -10,7 +10,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     set(SUBMODULES lib/glew;lib/glfw;lib/stb;lib/glm;)
     foreach(UPD_SUB IN LISTS SUBMODULES)
         message(STATUS "Updating ${UPD_SUB}...")
-
+        file(MAKE_DIRECTORY ${UPD_SUB})
         execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive -- ${UPD_SUB} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
 
         if(NOT GIT_SUBMOD_RESULT EQUAL "0")
