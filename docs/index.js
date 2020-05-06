@@ -240,7 +240,6 @@ $(document).ready(() => {
             : ''}
         ${stbImg ?
             `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up stb image..."</span>)</div>
-        <div>add_compile_definitions(<span class="green">STB_IMAGE STB_IMAGE_IMPLEMENTATION</span>)</div>
         <div>include_directories(<span class="green"/>lib/stb</span>)</div>
         <br>`
             : ''}
@@ -341,7 +340,6 @@ message(STATUS "Setting up imgui...")
     message(STATUS "Setting up glm...")
 include_directories(lib/glm/glm)` : ''}${stbImg ? `
 message(STATUS "Setting up stb...")
-add_compile_definitions(STB_IMAGE_IMPLEMENTATION)
 include_directories(lib/stb)` : ''}
 message(STATUS "Copying resources...")
 file(COPY res DESTINATION \${CMAKE_BINARY_DIR})
@@ -434,6 +432,7 @@ target_link_libraries(${projectName} glad \${CMAKE_DL_LIBS})` : ''}
     `;
 
         let stbImgImport = `
+        #define STB_IMAGE_IMPLEMENTATION
         #include <stb_image.h>`;
 
         let stbImgTest = `
