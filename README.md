@@ -13,6 +13,7 @@ Easy to use CMake boilerplate for developing OpenGL programs in C++
 - [IMGUI](https://github.com/ocornut/imgui)
 - [SDL](https://www.libsdl.org/)
 - [GLM](https://glm.g-truc.net/0.9.9/index.html)
+- [MathFu](http://google.github.io/mathfu/)
 - [STB Image](https://github.com/nothings/stb/blob/master/stb_image.h)
 
 ## Supported platforms
@@ -20,7 +21,8 @@ Easy to use CMake boilerplate for developing OpenGL programs in C++
 - Linux
 
 # Setup
-[Generate custom](./docs/index.html) `CMakeLists.txt` and `main.cpp`
+1. Clone glub repository
+2. Replace `CMakeLists.txt` and `main.cpp` with [generated files](https://drgy.github.io/glub/) 
 
 ## Bash
 1. `mkdir build build/debug build/release`
