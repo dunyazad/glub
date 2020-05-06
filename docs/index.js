@@ -190,7 +190,6 @@ $(document).ready(() => {
         <br>
         <div style="margin-left: 20px"><span class="yellow">foreach</span>(<span class="yellow">UPD_SUB</span> <span class="blue">IN LISTS</span> <span class="yellow">SUBMODULES</span>)</div>
         <div style="margin-left: 40px">message(<span class="blue">STATUS</span> <span class="green">"Updating </span><span class="yellow">\${UPD_SUB}</span><span class="green">..."</span>)</div>
-        <div style="margin-left: 40px">file(<span class="blue">MAKE_DIRECTORY</span> <span class="yellow">\${UPD_SUB}</span>)</div>
         <div style="margin-left: 40px">execute_process(<span class="blue">COMMAND</span> <span class="yellow">\${GIT_EXECUTABLE}</span> <span class="green">submodule update --init --recursive -- </span><span class="yellow">\${UPD_SUB}</span> <span class="blue">WORKING_DIRECTORY</span> <span class="yellow">\${PROJECT_SOURCE_DIR}</span> <span class="blue">RESULT_VARIABLE</span> <span class="yellow">GIT_SUBMOD_RESULT</span>)</div>
         <br>
         <div style="margin-left: 40px"><span class="yellow">if</span>(<span class="blue">NOT</span> <span class="yellow">GIT_SUBMOD_RESULT</span> <span class="blue">EQUAL</span> <span class="green">"0"</span>)</div>
@@ -302,7 +301,7 @@ if(GIT_FOUND AND EXISTS "\${PROJECT_SOURCE_DIR}/.git")
     set(SUBMODULES ${glew ? 'lib/glew;' : ''}${glad ? 'lib/glad;' : ''}${glfw ? 'lib/glfw;' : ''}${stbImg ? 'lib/stb;' : ''}${imgui ? 'lib/imgui;' : ''}${sdl ? 'lib/sdl;' : ''}${glm ? 'lib/glm;' : ''})
     foreach(UPD_SUB IN LISTS SUBMODULES)
         message(STATUS "Updating \${UPD_SUB}...")
-        file(MAKE_DIRECTORY \${UPD_SUB})
+
         execute_process(COMMAND \${GIT_EXECUTABLE} submodule update --init --recursive -- \${UPD_SUB} WORKING_DIRECTORY \${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
 
         if(NOT GIT_SUBMOD_RESULT EQUAL "0")
