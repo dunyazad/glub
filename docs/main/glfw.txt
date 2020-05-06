@@ -1,6 +1,6 @@
 #include <iostream>
 IMGUI_IMPORTGLEW_IMPORTGLAD_IMPORT
-#include <GLFW/glfw3.h>GLM_IMPORTSTB_IMG_IMPORT
+#include <GLFW/glfw3.h>GLM_IMPORTMATHFU_IMPORTSTB_IMG_IMPORT
 
 int main() {
     GLFWwindow * window;
@@ -25,7 +25,7 @@ int main() {
     glfwMakeContextCurrent(window);
 
     std::cout << "OK" << std::endl;
-    GLEW_INITGLAD_INITGLM_TESTSTB_IMG_TESTIMGUI_INIT
+    GLEW_INITGLAD_INITGLM_TESTMATHFU_TESTSTB_IMG_TESTIMGUI_INIT
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);

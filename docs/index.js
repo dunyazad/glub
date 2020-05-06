@@ -2,7 +2,7 @@ $(document).ready(() => {
     let projectName = "glub";
     let projectVersion = "1.0.0";
     let projectDescription = "Easy to use CMake boilerplate for developing OpenGL programs in C++";
-    let glew = true, glad = false, glfw = true, stbImg = true, imgui = false, sdl = false, glm = true, xlib = false;
+    let glew = true, glad = false, glfw = true, stbImg = true, imgui = false, sdl = false, glm = true, mathfu = false, xlib = false;
 
     $('#glew, #glfw, #stb-img, #glm').addClass('selected');
 
@@ -144,6 +144,12 @@ $(document).ready(() => {
         updateResult();
     });
 
+    $('#mathfu').on('click', () => {
+        mathfu = !mathfu;
+        $('#mathfu').toggleClass('selected');
+        updateResult();
+    });
+
     $('#project-name').on('input', () => {
         projectName = $('#project-name').val();
         projectName = projectName.replace(' ', '-');
@@ -186,7 +192,7 @@ $(document).ready(() => {
         <br>
         <div><span class="yellow">if</span>(<span class="green">GIT_FOUND</span> <span class="blue">AND EXISTS</span> <span class="green">"</span><span class="yellow">\${PROJECT_SOURCE_DIR}</span><span class="green">/.git"</span>)</div>
         <div style="margin-left: 20px">message(<span class="blue">STATUS</span> <span class="green">"Updating git submodules..."</span>)</div>
-        <div style="margin-left: 20px">set(<span class="yellow">SUBMODULES</span> ${glew ? `<span class="green">lib/glew</span><span class="yellow">;</span>` : ''}${glad ? `<span class="green">lib/glad</span><span class="yellow">;</span>` : ''}${glfw ? `<span class="green">lib/glfw</span><span class="yellow">;</span>` : ''}${stbImg ? `<span class="green">lib/stb</span><span class="yellow">;</span>` : ''}${imgui ? `<span class="green">lib/imgui</span><span class="yellow">;</span>` : ''}${sdl ? `<span class="green">lib/sdl</span><span class="yellow">;</span>` : ''}${glm ? `<span class="green">lib/glm</span><span class="yellow">;</span>` : ''})</div>
+        <div style="margin-left: 20px">set(<span class="yellow">SUBMODULES</span> ${glew ? `<span class="green">lib/glew</span><span class="yellow">;</span>` : ''}${glad ? `<span class="green">lib/glad</span><span class="yellow">;</span>` : ''}${glfw ? `<span class="green">lib/glfw</span><span class="yellow">;</span>` : ''}${stbImg ? `<span class="green">lib/stb</span><span class="yellow">;</span>` : ''}${imgui ? `<span class="green">lib/imgui</span><span class="yellow">;</span>` : ''}${sdl ? `<span class="green">lib/sdl</span><span class="yellow">;</span>` : ''}${glm ? `<span class="green">lib/glm</span><span class="yellow">;</span>` : ''}${mathfu ? `<span class="green">lib/mathfu</span><span class="yellow">;</span>` : ''})</div>
         <br>
         <div style="margin-left: 20px"><span class="yellow">foreach</span>(<span class="yellow">UPD_SUB</span> <span class="blue">IN LISTS</span> <span class="yellow">SUBMODULES</span>)</div>
         <div style="margin-left: 40px">message(<span class="blue">STATUS</span> <span class="green">"Updating </span><span class="yellow">\${UPD_SUB}</span><span class="green">..."</span>)</div>
@@ -249,6 +255,13 @@ $(document).ready(() => {
         <div>include_directories(<span class="green"/>lib/glm/glm</span>)</div>
         <br>`
             : ''}
+        ${mathfu ?
+            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up MathFu..."</span>)</div>
+        <div>add_compile_definitions(<span class="green">MATHFU</span>)</div>
+        <div>include_directories(<span class="green"/>lib/mathfu/include</span>)</div>
+        <div>include_directories(<span class="green"/>include_directories(lib/mathfu/dependencies/vectorial/include)</span>)</div>
+        <br>`
+            : ''}
         <div>message(<span class="blue">STATUS</span> <span class="green">"Copying resources..."</span>)</div>
         <div>file(<span class="blue">COPY</span> <span class="green">res</span> <span class="blue">DESTINATION</span> <span class="yellow">\${CMAKE_BINARY_DIR}</span>)</div>
         <br>
@@ -298,7 +311,7 @@ find_package(Git)
 if(GIT_FOUND AND EXISTS "\${PROJECT_SOURCE_DIR}/.git")
     message(STATUS "Updating git submodules...")
 
-    set(SUBMODULES ${glew ? 'lib/glew;' : ''}${glad ? 'lib/glad;' : ''}${glfw ? 'lib/glfw;' : ''}${stbImg ? 'lib/stb;' : ''}${imgui ? 'lib/imgui;' : ''}${sdl ? 'lib/sdl;' : ''}${glm ? 'lib/glm;' : ''})
+    set(SUBMODULES ${glew ? 'lib/glew;' : ''}${glad ? 'lib/glad;' : ''}${glfw ? 'lib/glfw;' : ''}${stbImg ? 'lib/stb;' : ''}${imgui ? 'lib/imgui;' : ''}${sdl ? 'lib/sdl;' : ''}${glm ? 'lib/glm;' : ''}${mathfu ? 'lib/mathfu;' : ''})
     foreach(UPD_SUB IN LISTS SUBMODULES)
         message(STATUS "Updating \${UPD_SUB}...")
 
@@ -338,7 +351,10 @@ message(STATUS "Setting up imgui...")
     include_directories(lib/sdl/include)
     add_compile_definitions(SDL)` : ''}${glm ? `
     message(STATUS "Setting up glm...")
-include_directories(lib/glm/glm)` : ''}${stbImg ? `
+include_directories(lib/glm/glm)` : ''}${mathfu ? `
+    message(STATUS "Setting up MathFu...")
+include_directories(lib/mathfu/include)
+include_directories(lib/mathfu/dependencies/vectorial/include)` : ''}${stbImg ? `
 message(STATUS "Setting up stb...")
 include_directories(lib/stb)` : ''}
 message(STATUS "Copying resources...")
@@ -431,6 +447,17 @@ target_link_libraries(${projectName} glad \${CMAKE_DL_LIBS})` : ''}
     }
     `;
 
+        let mathfuImport = `
+        #include <mathfu/vector.h>`;
+
+        let mathfuTest = `
+        mathfu::Vector<unsigned int, 2> mathfuTest = mathfu::Vector<unsigned int, 2>(1) + mathfu::Vector<unsigned int, 2>((unsigned int)0);
+
+    if (mathfuTest == mathfu::Vector<unsigned int, 2>(1)) {
+        std::cout << "MathFu present..." << std::endl;
+    }
+`;
+
         let stbImgImport = `
         #define STB_IMAGE_IMPLEMENTATION
         #include <stb_image.h>`;
@@ -509,6 +536,12 @@ target_link_libraries(${projectName} glad \${CMAKE_DL_LIBS})` : ''}
                 main = main.replace('GLM_IMPORT', glmImport).replace('GLM_TEST', glmTest);
             } else {
                 main = main.replace('GLM_IMPORT', '').replace('GLM_TEST', '');
+            }
+
+            if (mathfu) {
+                main = main.replace('MATHFU_IMPORT', mathfuImport).replace('MATHFU_TEST', mathfuTest);
+            } else {
+                main = main.replace('MATHFU_IMPORT', '').replace('MATHFU_TEST', '');
             }
 
             if (stbImg) {

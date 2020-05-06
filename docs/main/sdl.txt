@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SDL2/SDL.h>IMGUI_IMPORTGLAD_IMPORTGLEW_IMPORTGLM_IMPORTSTB_IMG_IMPORT
+#include <SDL2/SDL.h>IMGUI_IMPORTGLAD_IMPORTGLEW_IMPORTGLM_IMPORTMATHFU_IMPORTSTB_IMG_IMPORT
 
 int main() {
     SDL_Window * window = SDL_CreateWindow("PROJECT_NAME", 0, 0, 640, 480, SDL_WINDOW_OPENGL);
@@ -14,7 +14,7 @@ int main() {
     SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255);
 
     std::cout << "Window created, sdl initialized..." << std::endl;
-    GLAD_INITGLEW_INITGLM_TESTSTB_IMG_TESTIMGUI_INIT
+    GLAD_INITGLEW_INITGLM_TESTMATHFU_TESTSTB_IMG_TESTIMGUI_INIT
     bool running = true;
 
     while (running) {
