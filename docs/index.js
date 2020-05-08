@@ -245,7 +245,7 @@ $(document).ready(() => {
         <br>`
             : ''}
         ${stb ?
-            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up stb image..."</span>)</div>
+            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up stb..."</span>)</div>
         <div>include_directories(<span class="green"/>lib/stb</span>)</div>
         <br>`
             : ''}
