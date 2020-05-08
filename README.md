@@ -14,7 +14,7 @@ Easy to use CMake boilerplate for developing OpenGL programs in C++
 - [SDL](https://www.libsdl.org/)
 - [GLM](https://glm.g-truc.net/0.9.9/index.html)
 - [MathFu](http://google.github.io/mathfu/)
-- [STB Image](https://github.com/nothings/stb/blob/master/stb_image.h)
+- [STB](https://github.com/nothings/stb)
 
 ## Supported platforms
 

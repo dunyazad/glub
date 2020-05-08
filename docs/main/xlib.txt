@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-XLIB_GLEW_IMPORTXLIB_IMPORTGLM_IMPORTMATHFU_IMPORTSTB_IMG_IMPORT
+XLIB_GLEW_IMPORTXLIB_IMPORTGLM_IMPORTMATHFU_IMPORTSTB_IMPORT
 
 typedef GLXContext (*glXCreateContextAttribsARBProc)(Display *, GLXFBConfig, GLXContext, Bool, const int *);
 typedef Bool (*glXMakeContextCurrentARBProc)(Display *, GLXDrawable, GLXDrawable, GLXContext);
@@ -146,7 +146,7 @@ int main (){
     glXMakeCurrent(display, window, context);
 
     std::cout << "OK" << std::endl;
-    GLEW_INITGLM_TESTMATHFU_TESTSTB_IMG_TEST
+    GLEW_INITGLM_TESTMATHFU_TESTSTB_TEST
     std::cout << "GL Renderer: " << glGetString(GL_RENDERER) << std::endl << "GL Version: " << glGetString(GL_VERSION) << std::endl << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl << std::endl;
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
