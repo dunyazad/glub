@@ -21,8 +21,10 @@ Easy to use CMake boilerplate for developing OpenGL programs in C++
 - Linux
 
 # Setup
-1. Clone glub repository
-2. Replace `CMakeLists.txt` and `main.cpp` with [generated files](https://drgy.github.io/glub/) 
+1. Create git repository for your project
+2. [Generate](https://drgy.github.io/glub/) `CMakeLists.txt`, `main.cpp` and place them into your project
+3. Files that should be compiled must be in `src` directory (including `main.cpp`)
+4. Place resources that are required by your project (images, fonts, shaders...) into `res` directory
 
 ## Bash
 1. `mkdir build build/debug build/release`
