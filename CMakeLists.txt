@@ -8,13 +8,23 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     message(STATUS "Updating git submodules...")
 
     set(SUBMODULES lib/glew;lib/glfw;lib/stb;lib/glm;)
+    set(REPOSITORIES https://github.com/Perlmint/glew-cmake.git;https://github.com/glfw/glfw.git;https://github.com/nothings/stb.git;https://github.com/g-truc/glm.git;)
+
     foreach(UPD_SUB IN LISTS SUBMODULES)
         message(STATUS "Updating ${UPD_SUB}...")
 
         execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive -- ${UPD_SUB} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
 
         if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-            message(WARNING "Unable to update submodule ${UPD_SUB}")
+            list(FIND SUBMODULES ${UPD_SUB} SUB_INDEX)
+            list(GET REPOSITORIES ${SUB_INDEX} SUB_URL)
+
+            execute_process(COMMAND ${GIT_EXECUTABLE} submodule add ${SUB_URL} ${UPD_SUB} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+            execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive -- ${UPD_SUB} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
+
+            if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+                message(WARNING "Unable to update submodule ${UPD_SUB}")
+            endif()
         endif()
 
     endforeach()
