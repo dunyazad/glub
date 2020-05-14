@@ -48,8 +48,11 @@ message(STATUS "Setting up glm...")
 include_directories(lib/glm/glm)
 message(STATUS "Setting up stb...")
 include_directories(lib/stb)
-message(STATUS "Copying resources...")
-file(COPY res DESTINATION ${CMAKE_BINARY_DIR})
+
+if(EXISTS res)
+    message(STATUS "Copying resources...")
+    file(COPY res DESTINATION ${CMAKE_BINARY_DIR})
+endif()
 
 message(STATUS "Setting up build options...")
 set(CMAKE_CXX_STANDARD 17)

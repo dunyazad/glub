@@ -278,8 +278,10 @@ $(document).ready(() => {
         <div>include_directories(<span class="green"/>include_directories(lib/mathfu/dependencies/vectorial/include)</span>)</div>
         <br>`
             : ''}
-        <div>message(<span class="blue">STATUS</span> <span class="green">"Copying resources..."</span>)</div>
-        <div>file(<span class="blue">COPY</span> <span class="green">res</span> <span class="blue">DESTINATION</span> <span class="yellow">\${CMAKE_BINARY_DIR}</span>)</div>
+        <div><span class="yellow">if</span>(<span class="blue">EXISTS</span> <span class="green">res</span>)</div>
+        <div style="margin-left: 20px">message(<span class="blue">STATUS</span> <span class="green">"Copying resources..."</span>)</div>
+        <div style="margin-left: 20px">file(<span class="blue">COPY</span> <span class="green">res</span> <span class="blue">DESTINATION</span> <span class="yellow">\${CMAKE_BINARY_DIR}</span>)</div>
+        <div><span class="yellow">endif</span>()</div>
         <br>
         <div>message(<span class="blue">STATUS</span> <span class="green">"Setting up build options..."</span>)</div>
         <div>set(<span class="blue">CMAKE_CXX_STANDARD</span> <span class="green">17</span>)</div>
@@ -383,8 +385,11 @@ include_directories(lib/mathfu/include)
 include_directories(lib/mathfu/dependencies/vectorial/include)` : ''}${stb ? `
 message(STATUS "Setting up stb...")
 include_directories(lib/stb)` : ''}
-message(STATUS "Copying resources...")
-file(COPY res DESTINATION \${CMAKE_BINARY_DIR})
+
+if(EXISTS res)
+    message(STATUS "Copying resources...")
+    file(COPY res DESTINATION \${CMAKE_BINARY_DIR})
+endif()
 
 message(STATUS "Setting up build options...")
 set(CMAKE_CXX_STANDARD 17)
