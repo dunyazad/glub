@@ -2,7 +2,7 @@ $(document).ready(() => {
     let projectName = "glub";
     let projectVersion = "1.0.0";
     let projectDescription = "Easy to use CMake boilerplate for developing OpenGL programs in C++";
-    let glew = true, glad = false, glfw = true, stb = true, imgui = false, sdl = false, glm = true, mathfu = false, xlib = false;
+    let glew = true, glad = false, glfw = true, stb = true, imgui = false, sdl = false, glm = true, mathfu = false, xlib = false, freetype = false;
 
     $('#glew, #glfw, #stb, #glm').addClass('selected');
 
@@ -150,6 +150,12 @@ $(document).ready(() => {
         updateResult();
     });
 
+    $('#freetype').on('click', () => {
+        freetype = !freetype;
+        $('#freetype').toggleClass('selected');
+        updateResult();
+    });
+
     $('#project-name').on('input', () => {
         projectName = $('#project-name').val();
         projectName = projectName.replace(' ', '-');
@@ -192,7 +198,7 @@ $(document).ready(() => {
         <br>
         <div><span class="yellow">if</span>(<span class="green">GIT_FOUND</span> <span class="blue">AND EXISTS</span> <span class="green">"</span><span class="yellow">\${PROJECT_SOURCE_DIR}</span><span class="green">/.git"</span>)</div>
         <div style="margin-left: 20px">message(<span class="blue">STATUS</span> <span class="green">"Updating git submodules..."</span>)</div>
-        <div style="margin-left: 20px">set(<span class="yellow">SUBMODULES</span> ${glew ? `<span class="green">lib/glew</span><span class="yellow">;</span>` : ''}${glad ? `<span class="green">lib/glad</span><span class="yellow">;</span>` : ''}${glfw ? `<span class="green">lib/glfw</span><span class="yellow">;</span>` : ''}${stb ? `<span class="green">lib/stb</span><span class="yellow">;</span>` : ''}${imgui ? `<span class="green">lib/imgui</span><span class="yellow">;</span>` : ''}${sdl ? `<span class="green">lib/sdl</span><span class="yellow">;</span>` : ''}${glm ? `<span class="green">lib/glm</span><span class="yellow">;</span>` : ''}${mathfu ? `<span class="green">lib/mathfu</span><span class="yellow">;</span>` : ''})</div>
+        <div style="margin-left: 20px">set(<span class="yellow">SUBMODULES</span> ${glew ? `<span class="green">lib/glew</span><span class="yellow">;</span>` : ''}${glad ? `<span class="green">lib/glad</span><span class="yellow">;</span>` : ''}${glfw ? `<span class="green">lib/glfw</span><span class="yellow">;</span>` : ''}${stb ? `<span class="green">lib/stb</span><span class="yellow">;</span>` : ''}${imgui ? `<span class="green">lib/imgui</span><span class="yellow">;</span>` : ''}${sdl ? `<span class="green">lib/sdl</span><span class="yellow">;</span>` : ''}${glm ? `<span class="green">lib/glm</span><span class="yellow">;</span>` : ''}${mathfu ? `<span class="green">lib/mathfu</span><span class="yellow">;</span>` : ''}${freetype ? `<span class="green">lib/freetype</span><span class="yellow">;</span>` : ''})</div>
         <div style="margin-left: 20px">set(<span class="yellow">REPOSITORIES</span> ${glew ? 
             `<span class="green">https://github.com/Perlmint/glew-cmake.git</span><span class="yellow">;</span>` : ''}${glad ? 
             `<span class="green">https://github.com/Dav1dde/glad.git</span><span class="yellow">;</span>` : ''}${glfw ? 
@@ -201,7 +207,8 @@ $(document).ready(() => {
             `<span class="green">https://github.com/ocornut/imgui.git</span><span class="yellow">;</span>` : ''}${sdl ? 
             `<span class="green">https://github.com/SDL-mirror/SDL.git</span><span class="yellow">;</span>` : ''}${glm ? 
             `<span class="green">https://github.com/g-truc/glm.git</span><span class="yellow">;</span>` : ''}${mathfu ? 
-            `<span class="green">https://github.com/google/mathfu.git</span><span class="yellow">;</span>` : ''})</div>
+            `<span class="green">https://github.com/google/mathfu.git</span><span class="yellow">;</span>` : ''}${freetype ?
+            `<span class="green">git://git.sv.nongnu.org/freetype/freetype2.git</span><span class="yellow">;</span>` : ''})</div>
         <br>
         <div style="margin-left: 20px"><span class="yellow">foreach</span>(<span class="yellow">UPD_SUB</span> <span class="blue">IN LISTS</span> <span class="yellow">SUBMODULES</span>)</div>
         <div style="margin-left: 40px">message(<span class="blue">STATUS</span> <span class="green">"Updating </span><span class="yellow">\${UPD_SUB}</span><span class="green">..."</span>)</div>
@@ -278,6 +285,13 @@ $(document).ready(() => {
         <div>include_directories(<span class="green"/>include_directories(lib/mathfu/dependencies/vectorial/include)</span>)</div>
         <br>`
             : ''}
+        ${freetype ?
+            `<div>messsage(<span class="blue">STATUS</span> <span class="green">"Setting up Freetype..."</span>)</div>
+        <div>add_compile_definitions(<span class="green">FREETYPE</span>)</div>
+        <div>add_subdirectory(<span class="green"/>lib/freetype</span>)</div>
+        <div>include_directories(<span class="green"/>lib/freetype/include</span>)</div>
+        <br>`
+            : ''}
         <div><span class="yellow">if</span>(<span class="blue">EXISTS</span> <span class="green">res</span>)</div>
         <div style="margin-left: 20px">message(<span class="blue">STATUS</span> <span class="green">"Copying resources..."</span>)</div>
         <div style="margin-left: 20px">file(<span class="blue">COPY</span> <span class="green">res</span> <span class="blue">DESTINATION</span> <span class="yellow">\${CMAKE_BINARY_DIR}</span>)</div>
@@ -316,6 +330,8 @@ $(document).ready(() => {
             `<div>target_link_libraries(<span class="green">${projectName} glfw</span>)</div>` : ''}
         ${sdl ?
             `<div>target_link_libraries(<span class="green">${projectName} SDL2</span>)</div>` : ''}
+        ${freetype ?
+            `<div>target_link_libraries(<span class="green">${projectName} freetype</span>)</div>` : ''}
 `);
     }
 
@@ -329,8 +345,8 @@ find_package(Git)
 if(GIT_FOUND AND EXISTS "\${PROJECT_SOURCE_DIR}/.git")
     message(STATUS "Updating git submodules...")
 
-    set(SUBMODULES ${glew ? 'lib/glew;' : ''}${glad ? 'lib/glad;' : ''}${glfw ? 'lib/glfw;' : ''}${stb ? 'lib/stb;' : ''}${imgui ? 'lib/imgui;' : ''}${sdl ? 'lib/sdl;' : ''}${glm ? 'lib/glm;' : ''}${mathfu ? 'lib/mathfu;' : ''})
-    set(REPOSITORIES ${glew ? 'https://github.com/Perlmint/glew-cmake.git;' : ''}${glad ? 'https://github.com/Dav1dde/glad.git;' : ''}${glfw ? 'https://github.com/glfw/glfw.git;' : ''}${stb ? 'https://github.com/nothings/stb.git;' : ''}${imgui ? 'https://github.com/ocornut/imgui.git;' : ''}${sdl ? 'https://github.com/SDL-mirror/SDL.git;' : ''}${glm ? 'https://github.com/g-truc/glm.git;' : ''}${mathfu ? 'https://github.com/google/mathfu.git;' : ''})
+    set(SUBMODULES ${glew ? 'lib/glew;' : ''}${glad ? 'lib/glad;' : ''}${glfw ? 'lib/glfw;' : ''}${stb ? 'lib/stb;' : ''}${imgui ? 'lib/imgui;' : ''}${sdl ? 'lib/sdl;' : ''}${glm ? 'lib/glm;' : ''}${mathfu ? 'lib/mathfu;' : ''}${freetype ? 'lib/freetype;' : ''})
+    set(REPOSITORIES ${glew ? 'https://github.com/Perlmint/glew-cmake.git;' : ''}${glad ? 'https://github.com/Dav1dde/glad.git;' : ''}${glfw ? 'https://github.com/glfw/glfw.git;' : ''}${stb ? 'https://github.com/nothings/stb.git;' : ''}${imgui ? 'https://github.com/ocornut/imgui.git;' : ''}${sdl ? 'https://github.com/SDL-mirror/SDL.git;' : ''}${glm ? 'https://github.com/g-truc/glm.git;' : ''}${mathfu ? 'https://github.com/google/mathfu.git;' : ''}${freetype ? 'git://git.sv.nongnu.org/freetype/freetype2.git;' : ''})
     
     foreach(UPD_SUB IN LISTS SUBMODULES)
         message(STATUS "Updating \${UPD_SUB}...")
@@ -377,14 +393,17 @@ message(STATUS "Setting up imgui...")
     message(STATUS "Setting up sdl...")
     add_subdirectory(lib/sdl)
     include_directories(lib/sdl/include)
-    add_compile_definitions(SDL)` : ''}${glm ? `
+    add_compile_definitions(SDL)` : ''}${stb ? `
+message(STATUS "Setting up stb...")
+include_directories(lib/stb)` : ''}${glm ? `
     message(STATUS "Setting up glm...")
 include_directories(lib/glm/glm)` : ''}${mathfu ? `
     message(STATUS "Setting up MathFu...")
 include_directories(lib/mathfu/include)
-include_directories(lib/mathfu/dependencies/vectorial/include)` : ''}${stb ? `
-message(STATUS "Setting up stb...")
-include_directories(lib/stb)` : ''}
+include_directories(lib/mathfu/dependencies/vectorial/include)` : ''}${freetype ? `
+message(STATUS "Setting up freetype...")
+add_subdirectory(lib/freetype)
+include_directories(lib/freetype/include)` : ''}
 
 if(EXISTS res)
     message(STATUS "Copying resources...")
@@ -413,7 +432,8 @@ target_link_libraries(${projectName} X11)` : ''}${sdl ? `
 target_link_libraries(${projectName} SDL2)` : ''}${glfw ? `
 target_link_libraries(${projectName} glfw)` : ''}${glew ? `
 target_link_libraries(${projectName} glew)` : ''}${glad ? `
-target_link_libraries(${projectName} glad \${CMAKE_DL_LIBS})` : ''}
+target_link_libraries(${projectName} glad \${CMAKE_DL_LIBS})` : ''}${freetype ? `
+target_link_libraries(${projectName} freetype)` : ''}
 `;
     }
 
@@ -540,6 +560,21 @@ target_link_libraries(${projectName} glad \${CMAKE_DL_LIBS})` : ''}
         ImGui::DestroyContext();
         `;
 
+        let freetypeImport = `
+        #include <ft2build.h>
+        #include FT_FREETYPE_H`;
+
+        let freetypeInit = `
+        std::cout << "Initializing freetype...";
+
+        FT_Library ft;
+        if (FT_Init_FreeType(&ft)) {
+            std::cout << "FAILED" << std::endl;
+        }
+    
+        std::cout << "OK" << std::endl;
+        `;
+
         return $.get(file).then((data) => {
             let main = data.replace('PROJECT_NAME', projectName);
 
@@ -585,6 +620,12 @@ target_link_libraries(${projectName} glad \${CMAKE_DL_LIBS})` : ''}
                 main = main.replace('IMGUI_IMPORT', imguiImport).replace('IMGUI_INIT', imguiInit).replace('IMGUI_RENDER', imguiRender).replace('IMGUI_CLEANUP', imguiCleanup);
             } else {
                 main = main.replace('IMGUI_IMPORT', '').replace('IMGUI_INIT', '').replace('IMGUI_RENDER', '').replace('IMGUI_CLEANUP', '');
+            }
+
+            if (freetype) {
+                main = main.replace('FREETYPE_IMPORT', freetypeImport).replace('FREETYPE_INIT', freetypeInit);
+            } else {
+                main = main.replace('FREETYPE_IMPORT', '').replace('FREETYPE_INIT', '');
             }
 
             return main;
