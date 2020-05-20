@@ -49,9 +49,9 @@ include_directories(lib/glm/glm)
 message(STATUS "Setting up stb...")
 include_directories(lib/stb)
 
-if(EXISTS res)
+if(EXISTS ${PROJECT_SOURCE_DIR}/res)
     message(STATUS "Copying resources...")
-    file(COPY res DESTINATION ${CMAKE_BINARY_DIR})
+    file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR})
 endif()
 
 message(STATUS "Setting up build options...")

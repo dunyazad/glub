@@ -212,14 +212,14 @@ $(document).ready(() => {
         <br>
         <div style="margin-left: 20px"><span class="yellow">foreach</span>(<span class="yellow">UPD_SUB</span> <span class="blue">IN LISTS</span> <span class="yellow">SUBMODULES</span>)</div>
         <div style="margin-left: 40px">message(<span class="blue">STATUS</span> <span class="green">"Updating </span><span class="yellow">\${UPD_SUB}</span><span class="green">..."</span>)</div>
-        <div style="margin-left: 40px">execute_process(<span class="blue">COMMAND</span> <span class="yellow">\${GIT_EXECUTABLE}</span> <span class="green">submodule update --init --recursive -- </span><span class="yellow">\${UPD_SUB}</span> <span class="blue">WORKING_DIRECTORY</span> <span class="yellow">\${PROJECT_SOURCE_DIR}</span> <span class="blue">RESULT_VARIABLE</span> <span class="yellow">GIT_SUBMOD_RESULT</span>)</div>
+        <div style="margin-left: 40px">execute_process(<span class="blue">COMMAND</span> <span class="yellow">\${GIT_EXECUTABLE}</span> <span class="green">submodule update --init --recursive --remote -- </span><span class="yellow">\${UPD_SUB}</span> <span class="blue">WORKING_DIRECTORY</span> <span class="yellow">\${PROJECT_SOURCE_DIR}</span> <span class="blue">RESULT_VARIABLE</span> <span class="yellow">GIT_SUBMOD_RESULT</span>)</div>
         <br>
         <div style="margin-left: 40px"><span class="yellow">if</span>(<span class="blue">NOT</span> <span class="yellow">GIT_SUBMOD_RESULT</span> <span class="blue">EQUAL</span> <span class="green">"0"</span>)</div>
         <div style="margin-left: 60px">list(<span class="blue">FIND</span> <span class="yellow">SUBMODULES \${UPD_SUB} SUB_INDEX</span>)</div>
         <div style="margin-left: 60px">list(<span class="blue">GET</span> <span class="yellow">REPOSITORIES \${SUB_INDEX} SUB_URL</span>)</div>
         <br>
         <div style="margin-left: 60px">execute_process(<span class="blue">COMMAND</span> <span class="yellow">\${GIT_EXECUTABLE}</span> <span class="green">submodule add</span> <span class="yellow">\${SUB_URL} \${UPD_SUB}</span> <span class="blue">WORKING_DIRECTORY</span> <span class="yellow">\${PROJECT_SOURCE_DIR}</span>)</div>
-        <div style="margin-left: 60px">execute_process(<span class="blue">COMMAND</span> <span class="yellow">\${GIT_EXECUTABLE}</span> <span class="green">submodule update --init --recursive -- </span><span class="yellow">\${UPD_SUB}</span> <span class="blue">WORKING_DIRECTORY</span> <span class="yellow">\${PROJECT_SOURCE_DIR}</span> <span class="blue">RESULT_VARIABLE</span> <span class="yellow">GIT_SUBMOD_RESULT</span>)</div>
+        <div style="margin-left: 60px">execute_process(<span class="blue">COMMAND</span> <span class="yellow">\${GIT_EXECUTABLE}</span> <span class="green">submodule update --init --recursive --remote -- </span><span class="yellow">\${UPD_SUB}</span> <span class="blue">WORKING_DIRECTORY</span> <span class="yellow">\${PROJECT_SOURCE_DIR}</span> <span class="blue">RESULT_VARIABLE</span> <span class="yellow">GIT_SUBMOD_RESULT</span>)</div>
         <div style="margin-left: 60px"><span class="yellow">if</span>(<span class="blue">NOT</span> <span class="yellow">GIT_SUBMOD_RESULT</span> <span class="blue">EQUAL</span> <span class="green">"0"</span>)</div>
         <div style="margin-left: 80px">message(<span class="blue">WARNING</span> <span class="green">"Unable to update submodule</span> <span class="yellow">\${UPD_SUB}</span><span class="green">"</span>)</div>
         <div style="margin-left: 60px"><span class="yellow">endif</span>()</div>
@@ -292,9 +292,9 @@ $(document).ready(() => {
         <div>include_directories(<span class="green"/>lib/freetype/include</span>)</div>
         <br>`
             : ''}
-        <div><span class="yellow">if</span>(<span class="blue">EXISTS</span> <span class="green">res</span>)</div>
+        <div><span class="yellow">if</span>(<span class="blue">EXISTS</span> <span class="yellow">${PROJECT_SOURCE_DIR}</span><span class="green">/res</span>)</div>
         <div style="margin-left: 20px">message(<span class="blue">STATUS</span> <span class="green">"Copying resources..."</span>)</div>
-        <div style="margin-left: 20px">file(<span class="blue">COPY</span> <span class="green">res</span> <span class="blue">DESTINATION</span> <span class="yellow">\${CMAKE_BINARY_DIR}</span>)</div>
+        <div style="margin-left: 20px">file(<span class="blue">COPY</span> <span class="yellow">${PROJECT_SOURCE_DIR}</span><span class="green">/res</span> <span class="blue">DESTINATION</span> <span class="yellow">\${CMAKE_BINARY_DIR}</span>)</div>
         <div><span class="yellow">endif</span>()</div>
         <br>
         <div>message(<span class="blue">STATUS</span> <span class="green">"Setting up build options..."</span>)</div>
@@ -351,14 +351,14 @@ if(GIT_FOUND AND EXISTS "\${PROJECT_SOURCE_DIR}/.git")
     foreach(UPD_SUB IN LISTS SUBMODULES)
         message(STATUS "Updating \${UPD_SUB}...")
 
-        execute_process(COMMAND \${GIT_EXECUTABLE} submodule update --init --recursive -- \${UPD_SUB} WORKING_DIRECTORY \${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        execute_process(COMMAND \${GIT_EXECUTABLE} submodule update --init --recursive --remote -- \${UPD_SUB} WORKING_DIRECTORY \${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
 
         if(NOT GIT_SUBMOD_RESULT EQUAL "0")
             list(FIND SUBMODULES \${UPD_SUB} SUB_INDEX)
             list(GET REPOSITORIES \${SUB_INDEX} SUB_URL)
 
             execute_process(COMMAND \${GIT_EXECUTABLE} submodule add \${SUB_URL} \${UPD_SUB} WORKING_DIRECTORY \${PROJECT_SOURCE_DIR})
-            execute_process(COMMAND \${GIT_EXECUTABLE} submodule update --init --recursive -- \${UPD_SUB} WORKING_DIRECTORY \${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
+            execute_process(COMMAND \${GIT_EXECUTABLE} submodule update --init --recursive --remote -- \${UPD_SUB} WORKING_DIRECTORY \${PROJECT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
 
             if(NOT GIT_SUBMOD_RESULT EQUAL "0")
                 message(WARNING "Unable to update submodule \${UPD_SUB}")
@@ -405,9 +405,9 @@ message(STATUS "Setting up freetype...")
 add_subdirectory(lib/freetype)
 include_directories(lib/freetype/include)` : ''}
 
-if(EXISTS res)
+if(EXISTS \${PROJECT_SOURCE_DIR}/res)
     message(STATUS "Copying resources...")
-    file(COPY res DESTINATION \${CMAKE_BINARY_DIR})
+    file(COPY \${PROJECT_SOURCE_DIR}/res DESTINATION \${CMAKE_BINARY_DIR})
 endif()
 
 message(STATUS "Setting up build options...")
