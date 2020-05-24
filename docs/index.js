@@ -292,9 +292,9 @@ $(document).ready(() => {
         <div>include_directories(<span class="green"/>lib/freetype/include</span>)</div>
         <br>`
             : ''}
-        <div><span class="yellow">if</span>(<span class="blue">EXISTS</span> <span class="yellow">${PROJECT_SOURCE_DIR}</span><span class="green">/res</span>)</div>
+        <div><span class="yellow">if</span>(<span class="blue">EXISTS</span> <span class="yellow">${"${PROJECT_SOURCE_DIR}"}</span><span class="green">/res</span>)</div>
         <div style="margin-left: 20px">message(<span class="blue">STATUS</span> <span class="green">"Copying resources..."</span>)</div>
-        <div style="margin-left: 20px">file(<span class="blue">COPY</span> <span class="yellow">${PROJECT_SOURCE_DIR}</span><span class="green">/res</span> <span class="blue">DESTINATION</span> <span class="yellow">\${CMAKE_BINARY_DIR}</span>)</div>
+        <div style="margin-left: 20px">file(<span class="blue">COPY</span> <span class="yellow">${"${PROJECT_SOURCE_DIR}"}</span><span class="green">/res</span> <span class="blue">DESTINATION</span> <span class="yellow">\${CMAKE_BINARY_DIR}</span>)</div>
         <div><span class="yellow">endif</span>()</div>
         <br>
         <div>message(<span class="blue">STATUS</span> <span class="green">"Setting up build options..."</span>)</div>
