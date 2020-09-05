@@ -35,23 +35,14 @@
                             <input id="project-description" class="wide" type="text" placeholder="Simple CMake setup for developing OpenGL programs in C++" aria-multiline="true"/>
                         </label>
                     </div>
-                    <div class="outline half-tile loading-library">
+                    <div class="outline half-tile loading-library" data-category="Loading library">
                         <p class="card-title">Loading library</p>
-                        <button id="glad" class="option">GLAD</button>
-                        <button id="glew" class="option">GLEW</button>
                     </div>
-                    <div class="outline half-tile" style="margin-left: 12px; float: right">
+                    <div class="outline half-tile" style="margin-left: 12px; float: right" data-category="Utility">
                         <p class="card-title">Utility</p>
-                        <button id="freetype" class="option">Freetype</button>
-                        <button id="glfw" class="option">GLFW</button>
-                        <button id="imgui" class="option">Imgui</button>
-                        <button id="sdl" class="option">SDL</button>
-                        <button id="stb" class="option">STB</button>
                     </div>
-                    <div class="outline half-tile math" style="float: left">
+                    <div class="outline half-tile math" style="float: left" data-category="Math">
                         <p class="card-title">Math</p>
-                        <button id="glm" class="option">glm</button>
-                        <button id="mathfu" class="option">MathFu</button>
                     </div>
                 </div>
             </div>
@@ -61,7 +52,7 @@
                 <div class="tooltip" id="main-tooltip">Copy basic main.cpp file to clipboard</div>
                 <a class="gh-link" id="gh-link" href="https://github.com/Drgy/glub" target="_blank"><img src="img/github.svg" alt="github repository" /></a>
                 <div class="tooltip" id="gh-tooltip">Open Github repository</div>
-                <div id="result"></div>
+                <div title="Click to copy" id="result"></div>
             </div>
         </div>
     </body>

@@ -1,10 +1,95 @@
 $(document).ready(() => {
+    $.getJSON('data/libraries.json', (data) => {
+        function toggleLib(lib) {
+            data[lib]['selected'] = !data[lib]['selected'];
+            $(`#${lib}`).toggleClass('selected');
+        }
+
+        function selectLib(lib) {
+            data[lib]['selected'] = true;
+            $(`#${lib}`).addClass('selected');
+        }
+
+        function deselectLib(lib) {
+            data[lib]['selected'] = false;
+            $(`#${lib}`).removeClass('selected');
+        }
+
+        for (let lib of Object.keys(data)) {
+            $(`*[data-category="${data[lib]['category']}"]`).append(`<button id="${lib}" class="option${data[lib]['selected'] ? ' selected' : ''}">${lib}</button>`);
+
+            if (data[lib]['require']) {
+                for (let requires of data[lib]['require']) {
+                    for (let req of requires.split("|")) {
+                        if (!data[req]['dependency']) {
+                            data[req]['dependency'] = [];
+                        }
+
+                        data[req]['dependency'].push(lib);
+                    }
+                }
+            }
+
+            $(`#${lib}`).on('click', () => {
+                toggleLib(lib);
+
+                if (data[lib]['incompatible']) {
+                    for (let incompatible of data[lib]['incompatible']) {
+                        deselectLib(incompatible);
+                    }
+                }
+
+                if (data[lib]['require']) {
+                    for (let requires of data[lib]['require']) {
+                        let reqList = requires.split("|");
+                        let oneSelected = false;
+
+                        for (let req of reqList) {
+                            if (data[req]['selected']) {
+                                oneSelected = true;
+                                break;
+                            }
+                        }
+
+                        if (!oneSelected) {
+                            selectLib(reqList[0]);
+                        }
+                    }
+                }
+
+                if (data[lib]['dependency']) {
+                    for (let dependency of data[lib]['dependency']) {
+                        for (let requires of data[dependency]['require']) {
+                            if (requires.includes(lib)) {
+
+                                let reqList = requires.split("|");
+                                let oneSelected = false;
+
+                                for (let req of reqList) {
+                                    if (data[req]['selected']) {
+                                        oneSelected = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!oneSelected) {
+                                    deselectLib(dependency);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                updateResult();
+            });
+        }
+    });
+
+
+
     let projectName = "glub";
     let projectVersion = "1.0.0";
     let projectDescription = "Easy to use CMake boilerplate for developing OpenGL programs in C++";
-    let glew = true, glad = false, glfw = true, stb = true, imgui = false, sdl = false, glm = true, mathfu = false, xlib = false, freetype = false;
-
-    $('#glew, #glfw, #stb, #glm').addClass('selected');
 
     updateResult();
 
@@ -56,104 +141,6 @@ $(document).ready(() => {
 
     $('#gh-link').on('mouseout', () => {
         $('#gh-tooltip').css({ display: 'none' });
-    });
-
-    $('#glew').on('click', () => {
-        glew = !glew;
-        $('#glew').toggleClass('selected');
-        glad = false;
-        $('#glad').removeClass('selected');     // glad and glew are not compatible together
-        updateResult();
-    });
-
-    $('#glad').on('click', () => {
-        glad = !glad;
-        $('#glad').toggleClass('selected');
-        glew = false;
-        $('#glew').removeClass('selected');     // glad and glew are not compatible together
-
-        if (!sdl) {
-            glfw = true;
-            $('#glfw').addClass('selected');        // glad requires glad/gl.h and glad/glx.h to be generated in order to work directly with xlib
-        }
-
-        if (glad) {
-            xlib = false;
-        }
-
-        updateResult();
-    });
-
-    $('#glfw').on('click', () => {
-        glfw = !glfw;
-        xlib = !glfw;
-        $('#glfw').toggleClass('selected');
-
-        if (!glfw) {
-            $('#glad').removeClass('selected');
-            glad = false;
-        }
-
-        sdl = false;
-        $('#sdl').removeClass('selected');
-
-        updateResult();
-    });
-
-    $('#stb').on('click', () => {
-        stb = !stb;
-        $('#stb').toggleClass('selected');
-        updateResult();
-    });
-
-    $('#imgui').on('click', () => {
-        imgui = !imgui;
-        $('#imgui').toggleClass('selected');
-
-        if (imgui) {
-            if (!glew && !glad) {
-                $('#glew').trigger('click');
-            }
-
-            if (!sdl && !glfw) {
-                $('#glfw').trigger('click');
-            }
-        }
-
-        updateResult();
-    });
-
-    $('#sdl').on('click', () => {
-        sdl = !sdl;
-        xlib = !sdl;
-        $('#sdl').toggleClass('selected');
-        glfw = false;
-        $('#glfw').removeClass('selected');
-
-        if (!sdl) {
-            glad = false;
-            $('#glad').removeClass('selected');
-        }
-
-        updateResult();
-    });
-
-    $('#glm').on('click', () => {
-        glm = !glm;
-        $('#glm').toggleClass('selected');
-        updateResult();
-    });
-
-    $('#mathfu').on('click', () => {
-        mathfu = !mathfu;
-        $('#mathfu').toggleClass('selected');
-        updateResult();
-    });
-
-    $('#freetype').on('click', () => {
-        freetype = !freetype;
-        $('#freetype').toggleClass('selected');
-        updateResult();
     });
 
     $('#project-name').on('input', () => {

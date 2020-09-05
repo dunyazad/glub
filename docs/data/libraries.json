@@ -1,0 +1,74 @@
+{
+  "GLAD": {
+    "category": "Loading library",
+    "selected": false,
+    "ssh": "git@github.com:Dav1dde/glad.git",
+    "https": "https://github.com/Dav1dde/glad.git",
+    "incompatible": [
+      "GLEW"
+    ],
+    "require": [
+      "GLFW|SDL"
+    ]
+  },
+  "GLEW": {
+    "category": "Loading library",
+    "selected": true,
+    "https": "https://github.com/Perlmint/glew-cmake.git",
+    "ssh": "git@github.com:Perlmint/glew-cmake.git",
+    "incompatible": [
+      "GLAD"
+    ]
+  },
+  "Freetype": {
+    "category": "Utility",
+    "selected": false,
+    "ssh": "git://git.sv.nongnu.org/freetype/freetype2.git"
+  },
+  "GLFW": {
+    "category": "Utility",
+    "selected": true,
+    "https": "https://github.com/glfw/glfw.git",
+    "ssh": "git@github.com:glfw/glfw.git",
+    "incompatible": [
+      "SDL"
+    ]
+  },
+  "Imgui": {
+    "category": "Utility",
+    "selected": false,
+    "https": "https://github.com/ocornut/imgui.git",
+    "ssh": "git@github.com:ocornut/imgui.git",
+    "require": [
+      "GLEW|GLAD",
+      "GLFW|SDL"
+    ]
+  },
+  "SDL": {
+    "category": "Utility",
+    "selected": false,
+    "https": "https://github.com/SDL-mirror/SDL.git",
+    "ssh": "git@github.com:SDL-mirror/SDL.git",
+    "incompatible": [
+      "GLFW"
+    ]
+  },
+  "STB": {
+    "category": "Utility",
+    "selected": true,
+    "https": "https://github.com/nothings/stb.git",
+    "ssh": "git@github.com:nothings/stb.git"
+  },
+  "glm": {
+    "category": "Math",
+    "selected": true,
+    "https": "https://github.com/g-truc/glm.git",
+    "ssh": "git@github.com:g-truc/glm.git"
+  },
+  "MathFu": {
+    "category": "Math",
+    "selected": false,
+    "https": "https://github.com/google/mathfu.git",
+    "ssh": "git@github.com:google/mathfu.git"
+  }
+}
