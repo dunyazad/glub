@@ -11,8 +11,12 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
-        <script src="index.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="js/globals.js"></script>
+        <script type="text/javascript" src="js/helper.js"></script>
+        <script type="text/javascript" src="js/update.js"></script>
+        <script type="text/javascript" src="js/init.js"></script>
+        <script type="text/javascript" src="index.js"></script>
 
         <div class="container">
             <div class="title-group">
@@ -25,14 +29,14 @@
                         <p class="card-title">Project info</p>
                         <div>
                             <label style="width: calc(70% - 8px)">
-                                <input id="project-name" class="wide" style="margin-right: 8px" type="text" placeholder="glub" />
+                                <input id="project-name" class="wide" style="margin-right: 8px" type="text" />
                             </label>
                             <label style="width: calc(30% - 8px)">
-                                <input id="project-version" class="wide" style="margin-left: 8px" type="text" placeholder="1.0.0" />
+                                <input id="project-version" class="wide" style="margin-left: 8px" type="text" />
                             </label>
                         </div>
                         <label class="wide">
-                            <input id="project-description" class="wide" type="text" placeholder="Simple CMake setup for developing OpenGL programs in C++" aria-multiline="true"/>
+                            <input id="project-description" class="wide" type="text" aria-multiline="true"/>
                         </label>
                     </div>
                     <div class="outline half-tile loading-library" data-category="Loading library">
