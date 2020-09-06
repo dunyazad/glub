@@ -9,7 +9,8 @@
     ],
     "require": [
       "GLFW|SDL"
-    ]
+    ],
+    "setup": "add_subdirectory(lib/glad)\ninclude_directories(${CMAKE_BINARY_DIR}lib/glad/include)"
   },
   "GLEW": {
     "category": "Loading library",
@@ -18,12 +19,14 @@
     "ssh": "git@github.com:Perlmint/glew-cmake.git",
     "incompatible": [
       "GLAD"
-    ]
+    ],
+    "setup": "add_subdirectory(lib/glew/build/cmake)\nadd_compile_definitions(GLEW_STATIC)\ninclude_directories(lib/glew/include)"
   },
   "Freetype": {
     "category": "Utility",
     "selected": false,
-    "ssh": "git://git.sv.nongnu.org/freetype/freetype2.git"
+    "ssh": "git://git.sv.nongnu.org/freetype/freetype2.git",
+    "setup": "add_subdirectory(lib/freetype)\ninclude_directories(lib/freetype/include)"
   },
   "GLFW": {
     "category": "Utility",
@@ -32,7 +35,8 @@
     "ssh": "git@github.com:glfw/glfw.git",
     "incompatible": [
       "SDL"
-    ]
+    ],
+    "setup": "set(GLFW_BUILD_DOCS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_TESTS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_EXAMPLES OFF CACHE BOOL \"\" FORCE)\nadd_subdirectory(lib/glfw)\ninclude_directories(lib/glfw/include)"
   },
   "Imgui": {
     "category": "Utility",
@@ -51,24 +55,28 @@
     "ssh": "git@github.com:SDL-mirror/SDL.git",
     "incompatible": [
       "GLFW"
-    ]
+    ],
+    "setup": "add_subdirectory(lib/sdl)\ninclude_directories(lib/sdl/include)"
   },
   "STB": {
     "category": "Utility",
     "selected": true,
     "https": "https://github.com/nothings/stb.git",
-    "ssh": "git@github.com:nothings/stb.git"
+    "ssh": "git@github.com:nothings/stb.git",
+    "setup": "include_directories(lib/stb)"
   },
   "glm": {
     "category": "Math",
     "selected": true,
     "https": "https://github.com/g-truc/glm.git",
-    "ssh": "git@github.com:g-truc/glm.git"
+    "ssh": "git@github.com:g-truc/glm.git",
+    "setup": "include_directories(lib/glm/glm)"
   },
   "MathFu": {
     "category": "Math",
     "selected": false,
     "https": "https://github.com/google/mathfu.git",
-    "ssh": "git@github.com:google/mathfu.git"
+    "ssh": "git@github.com:google/mathfu.git",
+    "setup": "include_directories(lib/mathfu/include)\ninclude_directories(lib/mathfu/dependencies/vectorial/include)"
   }
 }
