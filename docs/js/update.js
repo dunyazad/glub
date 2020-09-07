@@ -3,7 +3,7 @@ const rawCmake = $.get('data/cmake.txt').responseText;
 $.ajaxSetup({ async: true });
 
 function getCmake() {
-    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '';
+    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '';
 
     $('.settings-container .selected').each((item, element) => {
         selected.push($(element).attr('id'));
@@ -46,7 +46,8 @@ function getCmake() {
             setup += `\nmessage(STATUS "Setting up ${lib}...")\n${data[lib]['setup']}\n`;
         }
 
-        linkLibs += `target_link_libraries(${lib.toLowerCase()})\n`;
+        linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} ${lib.toLowerCase()})\n`;
+        usedLibs += `\nset(LIB_${lib} ON)`;
     }
 
     return rawCmake.replaceAll('#[[name]]', projectInfo.name || DEFAULT_NAME)
@@ -55,10 +56,10 @@ function getCmake() {
         .replaceAll('#[[libPaths]]', libPaths)
         .replaceAll('#[[libRepos]]', libRepos)
         .replaceAll('#[[setup]]', setup)
-        .replaceAll('#[[linkLibs]]', linkLibs);
+        .replaceAll('#[[linkLibs]]', linkLibs)
+        .replaceAll('#[[usedLibs]]', usedLibs);
 }
 
 function update() {
-    let cmake = getCmake();
-    $('#result').html(cmakeToHtml(cmake));
+    $('#result').html(cmakeToHtml(getCmake()));
 }

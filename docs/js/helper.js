@@ -25,7 +25,11 @@ function save() {
 }
 
 function cmakeToHtml(cmake) {
-    let html = "", intend = 0, vars = [ "GIT_FOUND" ];
+    let html = "", intend = 0, vars = [ "GIT_FOUND", "IMGUI_FILES", "SRC_FILES" ];
+
+    for (let lib of Object.keys(data)) {
+        vars.push(`LIB_${lib}`);
+    }
 
     for (let line of cmake.split('\n')) {
         line = $.trim(line);
@@ -69,11 +73,11 @@ function cmakeToHtml(cmake) {
                 intend++;
             }
 
-            if (command === 'set' && line.match(/^[a-zA-Z0-9_]+(?= )/m)) {
-                let newVar = line.match(/^[a-zA-Z0-9_]+(?= )/m)[0];
-                line = line.replace(/^[a-zA-Z0-9_]+ /m, '');
+            if (command === 'set' && (line.match(/^[a-zA-Z0-9_]+(?=[ <])/m))) {
+                let newVar = line.match(/^[a-zA-Z0-9_]+(?=[ <])/m)[0];
+                line = line.replace(/^[a-zA-Z0-9_]+/m, '');
                 vars.push(newVar);
-                html += `<span class="yellow">${newVar}</span> `;
+                html += `<span class="yellow">${newVar}</span>`;
 
                 html += `<span class="green">${line}</span>`;
             } else if (command === 'add_compile_definitions') {

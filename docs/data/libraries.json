@@ -46,7 +46,8 @@
     "require": [
       "GLEW|GLAD",
       "GLFW|SDL"
-    ]
+    ],
+    "setup": "include_directories(lib/imgui lib/imgui/examples)\nif(LIB_GLFW)\nfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_glfw.h\" \"./lib/imgui/examples/imgui_impl_glfw.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nelseif(LIB_SDL)\nfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_sdl.h\" \"./lib/imgui/examples/imgui_impl_sdl.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nendif()"
   },
   "SDL": {
     "category": "Utility",
