@@ -36,7 +36,9 @@
     "incompatible": [
       "SDL"
     ],
-    "setup": "set(GLFW_BUILD_DOCS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_TESTS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_EXAMPLES OFF CACHE BOOL \"\" FORCE)\nadd_subdirectory(lib/glfw)\ninclude_directories(lib/glfw/include)"
+    "setup": "set(GLFW_BUILD_DOCS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_TESTS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_EXAMPLES OFF CACHE BOOL \"\" FORCE)\nadd_subdirectory(lib/glfw)\ninclude_directories(lib/glfw/include)",
+    "customWindow": true,
+    "include": "#include <GLFW/glfw3.h>"
   },
   "Imgui": {
     "category": "Utility",

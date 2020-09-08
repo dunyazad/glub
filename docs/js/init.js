@@ -6,7 +6,7 @@ function init() {
     });
 
     $('#main').on('click', () => {
-        // TODO copyToClipboard(mainString)
+        copyToClipboard(getMain());
         toast("main.cpp contents copied to clipboard");
         save();
     });
@@ -30,21 +30,21 @@ function init() {
     $('#project-name').on('input', () => {
         projectInfo.name = $('#project-name').val().replace(' ', '-').replace(';', '');
         $('#project-name').val(projectInfo.name);
-        update();
+        updateCmake();
     });
     $('#project-name').attr('placeholder', DEFAULT_NAME);
 
     $('#project-version').on('input', () => {
         projectInfo.version = $('#project-version').val().replace(';', '');
         $('#project-version').val(projectInfo.version);
-        update();
+        updateCmake();
     });
     $('#project-version').attr('placeholder', DEFAULT_VERSION);
 
     $('#project-description').on('input', () => {
         projectInfo.description = $('#project-description').val().replace(';', '');
         $('#project-description').val(projectInfo.description);
-        update();
+        updateCmake();
     });
     $('#project-description').attr('placeholder', DEFAULT_DESCRIPTION);
 
@@ -128,9 +128,17 @@ function init() {
                 }
             }
 
-            update();
+            if (data[lib]['customWindow']) {
+                for (let tmp of Object.keys(data)) {
+                    if (data[tmp]['customWindow'] && data[tmp]['selected'] && tmp !== lib) {
+                        deselectLib(tmp);
+                    }
+                }
+            }
+
+            updateCmake();
         });
     }
 
-    update();
+    updateCmake();
 }
