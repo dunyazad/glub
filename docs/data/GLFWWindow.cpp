@@ -1,10 +1,10 @@
-class Window {
+class WindowClass {
 public:
-    Window() {
+    WindowClass() {
         glfwInit();
     }
 
-    ~Window() {
+    ~WindowClass() {
         destroyWindow();
         glfwTerminate();
     }

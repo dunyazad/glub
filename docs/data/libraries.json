@@ -10,7 +10,9 @@
     "require": [
       "GLFW|SDL"
     ],
-    "setup": "add_subdirectory(lib/glad)\ninclude_directories(${CMAKE_BINARY_DIR}lib/glad/include)"
+    "setup": "add_subdirectory(lib/glad)\ninclude_directories(${CMAKE_BINARY_DIR}lib/glad/include)",
+    "include": "#include <glad/glad.h>",
+    "init": "// TODO GLAD init"
   },
   "GLEW": {
     "category": "Loading library",

@@ -57,7 +57,7 @@ endif()
 message(STATUS "Setting up build options...")
 set(CMAKE_CXX_STANDARD 17)
 file(GLOB_RECURSE SRC_FILES "./src/*.h" "./src/*.cpp")
-add_executable(glub ${SRC_FILES})
+add_executable(glub ${SRC_FILES} docs/data/XLibWindow.cpp)
 
 if (UNIX)
     target_compile_options(glub PUBLIC -Wall -Wextra -pedantic)

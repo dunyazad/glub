@@ -59,11 +59,16 @@ function cmakeToHtml(cmake) {
 
                 html += `<span class="green">${line}</span>`;
             } else if (command === 'add_compile_definitions') {
-                let newDef = line.match(/^[a-zA-Z0-9_]+/m)[0];
-                line = line.replace(/^[a-zA-Z0-9_]+/m, '');
-                html += `<span class="yellow">${newDef}</span>`;
+                let newDef = line.match(/^[a-zA-Z0-9_]+/m);
 
-                html += `<span class="green">${line}</span>`;
+                if (newDef) {
+                    line = line.replace(/^[a-zA-Z0-9_]+/m, '');
+                    html += `<span class="yellow">${newDef[0]}</span>`;
+
+                    html += `<span class="green">${line}</span>`;
+                } else {
+                    html += line;
+                }
             } else if (command === 'foreach') {
                 let newVar = line.match(/^[a-zA-Z0-9_]+/m)[0];
                 line = line.replace(/^[a-zA-Z0-9_]+/m, '');
@@ -83,7 +88,7 @@ function cmakeToHtml(cmake) {
 }
 
 function getCmake() {
-    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '';
+    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false;
 
     $('.settings-container .selected').each((item, element) => {
         selected.push($(element).attr('id'));
@@ -128,6 +133,15 @@ function getCmake() {
 
         linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} ${lib.toLowerCase()})\n`;
         usedLibs += `\nset(LIB_${lib} ON)`;
+        libMacros += `\nadd_compile_definitions(LIB_${lib.toUpperCase()})`;
+
+        if (data[lib]['customWindow']) {
+            hasWindowLib = true;
+        }
+    }
+
+    if (!hasWindowLib) {
+        linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} X11)\n`;
     }
 
     return rawCmake.replaceAll('#[[name]]', projectInfo.name || DEFAULT_NAME)
@@ -137,7 +151,8 @@ function getCmake() {
         .replaceAll('#[[libRepos]]', libRepos)
         .replaceAll('#[[setup]]', setup)
         .replaceAll('#[[linkLibs]]', linkLibs)
-        .replaceAll('#[[usedLibs]]', usedLibs);
+        .replaceAll('#[[usedLibs]]', usedLibs)
+        .replaceAll('#[[libMacros]]', libMacros);
 }
 
 function updateCmake() {

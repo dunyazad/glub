@@ -32,6 +32,7 @@ else()
     message(WARNING "Unable to update git submodules, please update them manually.")
 endif()
 #[[usedLibs]]
+#[[libMacros]]
 #[[setup]]
 if(EXISTS ${PROJECT_SOURCE_DIR}/res)
     message(STATUS "Copying resources...")
@@ -45,7 +46,7 @@ add_executable(#[[name]] ${SRC_FILES})
 
 if(UNIX)
     add_compile_options(-g -O0 -fprofile-arcs -ftest-coverage)
-    target_compile_options(#[[name]] PUBLIC -Wall -Wextra -pedantic)
+    target_compile_options(#[[name]] PUBLIC -Wall -Wextra -pedantic -lX11 -lGL)
 else()
     message(FATAL_ERROR "Detected platform is not supported!")
 endif()

@@ -3,7 +3,7 @@
 /*includeLibs*/
 /*window*/
 int main () {
-    Window window;
+    WindowClass window;
 
     std::cout << "Creating window..." << std::flush;
 
@@ -13,6 +13,8 @@ int main () {
     }
 
     std::cout << "OK" << std::endl;
+
+    /*init*/
 
     std::function<void()> update = [&] () {
         /*update*/
