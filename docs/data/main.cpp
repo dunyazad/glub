@@ -13,7 +13,6 @@ int main () {
     }
 
     std::cout << "OK" << std::endl;
-
     /*init*/
 
     std::function<void()> update = [&] () {
