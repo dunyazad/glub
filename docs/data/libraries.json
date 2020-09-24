@@ -28,7 +28,9 @@
     "category": "Utility",
     "selected": false,
     "ssh": "git://git.sv.nongnu.org/freetype/freetype2.git",
-    "setup": "add_subdirectory(lib/freetype)\ninclude_directories(lib/freetype/include)"
+    "setup": "add_subdirectory(lib/freetype)\ninclude_directories(lib/freetype/include)",
+    "include": "#include <ft2build.h>\n#include FT_FREETYPE_H",
+    "init": "\nFT_Library ft;\nif (FT_Init_FreeType(&ft)) {\nstd::cout << \"FAILED\" << std::endl;\n\n}"
   },
   "GLFW": {
     "category": "Utility",
