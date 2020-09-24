@@ -88,7 +88,7 @@ function cmakeToHtml(cmake) {
 }
 
 function getCmake() {
-    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false;
+    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false, compileOptions = '';
 
     $('.settings-container .selected').each((item, element) => {
         selected.push($(element).attr('id'));
@@ -131,12 +131,20 @@ function getCmake() {
             setup += `\nmessage(STATUS "Setting up ${lib}...")\n${data[lib]['setup']}\n`;
         }
 
-        linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} ${lib.toLowerCase()})\n`;
+        if (data[lib]['linkLib']) {
+            linkLibs += `${data[lib]['linkLib']}\n`;
+        } else {
+            linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} ${lib.toLowerCase()})\n`;
+        }
         usedLibs += `\nset(LIB_${lib} ON)`;
         libMacros += `\nadd_compile_definitions(LIB_${lib.toUpperCase()})`;
 
         if (data[lib]['customWindow']) {
             hasWindowLib = true;
+        }
+
+        if (data[lib]['compileOptions']) {
+            compileOptions += ` ${data[lib]['compileOptions']}`;
         }
     }
 
@@ -144,15 +152,16 @@ function getCmake() {
         linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} X11)\n`;
     }
 
-    return rawCmake.replaceAll('#[[name]]', projectInfo.name || DEFAULT_NAME)
-        .replaceAll('#[[version]]', projectInfo.version || DEFAULT_VERSION)
-        .replaceAll('#[[description]]', projectInfo.description || DEFAULT_DESCRIPTION)
-        .replaceAll('#[[libPaths]]', libPaths)
+    return rawCmake.replaceAll('#[[libPaths]]', libPaths)
         .replaceAll('#[[libRepos]]', libRepos)
         .replaceAll('#[[setup]]', setup)
         .replaceAll('#[[linkLibs]]', linkLibs)
         .replaceAll('#[[usedLibs]]', usedLibs)
-        .replaceAll('#[[libMacros]]', libMacros);
+        .replaceAll('#[[libMacros]]', libMacros)
+        .replaceAll('#[[compileOptions]]', compileOptions)
+        .replaceAll('#[[name]]', projectInfo.name || DEFAULT_NAME)
+        .replaceAll('#[[version]]', projectInfo.version || DEFAULT_VERSION)
+        .replaceAll('#[[description]]', projectInfo.description || DEFAULT_DESCRIPTION);
 }
 
 function updateCmake() {

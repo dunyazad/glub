@@ -61,7 +61,11 @@
     "incompatible": [
       "GLFW"
     ],
-    "setup": "add_subdirectory(lib/sdl)\ninclude_directories(lib/sdl/include)"
+    "setup": "add_subdirectory(lib/sdl)\ninclude_directories(lib/sdl/include)",
+    "linkLib": "target_link_libraries(#[[name]] SDL2)",
+    "customWindow": true,
+    "include": "#include <SDL2/SDL.h>",
+    "compileOptions": "-l SDL2"
   },
   "STB": {
     "category": "Utility",
