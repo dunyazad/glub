@@ -10,6 +10,7 @@
     "require": [
       "GLFW|SDL"
     ],
+    "linkLib": "target_link_libraries(#[[name]] glad ${CMAKE_DL_LIBS})",
     "setup": "add_subdirectory(lib/glad)\ninclude_directories(${CMAKE_BINARY_DIR}lib/glad/include)",
     "include": "#include <glad/glad.h>",
     "init": "\n#ifdef LIB_GLFW\nauto gladAddress = glfwGetProcAddress;\n#endif\n\n#ifdef LIB_SDL\nauto gladAddress = SDL_GL_GetProcAddress;\n#endif\n\nif (!gladLoadGLLoader((GLADloadproc) gladAddress)) {\nstd::cout << \"FAILED\" << std::endl;\nreturn -1;\n}\n"
@@ -53,7 +54,13 @@
       "GLEW|GLAD",
       "GLFW|SDL"
     ],
-    "setup": "include_directories(lib/imgui lib/imgui/examples)\nif(LIB_GLFW)\nfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_glfw.h\" \"./lib/imgui/examples/imgui_impl_glfw.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nelseif(LIB_SDL)\nfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_sdl.h\" \"./lib/imgui/examples/imgui_impl_sdl.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nendif()"
+    "setup": "include_directories(lib/imgui lib/imgui/examples)\nif(LIB_GLFW)\nfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_glfw.h\" \"./lib/imgui/examples/imgui_impl_glfw.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nelseif(LIB_SDL)\nfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_sdl.h\" \"./lib/imgui/examples/imgui_impl_sdl.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nendif()\n\nif(LIB_GLAD)\nset(IMGUI_COMPILE_OPTIONS \"-DIMGUI_IMPL_OPENGL_LOADER_GLAD\")\nelse()\nset(IMGUI_COMPILE_OPTIONS \"\")\nendif()",
+    "execFiles": "IMGUI_FILES",
+    "compileOptions": "${IMGUI_COMPILE_OPTIONS}",
+    "linkLib": " ",
+    "include": "#include <imgui.h>\n\n#ifdef LIB_GLFW\n#include <imgui_impl_glfw.h>\n#endif\n\n#ifdef LIB_SDL\n#include <imgui_impl_sdl.h>\n#endif\n\n#include <imgui_impl_opengl3.h>",
+    "init": "\nIMGUI_CHECKVERSION();\nImGui::CreateContext();\nImGuiIO& io = ImGui::GetIO();\n(void) io;\nImGui::StyleColorsDark();\n\n#ifdef LIB_GLFW\nImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true);\n#endif\n\n#ifdef LIB_SDL\nImGui_ImplSDL2_InitForOpenGL(window.getWindow(), window.getContext());\n#endif\n\nImGui_ImplOpenGL3_Init(\"#version 330\");\nbool demoWindow = true;",
+    "update": "\nImGui_ImplOpenGL3_NewFrame();\n\n#ifdef LIB_GLFW\nImGui_ImplGlfw_NewFrame();\n#endif\n\n#ifdef LIB_SDL\nImGui_ImplSDL2_NewFrame(window.getWindow());\n#endif\n\nImGui::NewFrame();\nImGui::ShowDemoWindow(&demoWindow);\nImGui::Render();\nImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());"
   },
   "SDL": {
     "category": "Utility",

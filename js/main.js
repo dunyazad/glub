@@ -3,7 +3,7 @@ const rawMain = $.get('data/main.cpp').responseText;
 $.ajaxSetup({ async: true });
 
 function getMain() {
-    let includes = '', windowClass = '', init = '';
+    let includes = '', windowClass = '', init = '', update = '';
 
     for (let lib of Object.keys(data)) {
         if (data[lib]['selected']) {
@@ -12,7 +12,11 @@ function getMain() {
             }
 
             if (data[lib]['init']) {
-                init += `\nstd::cout << "Initializing ${lib}..." << std::flush;\n${data[lib]['init']}\nstd::cout << "OK" << std::endl;\n`;
+                init += `\nstd::cout << "Initializing ${lib}..." << std::flush;\n${data[lib]['init']}\n\nstd::cout << "OK" << std::endl;`;
+            }
+
+            if (data[lib]['update']) {
+                update += data[lib]['update'];
             }
 
             if (data[lib]['customWindow']) {
@@ -32,5 +36,6 @@ function getMain() {
     return rawMain.replaceAll('/*name*/', projectInfo.name || DEFAULT_NAME)
         .replaceAll('/*includeLibs*/', includes)
         .replaceAll('/*init*/', init)
+        .replaceAll('/*update*/', update)
         .replaceAll('/*window*/', windowClass);
 }

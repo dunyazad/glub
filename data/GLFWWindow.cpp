@@ -44,6 +44,10 @@ public:
         }
     }
 
+    GLFWwindow * getWindow() const {
+        return window;
+    }
+
 private:
     GLFWwindow * window = nullptr;
 };

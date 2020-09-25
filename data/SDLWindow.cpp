@@ -36,6 +36,8 @@ public:
                 }
             }
 
+            onUpdate();
+
             SDL_RenderClear(renderer);
             SDL_RenderPresent(renderer);
             SDL_GL_SwapWindow(window);
@@ -54,6 +56,14 @@ public:
         if (window) {
             SDL_DestroyWindow(window);
         }
+    }
+
+    SDL_Window * getWindow() const {
+        return window;
+    }
+
+    void * getContext() const {
+        return context;
     }
 
 private:
