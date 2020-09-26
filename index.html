@@ -11,8 +11,13 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
-        <script src="index.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="js/globals.js"></script>
+        <script type="text/javascript" src="js/helper.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/cmake.js"></script>
+        <script type="text/javascript" src="js/init.js"></script>
+        <script type="text/javascript" src="index.js"></script>
 
         <div class="container">
             <div class="title-group">
@@ -25,33 +30,24 @@
                         <p class="card-title">Project info</p>
                         <div>
                             <label style="width: calc(70% - 8px)">
-                                <input id="project-name" class="wide" style="margin-right: 8px" type="text" placeholder="glub" />
+                                <input id="project-name" class="wide" style="margin-right: 8px" type="text" />
                             </label>
                             <label style="width: calc(30% - 8px)">
-                                <input id="project-version" class="wide" style="margin-left: 8px" type="text" placeholder="1.0.0" />
+                                <input id="project-version" class="wide" style="margin-left: 8px" type="text" />
                             </label>
                         </div>
                         <label class="wide">
-                            <input id="project-description" class="wide" type="text" placeholder="Simple CMake setup for developing OpenGL programs in C++" aria-multiline="true"/>
+                            <input id="project-description" class="wide" type="text" aria-multiline="true"/>
                         </label>
                     </div>
-                    <div class="outline half-tile loading-library">
+                    <div class="outline half-tile loading-library" data-category="Loading library">
                         <p class="card-title">Loading library</p>
-                        <button id="glad" class="option">GLAD</button>
-                        <button id="glew" class="option">GLEW</button>
                     </div>
-                    <div class="outline half-tile" style="margin-left: 12px; float: right">
+                    <div class="outline half-tile" style="margin-left: 12px; float: right" data-category="Utility">
                         <p class="card-title">Utility</p>
-                        <button id="freetype" class="option">Freetype</button>
-                        <button id="glfw" class="option">GLFW</button>
-                        <button id="imgui" class="option">Imgui</button>
-                        <button id="sdl" class="option">SDL</button>
-                        <button id="stb" class="option">STB</button>
                     </div>
-                    <div class="outline half-tile math" style="float: left">
+                    <div class="outline half-tile math" style="float: left" data-category="Math">
                         <p class="card-title">Math</p>
-                        <button id="glm" class="option">glm</button>
-                        <button id="mathfu" class="option">MathFu</button>
                     </div>
                 </div>
             </div>
@@ -61,7 +57,7 @@
                 <div class="tooltip" id="main-tooltip">Copy basic main.cpp file to clipboard</div>
                 <a class="gh-link" id="gh-link" href="https://github.com/Drgy/glub" target="_blank"><img src="img/github.svg" alt="github repository" /></a>
                 <div class="tooltip" id="gh-tooltip">Open Github repository</div>
-                <div id="result"></div>
+                <div title="Click to copy" id="result"></div>
             </div>
         </div>
     </body>

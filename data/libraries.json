@@ -1,0 +1,107 @@
+{
+  "GLAD": {
+    "category": "Loading library",
+    "selected": false,
+    "ssh": "git@github.com:Dav1dde/glad.git",
+    "https": "https://github.com/Dav1dde/glad.git",
+    "incompatible": [
+      "GLEW"
+    ],
+    "require": [
+      "GLFW|SDL"
+    ],
+    "linkLib": "target_link_libraries(#[[name]] glad ${CMAKE_DL_LIBS})",
+    "setup": "add_subdirectory(lib/glad)\ninclude_directories(${CMAKE_BINARY_DIR}lib/glad/include)",
+    "include": "#include <glad/glad.h>",
+    "init": "\n\t#ifdef LIB_GLFW\n\t\tauto gladAddress = glfwGetProcAddress;\n\t#endif\n\n\t#ifdef LIB_SDL\n\t\tauto gladAddress = SDL_GL_GetProcAddress;\n\t#endif\n\n\tif (!gladLoadGLLoader((GLADloadproc) gladAddress)) {\n\t\tstd::cout << \"FAILED\" << std::endl;\n\t\treturn 1;\n\t}\n"
+  },
+  "GLEW": {
+    "category": "Loading library",
+    "selected": true,
+    "https": "https://github.com/Perlmint/glew-cmake.git",
+    "ssh": "git@github.com:Perlmint/glew-cmake.git",
+    "incompatible": [
+      "GLAD"
+    ],
+    "setup": "add_subdirectory(lib/glew/build/cmake)\nadd_compile_definitions(GLEW_STATIC)\ninclude_directories(lib/glew/include)",
+    "include": "#include <GL/glew.h>",
+    "init": "\tif (glewInit() != GLEW_OK) {\n\t\tstd::cout << \"FAILED\" << std::endl;\n\t\treturn 1;\n\t}"
+  },
+  "Freetype": {
+    "category": "Utility",
+    "selected": false,
+    "ssh": "git://git.sv.nongnu.org/freetype/freetype2.git",
+    "setup": "add_subdirectory(lib/freetype)\ninclude_directories(lib/freetype/include)",
+    "include": "#include <ft2build.h>\n#include FT_FREETYPE_H",
+    "init": "\n\tFT_Library ft;\n\n\tif (FT_Init_FreeType(&ft)) {\n\t\tstd::cout << \"FAILED\" << std::endl;\n\t\treturn 1;\n\t}"
+  },
+  "GLFW": {
+    "category": "Utility",
+    "selected": true,
+    "https": "https://github.com/glfw/glfw.git",
+    "ssh": "git@github.com:glfw/glfw.git",
+    "incompatible": [
+      "SDL"
+    ],
+    "setup": "set(GLFW_BUILD_DOCS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_TESTS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_EXAMPLES OFF CACHE BOOL \"\" FORCE)\nadd_subdirectory(lib/glfw)\ninclude_directories(lib/glfw/include)",
+    "customWindow": true,
+    "include": "#include <GLFW/glfw3.h>"
+  },
+  "Imgui": {
+    "category": "Utility",
+    "selected": false,
+    "https": "https://github.com/ocornut/imgui.git",
+    "ssh": "git@github.com:ocornut/imgui.git",
+    "require": [
+      "GLEW|GLAD",
+      "GLFW|SDL"
+    ],
+    "setup": "include_directories(lib/imgui lib/imgui/examples)\nif(LIB_GLFW)\n\tfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_glfw.h\" \"./lib/imgui/examples/imgui_impl_glfw.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nelseif(LIB_SDL)\n\tfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_sdl.h\" \"./lib/imgui/examples/imgui_impl_sdl.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nendif()\n\nif(LIB_GLAD)\n\tset(IMGUI_COMPILE_OPTIONS \"-DIMGUI_IMPL_OPENGL_LOADER_GLAD\")\nelse()\n\tset(IMGUI_COMPILE_OPTIONS \"\")\nendif()",
+    "execFiles": "IMGUI_FILES",
+    "compileOptions": "${IMGUI_COMPILE_OPTIONS}",
+    "linkLib": " ",
+    "include": "#include <imgui.h>\n\n#ifdef LIB_GLFW\n\t#include <imgui_impl_glfw.h>\n#endif\n\n#ifdef LIB_SDL\n\t#include <imgui_impl_sdl.h>\n#endif\n\n#include <imgui_impl_opengl3.h>",
+    "init": "\n\tIMGUI_CHECKVERSION();\n\tImGui::CreateContext();\n\tImGuiIO& io = ImGui::GetIO();\n\t(void) io;\n\tImGui::StyleColorsDark();\n\n\t#ifdef LIB_GLFW\n\t\tImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true);\n\t#endif\n\n\t#ifdef LIB_SDL\n\t\tImGui_ImplSDL2_InitForOpenGL(window.getWindow(), window.getContext());\n\t#endif\n\n\tImGui_ImplOpenGL3_Init(\"#version 330\");\n\tbool demoWindow = true;",
+    "update": "ImGui_ImplOpenGL3_NewFrame();\n\n\t\t#ifdef LIB_GLFW\n\t\t\tImGui_ImplGlfw_NewFrame();\n\t\t#endif\n\n\t\t#ifdef LIB_SDL\n\t\t\tImGui_ImplSDL2_NewFrame(window.getWindow());\n\t\t#endif\n\n\t\tImGui::NewFrame();\n\t\tImGui::ShowDemoWindow(&demoWindow);\n\t\tImGui::Render();\n\t\tImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());"
+  },
+  "SDL": {
+    "category": "Utility",
+    "selected": false,
+    "https": "https://github.com/SDL-mirror/SDL.git",
+    "ssh": "git@github.com:SDL-mirror/SDL.git",
+    "incompatible": [
+      "GLFW"
+    ],
+    "setup": "add_subdirectory(lib/sdl)\ninclude_directories(lib/sdl/include)",
+    "linkLib": "target_link_libraries(#[[name]] SDL2)",
+    "customWindow": true,
+    "include": "#include <SDL2/SDL.h>",
+    "compileOptions": "-l SDL2"
+  },
+  "STB": {
+    "category": "Utility",
+    "selected": true,
+    "https": "https://github.com/nothings/stb.git",
+    "ssh": "git@github.com:nothings/stb.git",
+    "setup": "include_directories(lib/stb)",
+    "linkLib": " ",
+    "include": "#define STB_IMAGE_IMPLEMENTATION\n#include <stb_image.h>\n#define STB_IMAGE_WRITE_IMPLEMENTATION\n#include <stb_image_write.h>",
+    "init": "\n\tint width = 100;\n\tint height = 100;\n\tint channels = 3;\n\tint index = 0;\n\tuint8_t * pixels = new uint8_t[width * height * channels];\n\n\tfor (int i = 0; i < height; i++) {\n\t\tfor (int j = 0; j < width; j++) {\n\t\t\tpixels[index++] = int(255.99 * ((float)j / (float)width));\n\t\t\tpixels[index++] = int(255.99 * ((float)i / (float)height));\n\t\t\tpixels[index++] = int(255.99 * 0.5);\n\t\t}\n\t}\n\n\tstbi_write_png(\"stb_test.png\", width, height, channels, pixels, width * channels);\n\n\tunsigned char * img = stbi_load(\"stb_test.png\", &width, &height, &channels, 0);\n\n\tif (img == nullptr) {\n\t\tstd::cout << \"Failed\" << std::endl;\n\t\treturn 1;\n\t}"
+  },
+  "glm": {
+    "category": "Math",
+    "selected": true,
+    "https": "https://github.com/g-truc/glm.git",
+    "ssh": "git@github.com:g-truc/glm.git",
+    "setup": "include_directories(lib/glm/glm)",
+    "linkLib": " "
+  },
+  "MathFu": {
+    "category": "Math",
+    "selected": false,
+    "https": "https://github.com/google/mathfu.git",
+    "ssh": "git@github.com:google/mathfu.git",
+    "setup": "include_directories(lib/mathfu/include)\ninclude_directories(lib/mathfu/dependencies/vectorial/include)",
+    "linkLib": " "
+  }
+}
