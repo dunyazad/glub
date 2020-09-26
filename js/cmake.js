@@ -1,5 +1,6 @@
 $.ajaxSetup({ async: false });
 const rawCmake = $.get('data/CMakeLists.txt').responseText;
+const rawSubmodulesUpdate = $.get('data/SubmodulesUpdate.txt').responseText;
 $.ajaxSetup({ async: true });
 
 function cmakeToHtml(cmake) {
@@ -88,7 +89,7 @@ function cmakeToHtml(cmake) {
 }
 
 function getCmake() {
-    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false, compileOptions = '', execFiles = `\${SRC_FILES}`;
+    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false, compileOptions = '', execFiles = `\${SRC_FILES}`, submodulesUpdate='';
 
     $('.settings-container .selected').each((item, element) => {
         selected.push($(element).attr('id'));
@@ -154,11 +155,16 @@ function getCmake() {
         }
     }
 
+    if (libPaths !== '') {
+        submodulesUpdate = rawSubmodulesUpdate;
+    }
+
     if (!hasWindowLib) {
         linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} X11)\n`;
     }
 
-    return rawCmake.replaceAll('#[[libPaths]]', libPaths)
+    return rawCmake.replaceAll('#[[submodulesUpdate]]', submodulesUpdate)
+        .replaceAll('#[[libPaths]]', libPaths)
         .replaceAll('#[[libRepos]]', libRepos)
         .replaceAll('#[[setup]]', setup)
         .replaceAll('#[[linkLibs]]', linkLibs)
