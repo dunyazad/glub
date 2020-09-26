@@ -1,4 +1,4 @@
-![glub](./docs/img/glub.svg)
+![glub](./img/glub.svg)
 
 # openGL's Ultimate Boilerplate
 Easy to use CMake boilerplate for developing OpenGL programs in C++
