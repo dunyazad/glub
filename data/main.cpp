@@ -3,23 +3,23 @@
 /*includeLibs*/
 /*window*/
 int main () {
-    WindowClass window;
+	WindowClass window;
 
-    std::cout << "Creating window..." << std::flush;
+	std::cout << "Creating window..." << std::flush;
 
-    if (!window.create(640, 480, "/*name*/")) {
-        std::cout << "FAILED" << std::endl;
-        return -1;
-    }
+	if (!window.create(640, 480, "/*name*/")) {
+		std::cout << "FAILED" << std::endl;
+		return 1;
+	}
 
-    std::cout << "OK" << std::endl;
-    /*init*/
+	std::cout << "OK" << std::endl;
+	/*init*/
 
-    std::function<void()> update = [&] () {
-        /*update*/
-    };
+	std::function<void()> update = [&] () {
+		/*update*/
+	};
 
-    window.start(update);
+	window.start(update);
 
-    return 0;
+	return 0;
 }

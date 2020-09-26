@@ -12,7 +12,7 @@ function getMain() {
             }
 
             if (data[lib]['init']) {
-                init += `\nstd::cout << "Initializing ${lib}..." << std::flush;\n${data[lib]['init']}\n\nstd::cout << "OK" << std::endl;`;
+                init += `\n\tstd::cout << "Initializing ${lib}..." << std::flush;\n${data[lib]['init']}\n\n\tstd::cout << "OK" << std::endl;`;
             }
 
             if (data[lib]['update']) {

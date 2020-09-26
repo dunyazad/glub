@@ -4,8 +4,8 @@ project(#[[name]] VERSION #[[version]] DESCRIPTION "#[[description]]" LANGUAGES 
 #[[libMacros]]
 #[[setup]]
 if(EXISTS ${PROJECT_SOURCE_DIR}/res)
-    message(STATUS "Copying resources...")
-    file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR})
+	message(STATUS "Copying resources...")
+	file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR})
 endif()
 
 message(STATUS "Setting up build options...")
@@ -14,10 +14,10 @@ file(GLOB_RECURSE SRC_FILES "./src/*.h" "./src/*.cpp")
 add_executable(#[[name]] #[[execFiles]])
 
 if(UNIX)
-    add_compile_options(-g -O0 -fprofile-arcs -ftest-coverage)
-    target_compile_options(#[[name]] PUBLIC -Wall -Wextra -pedantic -lX11 -lGL#[[compileOptions]])
+	add_compile_options(-g -O0 -fprofile-arcs -ftest-coverage)
+	target_compile_options(#[[name]] PUBLIC -Wall -Wextra -pedantic -lX11 -lGL#[[compileOptions]])
 else()
-    message(FATAL_ERROR "Detected platform is not supported!")
+	message(FATAL_ERROR "Detected platform is not supported!")
 endif()
 
 message(STATUS "Linking...")
