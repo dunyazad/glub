@@ -93,13 +93,15 @@
     "selected": true,
     "https": "https://github.com/g-truc/glm.git",
     "ssh": "git@github.com:g-truc/glm.git",
-    "setup": "include_directories(lib/glm/glm)"
+    "setup": "include_directories(lib/glm/glm)",
+    "linkLib": " "
   },
   "MathFu": {
     "category": "Math",
     "selected": false,
     "https": "https://github.com/google/mathfu.git",
     "ssh": "git@github.com:google/mathfu.git",
-    "setup": "include_directories(lib/mathfu/include)\ninclude_directories(lib/mathfu/dependencies/vectorial/include)"
+    "setup": "include_directories(lib/mathfu/include)\ninclude_directories(lib/mathfu/dependencies/vectorial/include)",
+    "linkLib": " "
   }
 }
