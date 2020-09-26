@@ -132,7 +132,9 @@ function getCmake() {
         }
 
         if (data[lib]['linkLib']) {
-            linkLibs += `${data[lib]['linkLib']}\n`;
+            if (data[lib]['linkLib'].trim() !== '') {
+                linkLibs += `${data[lib]['linkLib']}\n`;
+            }
         } else {
             linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} ${lib.toLowerCase()})\n`;
         }
