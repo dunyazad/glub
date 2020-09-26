@@ -23,7 +23,9 @@
     "incompatible": [
       "GLAD"
     ],
-    "setup": "add_subdirectory(lib/glew/build/cmake)\nadd_compile_definitions(GLEW_STATIC)\ninclude_directories(lib/glew/include)"
+    "setup": "add_subdirectory(lib/glew/build/cmake)\nadd_compile_definitions(GLEW_STATIC)\ninclude_directories(lib/glew/include)",
+    "include": "#include <GL/glew.h>",
+    "init": "if (glewInit() != GLEW_OK) {\nstd::cout << \"FAILED\" << std::endl;\n}"
   },
   "Freetype": {
     "category": "Utility",
