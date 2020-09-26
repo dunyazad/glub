@@ -81,7 +81,10 @@
     "selected": true,
     "https": "https://github.com/nothings/stb.git",
     "ssh": "git@github.com:nothings/stb.git",
-    "setup": "include_directories(lib/stb)"
+    "setup": "include_directories(lib/stb)",
+    "linkLib": " ",
+    "include": "#define STB_IMAGE_IMPLEMENTATION\n#include <stb_image.h>\n#define STB_IMAGE_WRITE_IMPLEMENTATION\n#include <stb_image_write.h>",
+    "init": "\nint width = 100;\nint height = 100;\nint channels = 3;\nint index = 0;\nuint8_t * pixels = new uint8_t[width * height * channels];\n\nfor (int i = 0; i < height; i++) {\nfor (int j = 0; j < width; j++) {\npixels[index++] = int(255.99 * ((float)j / (float)width));\npixels[index++] = int(255.99 * ((float)i / (float)height));\npixels[index++] = int(255.99 * 0.5);\n}\n}\n\nstbi_write_png(\"stb_test.png\", width, height, channels, pixels, width * channels);\n\nunsigned char * img = stbi_load(\"stb_test.png\", &width, &height, &channels, 0);\n\nif (img == nullptr) {\nstd::cout << \"Failed\" << std::endl;\nreturn 1;\n}"
   },
   "glm": {
     "category": "Math",
