@@ -140,5 +140,7 @@ function init() {
         });
     }
 
+    $('.cmake-card').css('min-height', $('.setting-cards').height());
+
     updateCmake();
 }

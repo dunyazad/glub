@@ -12,12 +12,12 @@ p {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #1d1f21;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 ::-webkit-scrollbar {
     width: 6px;
-    background-color: #1d1f21;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -87,6 +87,7 @@ input[type="text"]:focus {
     transition: color 180ms ease;
     user-select: none;
     cursor: pointer;
+    z-index: 5;
 }
 
 .card-title.right {
@@ -102,7 +103,9 @@ input[type="text"]:focus {
     width: calc(50% - 5px);
     display: inline-block;
     float: right;
-    margin-bottom: 100px;
+    margin-bottom: 80px;
+    height: calc(100vh - 284px);
+    position: relative;
 }
 
 .setting-cards {
@@ -113,6 +116,14 @@ input[type="text"]:focus {
 #result {
     word-break: break-word;
     cursor: pointer;
+    position: absolute;
+    overflow-y: scroll;
+    width: 100%;
+    height: calc(100% - 4px);
+    padding: 18px 20px;
+    top: 2px;
+    left: 0;
+    z-index: 1;
 }
 
 .green {
@@ -176,6 +187,7 @@ input[type="text"]:focus {
 .gh-link {
     position: absolute;
     right: 65px;
+    z-index: 10;
 }
 
 .gh-link img {
