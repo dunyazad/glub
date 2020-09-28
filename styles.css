@@ -236,6 +236,7 @@ input[type="text"]:focus {
         width: 100%;
         margin: 24px 0 40px;
         float: none;
+        height: auto;
     }
 
     .settings-container {
@@ -257,6 +258,10 @@ input[type="text"]:focus {
 
     #main-tooltip {
         right: -14px;
+    }
+
+    #result {
+        position: relative;
     }
 }
 
