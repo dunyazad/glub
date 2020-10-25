@@ -2,13 +2,11 @@ function init() {
     $('#result').on('click', () => {
         copyToClipboard(getCmake());
         toast("CMakeLists.txt contents copied to clipboard");
-        save();
     });
 
     $('#main').on('click', () => {
         copyToClipboard(getMain());
         toast("main.cpp contents copied to clipboard");
-        save();
     });
 
     $('#main').on('mouseover', () => {

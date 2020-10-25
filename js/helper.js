@@ -15,11 +15,3 @@ function toast(str) {
         });
     });
 }
-
-function save() {
-    localStorage.setItem('libData', JSON.stringify(data));
-
-    if (projectInfo.name && projectInfo.version && projectInfo.description) {
-        localStorage.setItem('projectInfo', JSON.stringify(projectInfo));
-    }
-}
