@@ -48,6 +48,20 @@ function init() {
     });
     $('#project-description').attr('placeholder', DEFAULT_DESCRIPTION);
 
+    $('#src-path').on('input', () => {
+        projectInfo.srcPath = $('#src-path').val().replace(';', '');
+        $('#src-path').val(projectInfo.srcPath);
+        updateCmake();
+    });
+    $('#src-path').attr('placeholder', DEFAULT_SRC_PATH);
+
+    $('#res-path').on('input', () => {
+        projectInfo.resPath = $('#res-path').val().replace(';', '');
+        $('#res-path').val(projectInfo.resPath);
+        updateCmake();
+    });
+    $('#res-path').attr('placeholder', DEFAULT_RES_PATH);
+
     function toggleLib(lib) {
         data[lib]['selected'] = !data[lib]['selected'];
         $(`#${lib}`).toggleClass('selected');

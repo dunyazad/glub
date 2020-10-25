@@ -174,7 +174,9 @@ function getCmake() {
         .replaceAll('#[[execFiles]]', execFiles)
         .replaceAll('#[[name]]', projectInfo.name || DEFAULT_NAME)
         .replaceAll('#[[version]]', projectInfo.version || DEFAULT_VERSION)
-        .replaceAll('#[[description]]', projectInfo.description || DEFAULT_DESCRIPTION);
+        .replaceAll('#[[description]]', projectInfo.description || DEFAULT_DESCRIPTION)
+        .replaceAll('#[[srcPath]]', projectInfo.srcPath || DEFAULT_SRC_PATH)
+        .replaceAll('#[[resPath]]', projectInfo.resPath || DEFAULT_RES_PATH);
 }
 
 function updateCmake() {

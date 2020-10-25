@@ -43,6 +43,10 @@ p {
     width: 100%;
 }
 
+.half {
+    width: calc(50% - 8px);
+}
+
 .outline {
     border: 2px solid #c5c8c6;
     border-radius: 10px;

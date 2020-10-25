@@ -3,14 +3,13 @@ cmake_minimum_required(VERSION 3.15)
 project(#[[name]] VERSION #[[version]] DESCRIPTION "#[[description]]" LANGUAGES CXX)#[[submodulesUpdate]]#[[usedLibs]]
 #[[libMacros]]
 #[[setup]]
-if(EXISTS ${PROJECT_SOURCE_DIR}/res)
+if(EXISTS ${PROJECT_SOURCE_DIR}/#[[resPath]])
 	message(STATUS "Copying resources...")
-	file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR})
+	file(COPY ${PROJECT_SOURCE_DIR}/#[[resPath]] DESTINATION ${CMAKE_BINARY_DIR}/#[[resPath]])
 endif()
 
 message(STATUS "Setting up build options...")
-set(CMAKE_CXX_STANDARD 17)
-file(GLOB_RECURSE SRC_FILES "./src/*.h" "./src/*.cpp")
+file(GLOB_RECURSE SRC_FILES "./#[[srcPath]]*.h" "./#[[srcPath]]*.cpp")
 add_executable(#[[name]] #[[execFiles]])
 
 if(UNIX)
