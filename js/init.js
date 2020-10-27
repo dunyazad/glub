@@ -60,6 +60,21 @@ function init() {
     });
     $('#res-path').attr('placeholder', DEFAULT_RES_PATH);
 
+    $('#https').on('click', () => {
+        useHttps = true;
+        $('#ssh').removeClass('active');
+        $('#https').addClass('active');
+        updateCmake();
+    });
+    $('#https').addClass('active');
+
+    $('#ssh').on('click', () => {
+        useHttps = false;
+        $('#https').removeClass('active');
+        $('#ssh').addClass('active');
+        updateCmake();
+    });
+
     function toggleLib(lib) {
         data[lib]['selected'] = !data[lib]['selected'];
         $(`#${lib}`).toggleClass('selected');

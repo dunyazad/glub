@@ -45,6 +45,7 @@ p {
 
 .half {
     width: calc(50% - 8px);
+    display: inline-block;
 }
 
 .outline {
@@ -287,4 +288,41 @@ input[type="text"]:focus {
     #result {
         margin-top: 50px;
     }
+}
+
+.toggle {
+    float: right;
+    width: calc(50% + 5px);
+    text-align: right;
+}
+
+.toggle button {
+    width: calc(50% - 5px);
+    background: #1d1f21;
+    border: 2px solid #c5c8c6;
+    border-radius: 10px;
+    display: inline-block;
+    color: #c5c8c6;
+    outline: none;
+    transition: all 180ms ease;
+}
+
+.toggle button:hover, .toggle button:focus {
+    color: rgba(25, 136, 68, .6);
+}
+
+.toggle button.active {
+    background: #c5c8c6;
+    color: #1d1f21;
+}
+
+.toggle button:first-of-type {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.toggle button:last-of-type {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    margin-left: -10px;
 }
