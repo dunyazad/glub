@@ -10,10 +10,9 @@ endif()
 
 message(STATUS "Setting up build options...")
 file(GLOB_RECURSE SRC_FILES "./#[[srcPath]]*.h" "./#[[srcPath]]*.cpp")
-add_executable(#[[name]] #[[execFiles]])
+#[[addTarget]]
 
 if(UNIX)
-	add_compile_options(-g -O0 -fprofile-arcs -ftest-coverage)
 	target_compile_options(#[[name]] PUBLIC -Wall -Wextra -pedantic -lX11 -lGL#[[compileOptions]])
 else()
 	message(FATAL_ERROR "Detected platform is not supported!")

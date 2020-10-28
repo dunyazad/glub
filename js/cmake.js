@@ -89,7 +89,7 @@ function cmakeToHtml(cmake) {
 }
 
 function getCmake() {
-    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false, compileOptions = '', execFiles = `\${SRC_FILES}`, submodulesUpdate='';
+    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false, compileOptions = '', execFiles = `\${SRC_FILES}`, submodulesUpdate='', addTarget = '';
 
     $('.settings-container .selected').each((item, element) => {
         selected.push($(element).attr('id'));
@@ -163,7 +163,14 @@ function getCmake() {
         linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} X11)\n`;
     }
 
+    if (projectInfo.isLibrary) {
+        addTarget = `add_library(${projectInfo.name || DEFAULT_NAME} SHARED ${execFiles})`;
+    } else {
+        addTarget = `add_executable(${projectInfo.name || DEFAULT_NAME} ${execFiles})`;
+    }
+
     return rawCmake.replaceAll('#[[submodulesUpdate]]', submodulesUpdate)
+        .replaceAll('#[[addTarget]]', addTarget)
         .replaceAll('#[[libPaths]]', libPaths)
         .replaceAll('#[[libRepos]]', libRepos)
         .replaceAll('#[[setup]]', setup)

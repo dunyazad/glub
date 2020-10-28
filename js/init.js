@@ -75,6 +75,21 @@ function init() {
         updateCmake();
     });
 
+    $('#executable').on('click', () => {
+        projectInfo.isLibrary = false;
+        $('#library').removeClass('active');
+        $('#executable').addClass('active');
+        updateCmake();
+    });
+    $('#executable').addClass('active');
+
+    $('#library').on('click', () => {
+        projectInfo.isLibrary = true;
+        $('#executable').removeClass('active');
+        $('#library').addClass('active');
+        updateCmake();
+    });
+
     function toggleLib(lib) {
         data[lib]['selected'] = !data[lib]['selected'];
         $(`#${lib}`).toggleClass('selected');
