@@ -236,6 +236,64 @@ input[type="text"]:focus {
     font-family: 'Share Tech Mono', monospace;
 }
 
+.labeled-input {
+    height: 36px;
+    margin-bottom: 8px;
+}
+
+.labeled-input label {
+    margin: 6px 0 0 0;
+}
+
+.labeled-input input {
+    float: right;
+}
+
+.toggle {
+    float: right;
+    width: calc(50% + 5px);
+    text-align: right;
+}
+
+.toggle button {
+    width: calc(50% - 5px);
+    background: #1d1f21;
+    border: 2px solid #c5c8c6;
+    border-radius: 10px;
+    display: inline-block;
+    color: #c5c8c6;
+    outline: none;
+    transition: all 180ms ease;
+}
+
+.toggle-container {
+    position: relative;
+}
+
+.toggle-container label {
+    margin-top: 5px;
+}
+
+.toggle button:hover, .toggle button:focus {
+    color: rgba(25, 136, 68, .6);
+}
+
+.toggle button.active {
+    background: #c5c8c6;
+    color: #1d1f21;
+}
+
+.toggle button:first-of-type {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.toggle button:last-of-type {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    margin-left: -10px;
+}
+
 @media screen and (max-width: 991px) {
     .cmake-card {
         width: 100%;
@@ -271,6 +329,43 @@ input[type="text"]:focus {
     }
 }
 
+@media screen and (max-width: 573px) {
+    .labeled-input {
+        height: auto;
+    }
+
+    .labeled-input input {
+        width: 100%;
+    }
+
+    .labeled-input label {
+        margin: 12px 0 0;
+    }
+
+    .labeled-input.first label {
+        margin-top: 4px;
+    }
+
+    .toggle-container {
+        margin-top: 12px;
+    }
+
+    .toggle-container.first {
+        padding-top: 32px;
+    }
+
+    .toggle-container label {
+        margin: 0;
+    }
+
+    .toggle {
+        float: none;
+        text-align: left;
+        width: calc(100% + 16px);
+        display: block;
+    }
+}
+
 @media screen and (max-width: 475px) {
     .half-tile {
         display: block;
@@ -288,41 +383,4 @@ input[type="text"]:focus {
     #result {
         margin-top: 50px;
     }
-}
-
-.toggle {
-    float: right;
-    width: calc(50% + 5px);
-    text-align: right;
-}
-
-.toggle button {
-    width: calc(50% - 5px);
-    background: #1d1f21;
-    border: 2px solid #c5c8c6;
-    border-radius: 10px;
-    display: inline-block;
-    color: #c5c8c6;
-    outline: none;
-    transition: all 180ms ease;
-}
-
-.toggle button:hover, .toggle button:focus {
-    color: rgba(25, 136, 68, .6);
-}
-
-.toggle button.active {
-    background: #c5c8c6;
-    color: #1d1f21;
-}
-
-.toggle button:first-of-type {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-}
-
-.toggle button:last-of-type {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    margin-left: -10px;
 }
