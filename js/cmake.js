@@ -4,7 +4,7 @@ const rawSubmodulesUpdate = $.get('data/SubmodulesUpdate.txt').responseText;
 $.ajaxSetup({ async: true });
 
 function cmakeToHtml(cmake) {
-    let html = "", intend = 0, vars = [ "GIT_FOUND", "IMGUI_FILES", "SRC_FILES" ];
+    let html = "", intend = 0, vars = [ "GIT_FOUND", "IMGUI_FILES", "SRC_FILES", "RUNTIME_OUTPUT_DIRECTORY" ];
 
     for (let lib of Object.keys(data)) {
         vars.push(`LIB_${lib}`);

@@ -14,6 +14,8 @@ file(GLOB_RECURSE SRC_FILES "./#[[srcPath]]*.h" "./#[[srcPath]]*.cpp")
 
 if(UNIX)
 	target_compile_options(#[[name]] PUBLIC -Wall -Wextra -pedantic -lX11 -lGL#[[compileOptions]])
+elseif(WIN32)
+	target_compile_options(#[[name]] PUBLIC -Wall -pedantic)
 else()
 	message(FATAL_ERROR "Detected platform is not supported!")
 endif()

@@ -23,7 +23,7 @@
     "incompatible": [
       "GLAD"
     ],
-    "setup": "add_subdirectory(lib/glew/build/cmake)\nadd_compile_definitions(GLEW_STATIC)\ninclude_directories(lib/glew/include)",
+    "setup": "add_subdirectory(lib/glew/build/cmake)\nadd_compile_definitions(GLEW_STATIC)\ninclude_directories(lib/glew/include)\nif(WIN32)\n\tset_target_properties(glew PROPERTIES RUNTIME_OUTPUT_DIRECTORY \"${CMAKE_BINARY_DIR}\")\nendif()",
     "include": "#include <GL/glew.h>",
     "init": "\tif (glewInit() != GLEW_OK) {\n\t\tstd::cout << \"FAILED\" << std::endl;\n\t\treturn 1;\n\t}"
   },
@@ -43,7 +43,7 @@
     "incompatible": [
       "SDL"
     ],
-    "setup": "set(GLFW_BUILD_DOCS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_TESTS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_EXAMPLES OFF CACHE BOOL \"\" FORCE)\nadd_subdirectory(lib/glfw)\ninclude_directories(lib/glfw/include)",
+    "setup": "set(GLFW_BUILD_DOCS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_TESTS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_EXAMPLES OFF CACHE BOOL \"\" FORCE)\nset(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})\nset(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})\nadd_subdirectory(lib/glfw)\ninclude_directories(lib/glfw/include)",
     "customWindow": true,
     "include": "#include <GLFW/glfw3.h>"
   },
