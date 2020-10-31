@@ -58,7 +58,7 @@
     ],
     "setup": "include_directories(lib/imgui lib/imgui/examples)\nif(LIB_GLFW)\n\tfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_glfw.h\" \"./lib/imgui/examples/imgui_impl_glfw.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nelseif(LIB_SDL)\n\tfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_sdl.h\" \"./lib/imgui/examples/imgui_impl_sdl.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nendif()\n\nif(LIB_GLAD)\n\tset(IMGUI_COMPILE_OPTIONS \"-DIMGUI_IMPL_OPENGL_LOADER_GLAD\")\nelse()\n\tset(IMGUI_COMPILE_OPTIONS \"\")\nendif()",
     "execFiles": "IMGUI_FILES",
-    "compileOptions": "${IMGUI_COMPILE_OPTIONS}",
+    "unixCompileOptions": "${IMGUI_COMPILE_OPTIONS}",
     "linkLib": " ",
     "include": "#include <imgui.h>\n\n#ifdef LIB_GLFW\n\t#include <imgui_impl_glfw.h>\n#endif\n\n#ifdef LIB_SDL\n\t#include <imgui_impl_sdl.h>\n#endif\n\n#include <imgui_impl_opengl3.h>",
     "init": "\n\tIMGUI_CHECKVERSION();\n\tImGui::CreateContext();\n\tImGuiIO& io = ImGui::GetIO();\n\t(void) io;\n\tImGui::StyleColorsDark();\n\n\t#ifdef LIB_GLFW\n\t\tImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true);\n\t#endif\n\n\t#ifdef LIB_SDL\n\t\tImGui_ImplSDL2_InitForOpenGL(window.getWindow(), window.getContext());\n\t#endif\n\n\tImGui_ImplOpenGL3_Init(\"#version 330\");\n\tbool demoWindow = true;",
@@ -73,7 +73,7 @@
       "GLFW"
     ],
     "setup": "set(SDL_STATIC ON CACHE BOOL \"\" FORCE)\nset(SDL_SHARED OFF CACHE BOOL \"\" FORCE)\nadd_subdirectory(lib/sdl)\ninclude_directories(lib/sdl/include)",
-    "linkLib": "target_link_libraries(#[[name]] SDL2d SDL2maind SDL2-static)",
+    "linkLib": "if(UNIX)\n\ttarget_link_libraries(#[[name]] SDL2)\nelseif(WINDOWS)\n\ttarget_link_libraries(#[[name]] SDL2d SDL2maind SDL2-static)\nendif()",
     "customWindow": true,
     "include": "#ifdef UNIX\n\t#include <SDL2/SDL.h>\n#elif WIN32\n\t#include <SDL.h>\n\t#undef main\n#endif",
     "unixCompileOptions": "-l SDL2",

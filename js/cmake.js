@@ -89,7 +89,7 @@ function cmakeToHtml(cmake) {
 }
 
 function getCmake() {
-    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false, compileOptions = '', execFiles = `\${SRC_FILES}`, submodulesUpdate='', addTarget = '';
+    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false, unixCompileOptions = '', winCompileOptions = '', execFiles = `\${SRC_FILES}`, submodulesUpdate='', addTarget = '';
 
     $('.settings-container .selected').each((item, element) => {
         selected.push($(element).attr('id'));
@@ -146,8 +146,12 @@ function getCmake() {
             hasWindowLib = true;
         }
 
-        if (data[lib]['compileOptions']) {
-            compileOptions += ` ${data[lib]['compileOptions']}`;
+        if (data[lib]['unixCompileOptions']) {
+            unixCompileOptions += ` ${data[lib]['unixCompileOptions']}`;
+        }
+
+        if (data[lib]['winCompileOptions']) {
+            winCompileOptions += ` ${data[lib]['winCompileOptions']}`;
         }
 
         if (data[lib]['execFiles']) {
@@ -177,7 +181,8 @@ function getCmake() {
         .replaceAll('#[[linkLibs]]', linkLibs)
         .replaceAll('#[[usedLibs]]', usedLibs)
         .replaceAll('#[[libMacros]]', libMacros)
-        .replaceAll('#[[compileOptions]]', compileOptions)
+        .replaceAll('#[[unixCompileOptions]]', unixCompileOptions)
+        .replaceAll('#[[winCompileOptions]]', winCompileOptions)
         .replaceAll('#[[execFiles]]', execFiles)
         .replaceAll('#[[name]]', projectInfo.name || DEFAULT_NAME)
         .replaceAll('#[[version]]', projectInfo.version || DEFAULT_VERSION)
