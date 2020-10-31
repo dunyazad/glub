@@ -73,9 +73,9 @@
       "GLFW"
     ],
     "setup": "set(SDL_STATIC ON CACHE BOOL \"\" FORCE)\nset(SDL_SHARED OFF CACHE BOOL \"\" FORCE)\nadd_subdirectory(lib/sdl)\ninclude_directories(lib/sdl/include)",
-    "linkLib": "if(UNIX)\n\ttarget_link_libraries(#[[name]] SDL2)\nelseif(WINDOWS)\n\ttarget_link_libraries(#[[name]] SDL2d SDL2maind SDL2-static)\nendif()",
+    "linkLib": "if(UNIX)\n\ttarget_link_libraries(#[[name]] SDL2)\nelseif(WIN32)\n\ttarget_link_libraries(#[[name]] SDL2d SDL2maind SDL2-static)\nendif()",
     "customWindow": true,
-    "include": "#ifdef UNIX\n\t#include <SDL2/SDL.h>\n#elif WIN32\n\t#include <SDL.h>\n\t#undef main\n#endif",
+    "include": "#ifdef UNIX\n\t#include <SDL2/SDL.h>\n#elif WINDOWS\n\t#include <SDL.h>\n\t#undef main\n#endif",
     "unixCompileOptions": "-l SDL2",
     "winCompileOptions": ""
   },
