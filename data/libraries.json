@@ -43,7 +43,7 @@
     "incompatible": [
       "SDL"
     ],
-    "setup": "set(GLFW_BUILD_DOCS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_TESTS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_EXAMPLES OFF CACHE BOOL \"\" FORCE)\nset(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})\nset(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})\nadd_subdirectory(lib/glfw)\ninclude_directories(lib/glfw/include)",
+    "setup": "set(GLFW_BUILD_DOCS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_TESTS OFF CACHE BOOL \"\" FORCE)\nset(GLFW_BUILD_EXAMPLES OFF CACHE BOOL \"\" FORCE)\nadd_subdirectory(lib/glfw)\ninclude_directories(lib/glfw/include)",
     "customWindow": true,
     "include": "#include <GLFW/glfw3.h>"
   },
@@ -72,11 +72,12 @@
     "incompatible": [
       "GLFW"
     ],
-    "setup": "add_subdirectory(lib/sdl)\ninclude_directories(lib/sdl/include)",
-    "linkLib": "target_link_libraries(#[[name]] SDL2)",
+    "setup": "set(SDL_STATIC ON CACHE BOOL \"\" FORCE)\nset(SDL_SHARED OFF CACHE BOOL \"\" FORCE)\nadd_subdirectory(lib/sdl)\ninclude_directories(lib/sdl/include)",
+    "linkLib": "target_link_libraries(#[[name]] SDL2d SDL2maind SDL2-static)",
     "customWindow": true,
-    "include": "#include <SDL2/SDL.h>",
-    "compileOptions": "-l SDL2"
+    "include": "#ifdef UNIX\n\t#include <SDL2/SDL.h>\n#elif WIN32\n\t#include <SDL.h>\n\t#undef main\n#endif",
+    "unixCompileOptions": "-l SDL2",
+    "winCompileOptions": ""
   },
   "STB": {
     "category": "Utility",
