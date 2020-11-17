@@ -56,7 +56,7 @@
       "GLEW|GLAD",
       "GLFW|SDL"
     ],
-    "setup": "include_directories(lib/imgui lib/imgui/examples)\nif(LIB_GLFW)\n\tfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_glfw.h\" \"./lib/imgui/examples/imgui_impl_glfw.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nelseif(LIB_SDL)\n\tfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/examples/imgui_impl_sdl.h\" \"./lib/imgui/examples/imgui_impl_sdl.cpp\" \"./lib/imgui/examples/imgui_impl_opengl3.h\" \"./lib/imgui/examples/imgui_impl_opengl3.cpp\")\nendif()\n\nif(LIB_GLAD)\n\tset(IMGUI_COMPILE_OPTIONS \"-DIMGUI_IMPL_OPENGL_LOADER_GLAD\")\nelse()\n\tset(IMGUI_COMPILE_OPTIONS \"\")\nendif()",
+    "setup": "include_directories(lib/imgui lib/imgui/backends)\nif(LIB_GLFW)\n\tfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/backends/*glfw*\" \"./lib/imgui/backends/*opengl3*\")\nelseif(LIB_SDL)\n\tfile(GLOB IMGUI_FILES \"./lib/imgui/*.h\" \"./lib/imgui/*.cpp\" \"./lib/imgui/backends/*sdl*\" \"./lib/imgui/backends/*opengl3*\")\nendif()\n\nif(LIB_GLAD)\n\tset(IMGUI_COMPILE_OPTIONS \"-DIMGUI_IMPL_OPENGL_LOADER_GLAD\")\nelse()\n\tset(IMGUI_COMPILE_OPTIONS \"\")\nendif()",
     "execFiles": "IMGUI_FILES",
     "unixCompileOptions": "${IMGUI_COMPILE_OPTIONS}",
     "linkLib": " ",
