@@ -1,0 +1,5 @@
+
+GLEW Freetype GLFW Imgui STB glm MathFu
+GLAD Freetype GLFW Imgui STB glm MathFu
+GLEW Freetype SDL Imgui STB glm MathFu
+GLAD Freetype SDL Imgui STB glm MathFu

@@ -1,11 +1,35 @@
+$.ajaxSetup({ async: false });
+const rawMain = $.get('data/main.cpp').responseText;
+const rawCmake = $.get('data/CMakeLists.txt').responseText;
+const rawSubmodulesUpdate = $.get('data/SubmodulesUpdate.txt').responseText;
+$.ajaxSetup({ async: true });
+
 function init() {
     $('#result').on('click', () => {
-        copyToClipboard(getCmake());
+        copyToClipboard(getCmake(getSelectedLibraries(),
+            projectInfo.name || DEFAULT_NAME,
+            projectInfo.version || DEFAULT_VERSION,
+            projectInfo.description || DEFAULT_DESCRIPTION,
+            projectInfo.srcPath || DEFAULT_SRC_PATH,
+            projectInfo.resPath || DEFAULT_RES_PATH,
+            projectInfo.isLibrary,
+            useHttps,
+            data,
+            rawCmake,
+            rawSubmodulesUpdate
+        ));
         toast("CMakeLists.txt contents copied to clipboard");
     });
 
     $('#main').on('click', () => {
-        copyToClipboard(getMain());
+        const readFile = (file) => {
+            $.ajaxSetup({ async: false });
+            let data = $.get(file).responseText;
+            $.ajaxSetup({ async: true });
+            return data;
+        };
+
+        copyToClipboard(getMain(rawMain, projectInfo.name || DEFAULT_NAME, data, readFile));
         toast("main.cpp contents copied to clipboard");
     });
 
