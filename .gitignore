@@ -1,2 +1,5 @@
 .idea
 .vs
+test
+!test/genProject.mjs
+!test/testCombos.txt
