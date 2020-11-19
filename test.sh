@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -r test/results test/build
+rm -r test/results test/build &> /dev/null
 mkdir -p test/src test/build test/results
 touch test/CMakeLists.txt test/src/main.cpp
 failedCombos=()
