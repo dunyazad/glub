@@ -1,4 +1,5 @@
 .idea
 .vs
-.cmake
-build
+test
+!test/genProject.mjs
+!test/testCombos.txt

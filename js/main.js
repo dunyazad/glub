@@ -1,8 +1,4 @@
-$.ajaxSetup({ async: false });
-const rawMain = $.get('data/main.cpp').responseText;
-$.ajaxSetup({ async: true });
-
-function getMain() {
+function getMain(rawMain, name, data, readFile) {
     let includes = '', windowClass = '', init = '', update = '';
 
     for (let lib of Object.keys(data)) {
@@ -20,22 +16,22 @@ function getMain() {
             }
 
             if (data[lib]['customWindow']) {
-                $.ajaxSetup({ async: false });
-                windowClass = $.get(`data/${lib}Window.cpp`).responseText;
-                $.ajaxSetup({ async: true });
+                windowClass = readFile(`data/${lib}Window.cpp`);
             }
         }
     }
 
     if (windowClass === '') {
-        $.ajaxSetup({ async: false });
-        windowClass = $.get(`data/XLibWindow.cpp`).responseText;
-        $.ajaxSetup({ async: true });
+        windowClass = readFile(`data/XLibWindow.cpp`);
     }
 
-    return rawMain.replaceAll('/*name*/', projectInfo.name || DEFAULT_NAME)
-        .replaceAll('/*includeLibs*/', includes)
-        .replaceAll('/*init*/', init)
-        .replaceAll('/*update*/', update)
-        .replaceAll('/*window*/', windowClass);
+    return rawMain.replace(/\/\*name\*\//g, name)
+        .replace(/\/\*includeLibs\*\//g, includes)
+        .replace(/\/\*init\*\//g, init)
+        .replace(/\/\*update\*\//g, update)
+        .replace(/\/\*window\*\//g, windowClass);
 }
+
+try {
+    module.exports = { getMain };
+} catch (e) {}

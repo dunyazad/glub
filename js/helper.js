@@ -15,3 +15,13 @@ function toast(str) {
         });
     });
 }
+
+function getSelectedLibraries() {
+    let selected = [];
+
+    $('.settings-container .selected').each((item, element) => {
+        selected.push($(element).attr('id'));
+    });
+
+    return selected;
+}

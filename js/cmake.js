@@ -1,10 +1,5 @@
-$.ajaxSetup({ async: false });
-const rawCmake = $.get('data/CMakeLists.txt').responseText;
-const rawSubmodulesUpdate = $.get('data/SubmodulesUpdate.txt').responseText;
-$.ajaxSetup({ async: true });
-
 function cmakeToHtml(cmake) {
-    let html = "", intend = 0, vars = [ "GIT_FOUND", "IMGUI_FILES", "SRC_FILES" ];
+    let html = "", intend = 0, vars = [ "GIT_FOUND", "IMGUI_FILES", "SRC_FILES", "RUNTIME_OUTPUT_DIRECTORY" ];
 
     for (let lib of Object.keys(data)) {
         vars.push(`LIB_${lib}`);
@@ -88,14 +83,10 @@ function cmakeToHtml(cmake) {
     return html;
 }
 
-function getCmake() {
-    let selected = [], libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false, compileOptions = '', execFiles = `\${SRC_FILES}`, submodulesUpdate='', addTarget = '';
+function getCmake(libraries, name, version, description, srcPath, resPath, isLibrary, useHttps, data, rawCmake, rawSubmodulesUpdate) {
+    let libPaths = '', libRepos = '', setup = '', linkLibs = '', usedLibs = '', libMacros = '', hasWindowLib = false, unixCompileOptions = '', winCompileOptions = '', execFiles = `\${SRC_FILES}`, submodulesUpdate='', addTarget = '';
 
-    $('.settings-container .selected').each((item, element) => {
-        selected.push($(element).attr('id'));
-    });
-
-    for (let lib of selected) {
+    for (let lib of libraries) {
         let urlFound = true;
 
         if (useHttps) {
@@ -137,7 +128,7 @@ function getCmake() {
                 linkLibs += `${data[lib]['linkLib']}\n`;
             }
         } else {
-            linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} ${lib.toLowerCase()})\n`;
+            linkLibs += `target_link_libraries(${name} ${lib.toLowerCase()})\n`;
         }
         usedLibs += `\nset(LIB_${lib} ON)`;
         libMacros += `\nadd_compile_definitions(LIB_${lib.toUpperCase()})`;
@@ -146,8 +137,12 @@ function getCmake() {
             hasWindowLib = true;
         }
 
-        if (data[lib]['compileOptions']) {
-            compileOptions += ` ${data[lib]['compileOptions']}`;
+        if (data[lib]['unixCompileOptions']) {
+            unixCompileOptions += ` ${data[lib]['unixCompileOptions']}`;
+        }
+
+        if (data[lib]['winCompileOptions']) {
+            winCompileOptions += ` ${data[lib]['winCompileOptions']}`;
         }
 
         if (data[lib]['execFiles']) {
@@ -160,32 +155,48 @@ function getCmake() {
     }
 
     if (!hasWindowLib) {
-        linkLibs += `target_link_libraries(${projectInfo.name || DEFAULT_NAME} X11)\n`;
+        linkLibs += `target_link_libraries(${name} X11)\n`;
     }
 
-    if (projectInfo.isLibrary) {
-        addTarget = `add_library(${projectInfo.name || DEFAULT_NAME} SHARED ${execFiles})`;
+    if (isLibrary) {
+        addTarget = `add_library(${name} SHARED ${execFiles})`;
     } else {
-        addTarget = `add_executable(${projectInfo.name || DEFAULT_NAME} ${execFiles})`;
+        addTarget = `add_executable(${name} ${execFiles})`;
     }
 
-    return rawCmake.replaceAll('#[[submodulesUpdate]]', submodulesUpdate)
-        .replaceAll('#[[addTarget]]', addTarget)
-        .replaceAll('#[[libPaths]]', libPaths)
-        .replaceAll('#[[libRepos]]', libRepos)
-        .replaceAll('#[[setup]]', setup)
-        .replaceAll('#[[linkLibs]]', linkLibs)
-        .replaceAll('#[[usedLibs]]', usedLibs)
-        .replaceAll('#[[libMacros]]', libMacros)
-        .replaceAll('#[[compileOptions]]', compileOptions)
-        .replaceAll('#[[execFiles]]', execFiles)
-        .replaceAll('#[[name]]', projectInfo.name || DEFAULT_NAME)
-        .replaceAll('#[[version]]', projectInfo.version || DEFAULT_VERSION)
-        .replaceAll('#[[description]]', projectInfo.description || DEFAULT_DESCRIPTION)
-        .replaceAll('#[[srcPath]]', projectInfo.srcPath || DEFAULT_SRC_PATH)
-        .replaceAll('#[[resPath]]', projectInfo.resPath || DEFAULT_RES_PATH);
+    return rawCmake.replace(/#\[\[submodulesUpdate]]/g, submodulesUpdate)
+        .replace(/#\[\[addTarget]]/g, addTarget)
+        .replace(/#\[\[libPaths]]/g, libPaths)
+        .replace(/#\[\[libRepos]]/g, libRepos)
+        .replace(/#\[\[setup]]/g, setup)
+        .replace(/#\[\[linkLibs]]/g, linkLibs)
+        .replace(/#\[\[usedLibs]]/g, usedLibs)
+        .replace(/#\[\[libMacros]]/g, libMacros)
+        .replace(/#\[\[unixCompileOptions]]/g, unixCompileOptions)
+        .replace(/#\[\[winCompileOptions]]/g, winCompileOptions)
+        .replace(/#\[\[execFiles]]/g, execFiles)
+        .replace(/#\[\[name]]/g, name)
+        .replace(/#\[\[version]]/g, version)
+        .replace(/#\[\[description]]/g, description)
+        .replace(/#\[\[srcPath]]/g, srcPath)
+        .replace(/#\[\[resPath]]/g, resPath);
 }
 
 function updateCmake() {
-    $('#result').html(cmakeToHtml(getCmake()));
+    $('#result').html(cmakeToHtml(getCmake(getSelectedLibraries(),
+        projectInfo.name || DEFAULT_NAME,
+        projectInfo.version || DEFAULT_VERSION,
+        projectInfo.description || DEFAULT_DESCRIPTION,
+        projectInfo.srcPath || DEFAULT_SRC_PATH,
+        projectInfo.resPath || DEFAULT_RES_PATH,
+        projectInfo.isLibrary,
+        useHttps,
+        data,
+        rawCmake,
+        rawSubmodulesUpdate
+    )));
 }
+
+try {
+    module.exports = {getCmake};
+} catch (e) {}
