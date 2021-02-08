@@ -20,6 +20,7 @@ Easy to use CMake boilerplate for developing OpenGL programs in C++
 ## Supported platforms
 
 - Linux
+- Windows
 
 # Setup
 1. Create git repository for your project
