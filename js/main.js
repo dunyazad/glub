@@ -22,7 +22,7 @@ function getMain(rawMain, name, data, readFile) {
     }
 
     if (windowClass === '') {
-        windowClass = readFile(`data/XLibWindow.cpp`);
+        windowClass = `#ifdef UNIX\n${readFile('data/XLibWindow.cpp')}#endif\n\n#ifdef WINDOWS\n${readFile('data/WinAPIWindow.cpp')}#endif\n\n`;
     }
 
     return rawMain.replace(/\/\*name\*\//g, name)

@@ -162,6 +162,8 @@ public:
 				}
 			}
 
+			onUpdate();
+
 			glClear(GL_COLOR_BUFFER_BIT);
 			glXSwapBuffers(display, window);
 		}

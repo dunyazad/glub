@@ -155,13 +155,13 @@ function getCmake(libraries, name, version, description, srcPath, resPath, isLib
     }
 
     if (!hasWindowLib) {
-        linkLibs += `target_link_libraries(${name} X11)\n`;
+        linkLibs += `if(UNIX)\n\ttarget_link_libraries(${name} X11)\nendif()\n`;
     }
 
     if (isLibrary) {
-        addTarget = `add_library(${name} SHARED ${execFiles})`;
+        addTarget = `if(UNIX)\n\tadd_library(${name} SHARED ${execFiles})\nelseif(WIN32)\n\tadd_library(${name} WIN32 SHARED ${execFiles})\nendif()`;
     } else {
-        addTarget = `add_executable(${name} ${execFiles})`;
+        addTarget = `if(UNIX)\n\tadd_executable(${name} ${execFiles})\nelseif(WIN32)\n\tadd_executable(${name} WIN32 ${execFiles})\nendif()`;
     }
 
     return rawCmake.replace(/#\[\[submodulesUpdate]]/g, submodulesUpdate)
