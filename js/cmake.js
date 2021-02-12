@@ -159,9 +159,13 @@ function getCmake(libraries, name, version, description, srcPath, resPath, isLib
     }
 
     if (isLibrary) {
-        addTarget = `if(UNIX)\n\tadd_library(${name} SHARED ${execFiles})\nelseif(WIN32)\n\tadd_library(${name} WIN32 SHARED ${execFiles})\nendif()`;
+        addTarget = `add_library(${name} SHARED ${execFiles})`;
     } else {
-        addTarget = `if(UNIX)\n\tadd_executable(${name} ${execFiles})\nelseif(WIN32)\n\tadd_executable(${name} WIN32 ${execFiles})\nendif()`;
+        if (hasWindowLib) {
+            addTarget = `add_executable(${name} ${execFiles})`;
+        } else {
+            addTarget = `if(UNIX)\n\tadd_executable(${name} ${execFiles})\nelseif(WIN32)\n\tadd_executable(${name} WIN32 ${execFiles})\nendif()`;
+        }
     }
 
     return rawCmake.replace(/#\[\[submodulesUpdate]]/g, submodulesUpdate)
