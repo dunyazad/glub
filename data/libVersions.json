@@ -1,0 +1,665 @@
+{
+  "GLAD": [
+    {
+      "name": "v0.1.34",
+      "sha": "a5ca31c88a4cc5847ea012629aff3690f261c7c4"
+    },
+    {
+      "name": "v0.1.33",
+      "sha": "de6c39e3040c987323b8ed078c36442f4fb681b3"
+    },
+    {
+      "name": "v0.1.32",
+      "sha": "3b3458f8dfadd5b1b7a63e153b48a29b609d1e34"
+    },
+    {
+      "name": "v0.1.31",
+      "sha": "1a42f8a6099c60f6a4522731fadad4191d64e6ff"
+    },
+    {
+      "name": "v0.1.30",
+      "sha": "78e495c9e98f2e88813a128fb82af961628d8e27"
+    },
+    {
+      "name": "v0.1.29",
+      "sha": "6d1f1fe1895832b8957d58f1e8f6df8865c56f94"
+    },
+    {
+      "name": "v0.1.28",
+      "sha": "bca7b92d4a45c9532ddd729c511a9693801882b5"
+    },
+    {
+      "name": "v0.1.27",
+      "sha": "6ee211029647defcb5399b73ba577309c3629e1a"
+    },
+    {
+      "name": "v0.1.26",
+      "sha": "986b01490da8a39d4e55f58f59cd95b0c69a28bb"
+    },
+    {
+      "name": "v0.1.25",
+      "sha": "e4c097caba6e92b43cba8f268cf9507e2d4b0b05"
+    },
+    {
+      "name": "v0.1.24",
+      "sha": "c33992f23c2524f472c7a0102ab26251f8563714"
+    },
+    {
+      "name": "v0.1.23",
+      "sha": "1f34886e8b10491cb2a90c4251ab76081d9fcce5"
+    },
+    {
+      "name": "v0.1.22",
+      "sha": "ec8549fa3813bbca2a5bdee918aba3c2ec3c5d97"
+    },
+    {
+      "name": "v0.1.21",
+      "sha": "eb3e0dd1a817a516d15514988a9d2cc3b5e67ade"
+    },
+    {
+      "name": "v0.1.20",
+      "sha": "aa03eedc56ad575dc42c3dc3fc8a6078a00e9ab5"
+    },
+    {
+      "name": "v0.1.19",
+      "sha": "4ce5624eeb7bfe50eaabb495f2617fdbb0577a03"
+    },
+    {
+      "name": "v0.1.18a0",
+      "sha": "4302106b37801afa075371f84c72e05c139a6dc0"
+    },
+    {
+      "name": "v0.1.17a0",
+      "sha": "b908a10a7f0f5ac7e966c8f786611c6250382ee7"
+    },
+    {
+      "name": "v0.1.16a0",
+      "sha": "0a146b6723fa812393455bbd1416781257eb5448"
+    },
+    {
+      "name": "v0.1.15a0",
+      "sha": "3f6a8138afba01a0d5de795697abe189d8e7f0eb"
+    },
+    {
+      "name": "v0.1.14a0",
+      "sha": "5dc17f9056635805158dd1ea922f71a9b403e5ff"
+    },
+    {
+      "name": "v0.1.13a0",
+      "sha": "f5483676b73b019fce86d13aadbf20fdc2c632eb"
+    },
+    {
+      "name": "v0.1.12a",
+      "sha": "0bc7c58141a8f3d4dbb2c89fd276e0d4a547d23d"
+    },
+    {
+      "name": "v0.1.11a",
+      "sha": "b6f5b2d8bb04039c418268c16ce9c2ca0b0ad3ad"
+    }
+  ],
+  "GLEW": [
+    {
+      "name": "glew-cmake-2.2.0",
+      "sha": "f456deace7b408655109aaeff71421ef2d3858c6"
+    },
+    {
+      "name": "glew-cmake-2.1.0",
+      "sha": "b38c74c243c130ff16153d2fe445179c08675a26"
+    },
+    {
+      "name": "glew-cmake-2.0.0",
+      "sha": "1a5328ec017dbb31b692c63f13523af689502714"
+    },
+    {
+      "name": "glew-cmake-1.13.0",
+      "sha": "3032a680f3e0aea31627cfc61489419152c35b98"
+    },
+    {
+      "name": "glew-cmake-1.12.0",
+      "sha": "b7f13fee4e9a1c8b15e96b345f11ddbf5a86e1bd"
+    },
+    {
+      "name": "glew-cmake-1.11.0",
+      "sha": "442545bc29d8999bde54cc2b35fdcf36bfb9e9aa"
+    },
+    {
+      "name": "glew-cmake-1.10.0",
+      "sha": "31d41933bfc87df688d5390ed0183bb158a897eb"
+    },
+    {
+      "name": "glew-cmake-1.9.0",
+      "sha": "d985d2aff288c9f0cd9f2fd16750c556b4046338"
+    },
+    {
+      "name": "glew-cmake-1.8.0",
+      "sha": "8c0c495b510ad1b50e34b10f7b851d9bb23c5ab2"
+    },
+    {
+      "name": "glew-cmake-1.7.0",
+      "sha": "0b221bf73eca6b77776633a26bc9cbd190829ff9"
+    },
+    {
+      "name": "glew-cmake-1.6.0",
+      "sha": "542d77ae223d42dc9ff315a6bddf3b9f799c051d"
+    },
+    {
+      "name": "glew-cmake-1.5.8",
+      "sha": "fcdd35c9c8f90fa7abe264212fe29945e345a91e"
+    },
+    {
+      "name": "glew-cmake-1.5.7",
+      "sha": "5c4890fb2e2e587b0758f31dfa6b5c50475ffc00"
+    },
+    {
+      "name": "glew-cmake-1.5.6",
+      "sha": "47034684850183e57a2b5e5fa4b33e90a70f5f38"
+    },
+    {
+      "name": "glew-cmake-1.5.5",
+      "sha": "8dc5cb7c2cfa514bf10eeb0e85cd9b0d5ac290c4"
+    },
+    {
+      "name": "glew-cmake-1.5.4",
+      "sha": "7ef404254a5531c7917e0e85a44df2b18ed4313d"
+    },
+    {
+      "name": "glew-cmake-1.5.3",
+      "sha": "5d393a6d8939a6538f5b09335501de4c37a88696"
+    },
+    {
+      "name": "glew-cmake-1.5.2",
+      "sha": "4a5c134afc1239aed62bace194f4caf38937b017"
+    },
+    {
+      "name": "glew-cmake-1.5.1",
+      "sha": "deeece287787c6f011280459c5e46f797b041462"
+    },
+    {
+      "name": "glew-cmake-1.5.0",
+      "sha": "c52b28d86e640656f099171a98944d570503cd85"
+    },
+    {
+      "name": "glew-2.2.0",
+      "sha": "9fb23c3e61cbd2d581e33ff7d8579b572b38ee26"
+    },
+    {
+      "name": "glew-2.1.0",
+      "sha": "3a8eff77da3658c13fbd3634c943d5251d76322c"
+    },
+    {
+      "name": "glew-2.0.0",
+      "sha": "7d72257b0ff2aadab92d9b627beb44c36b072e52"
+    },
+    {
+      "name": "glew-1.13.0",
+      "sha": "f0067bb1151d36b37bd43948ce5a399844afb313"
+    },
+    {
+      "name": "glew-1.12.0",
+      "sha": "9fedd9e053c973ef85cfc830c74a26d0cdd8c99a"
+    },
+    {
+      "name": "glew-1.11.0",
+      "sha": "83a2bae026289a8d4cdce0061b1c52595b3c9338"
+    },
+    {
+      "name": "glew-1.10.0",
+      "sha": "a6c3e7dad0d1ae34e8016cf086ba6109d6fb4e4a"
+    },
+    {
+      "name": "glew-1.9.0",
+      "sha": "e2f62ea8212ae2fb3b4d4c89ff138573fa01d781"
+    },
+    {
+      "name": "glew-1.8.0",
+      "sha": "a53c68ddd77e1bd5430cfdf2481e22900340bddd"
+    },
+    {
+      "name": "glew-1.7.0",
+      "sha": "4a5f85e49034c7c3364dc2658040dc18cb8eed71"
+    }
+  ],
+  "GLFW": [
+    {
+      "name": "3.3.2",
+      "sha": "0a49ef0a00baa3ab520ddc452f0e3b1e099c5589"
+    },
+    {
+      "name": "3.3.1",
+      "sha": "ecda86fa4f89ecdd364e5a1a22645030fe0ced6e"
+    },
+    {
+      "name": "3.3",
+      "sha": "b0796109629931b6fa6e449c15a177845256a407"
+    },
+    {
+      "name": "3.2.1",
+      "sha": "999f3556fdd80983b10051746264489f2cb1ef16"
+    },
+    {
+      "name": "3.2",
+      "sha": "f6ec835599123c3c970d34534ed7ddc69a1fc6af"
+    },
+    {
+      "name": "3.1.2",
+      "sha": "30306e54705c3adae9fe082c816a3be71963485c"
+    },
+    {
+      "name": "3.1.1",
+      "sha": "29b40112c234c3021648ea42a5e74cc122ba08b4"
+    },
+    {
+      "name": "3.1",
+      "sha": "4188c263e31ec3d5da99a77d939ab56bc199fda6"
+    },
+    {
+      "name": "3.0.4",
+      "sha": "eab31f228fd1872753c55fb438e3d88e51c0e9b2"
+    },
+    {
+      "name": "3.0.3",
+      "sha": "fd4ea8bc254d76eabe05c5380f419400cb6936a0"
+    },
+    {
+      "name": "3.0.2",
+      "sha": "58aef89521f22b8aa389b43037b60b44e959471c"
+    },
+    {
+      "name": "3.0.1",
+      "sha": "22e1aa6cfcb93779040d5b465dc077aa2f3a8245"
+    },
+    {
+      "name": "3.0",
+      "sha": "5da6a903f9a533063a77400b0a8873d5c9753f99"
+    }
+  ],
+  "Imgui": [
+    {
+      "name": "v1.81",
+      "sha": "4df57136e9832327c11e48b5bfe00b0326bd5b63"
+    },
+    {
+      "name": "v1.80",
+      "sha": "58075c4414b985b352d10718b02a8c43f25efd7c"
+    },
+    {
+      "name": "v1.79",
+      "sha": "e5cb04b132cba94f902beb6186cb58b864777012"
+    },
+    {
+      "name": "v1.78",
+      "sha": "95c99aaa4be611716093edcb6b01146ab9483f30"
+    },
+    {
+      "name": "v1.77",
+      "sha": "9418dcb69355558f70de260483424412c5ca2fce"
+    },
+    {
+      "name": "v1.76",
+      "sha": "5503c0a12e0c929e84b3f61b2cb4bb9177ea3da1"
+    },
+    {
+      "name": "v1.75",
+      "sha": "58b3e02b95b4c7c5bb9128a28c6d55546501bf93"
+    },
+    {
+      "name": "v1.74",
+      "sha": "bdce8336364595d1a446957a6164c97363349a53"
+    },
+    {
+      "name": "v1.73",
+      "sha": "688cf868ea83db6c2958dd6bf7a20d471d00940b"
+    },
+    {
+      "name": "v1.72",
+      "sha": "ecb9b1e2eba5becc38019b5c9f75fba711cd881b"
+    },
+    {
+      "name": "v1.72b",
+      "sha": "6a0d0dab5a9f0b9518a2bc9bb456a69895ae0962"
+    },
+    {
+      "name": "v1.71",
+      "sha": "2da1c66d151aec08aee06be4c5948b3cd256a617"
+    },
+    {
+      "name": "v1.70",
+      "sha": "d1d5075b66f93686954154ceaba7fe30abc41f4b"
+    },
+    {
+      "name": "v1.69",
+      "sha": "ebe79bbed00a13fd4455f04131b63d49c28ebd5d"
+    },
+    {
+      "name": "v1.68",
+      "sha": "3c15dffc944419eb4bb17984548468270ca90486"
+    },
+    {
+      "name": "v1.67",
+      "sha": "d38d7c6628bebd02692cfdd6fa76b4d992a35b75"
+    },
+    {
+      "name": "v1.66",
+      "sha": "da3c4330c1c3822cdc59b0c38c7e3c16aa3ef78a"
+    },
+    {
+      "name": "v1.66b",
+      "sha": "801645d35092c8da0eeabe71d7c1997c47aa3648"
+    },
+    {
+      "name": "v1.65",
+      "sha": "e0cab5664adf02c030f9cf2a05d2c334638a85f8"
+    },
+    {
+      "name": "v1.64",
+      "sha": "767649afb162dd1dba3b68a132d7401b9a4316f7"
+    },
+    {
+      "name": "v1.63",
+      "sha": "1c4008aa9735c085f2349e8284e745a686d3896b"
+    },
+    {
+      "name": "v1.62",
+      "sha": "00418d13e369bf53cc4b8f817eb10b8ce65f0904"
+    },
+    {
+      "name": "v1.61",
+      "sha": "78b28d545f79c5c5ed3e0ebae4099e44bdc6c5a6"
+    },
+    {
+      "name": "v1.60",
+      "sha": "dd079fe6e6aec0c7a71d8a441079b8de23f4ca56"
+    },
+    {
+      "name": "v1.53",
+      "sha": "e916310b2e1f9cacbb2b9ce192a3dfb359e4b509"
+    },
+    {
+      "name": "v1.52",
+      "sha": "9f200d10d569270995a8bb5893557196258fd997"
+    },
+    {
+      "name": "v1.51",
+      "sha": "55a6209931a145dd012e85e6673e5ef6575948c9"
+    },
+    {
+      "name": "v1.50",
+      "sha": "5e1caaaef3953091b5395cbeb17c67548d542801"
+    },
+    {
+      "name": "v1.49",
+      "sha": "adb85d800d70d3ddc4548f0e8f184eede4568034"
+    },
+    {
+      "name": "v1.48",
+      "sha": "95cbcdca3fcf84bf94b3bb4374d884b1d4bc5db0"
+    }
+  ],
+  "MathFu": [
+    {
+      "name": "v1.1.0",
+      "sha": "85b4c9f5b67457492c47bdfc4e669e3d6cae2e81"
+    },
+    {
+      "name": "v1.0.3",
+      "sha": "2088eecae9844439ce73e4efc2ea339cc6737e72"
+    },
+    {
+      "name": "v1.0.2",
+      "sha": "380f21d6c63a7db84e8dbdf6f66d8dc4c5435730"
+    },
+    {
+      "name": "v1.0.1",
+      "sha": "11ee78ab19b796481270393907e23d4df5aa4afb"
+    },
+    {
+      "name": "1.0.0",
+      "sha": "e45806a07782484293519b7f4e69a05d1de3a19d"
+    }
+  ],
+  "SDL": [
+    {
+      "name": "release-2.0.14",
+      "sha": "5c829aac66a491b9d23b12f4c37bf896dc11f3a8"
+    },
+    {
+      "name": "release-2.0.12",
+      "sha": "76468465a94b59f0dde4791846bc2476be4f245f"
+    },
+    {
+      "name": "release-2.0.10",
+      "sha": "c7b8b49ef8691ac85ad18298468f7e4a616290ed"
+    },
+    {
+      "name": "release-2.0.9",
+      "sha": "9333e80281655d2351913ee2418393af991efd36"
+    },
+    {
+      "name": "release-2.0.8",
+      "sha": "014a8fa3d78ea8e721b808976a264dc6ba6360ed"
+    },
+    {
+      "name": "release-2.0.7",
+      "sha": "236c143dd467bc18464ce2bac1bea9a66bd25588"
+    },
+    {
+      "name": "release-2.0.6",
+      "sha": "b5951c6fa2330021bc8a81104747b6cdcbd6fc0b"
+    },
+    {
+      "name": "release-2.0.5",
+      "sha": "3de74e55e12f40cea471417ab732b71044ac3876"
+    },
+    {
+      "name": "release-2.0.4",
+      "sha": "8e517b0a9988ebc11b3ff6ce47dce6a2a8e627ee"
+    },
+    {
+      "name": "release-2.0.3",
+      "sha": "b13efe2755dd9f0d31c5b8eadad9b6f6e43a4861"
+    },
+    {
+      "name": "release-2.0.2",
+      "sha": "bf8fd4aa4bb335230e4ad6570640a8a0c376421e"
+    },
+    {
+      "name": "release-2.0.1",
+      "sha": "2e112c99d46ea5c6e379866116cd181386df297e"
+    },
+    {
+      "name": "release-2.0.0",
+      "sha": "34710c77defe6f78dbfecdf0e53fde24728f21d4"
+    },
+    {
+      "name": "release-1.2.15",
+      "sha": "4817c67dff92900eedf288058272be3958b622c1"
+    },
+    {
+      "name": "release-1.2.14",
+      "sha": "e6b7fe6556620bdb59a60e9ff733d7c870bd583a"
+    },
+    {
+      "name": "release-1.2.13",
+      "sha": "17ace741249681f24d54dffdeb5788fdf6e7dd6e"
+    },
+    {
+      "name": "release-1.2.12",
+      "sha": "38d037c3a9abaed820a379c33c83d9b0f5937e83"
+    },
+    {
+      "name": "release-1.2.11",
+      "sha": "8aa7cbafaec21cecdad2eb734dfce218ca7a0d22"
+    },
+    {
+      "name": "release-1.2.10",
+      "sha": "fd42c511e8c5baf316f6d80c3240447fb78d59f6"
+    },
+    {
+      "name": "release-1.2.9",
+      "sha": "1c43de4e4b3c7cb1987f4f230f332752750c53c6"
+    },
+    {
+      "name": "release-1.2.8",
+      "sha": "ac14247b40ce6a95d81733a48071f5c28d9a6fb9"
+    },
+    {
+      "name": "release-1.2.7",
+      "sha": "2099bf54a12b41009136cf38ca9d279e5240a33d"
+    },
+    {
+      "name": "release-1.2.6",
+      "sha": "15c4972d534cdf64c24263cca111c87445348a37"
+    },
+    {
+      "name": "release-1.2.5",
+      "sha": "b795af4243b670936dfc0366a5aa45611fa9eb35"
+    },
+    {
+      "name": "release-1.2.4",
+      "sha": "11268723bb5f5a3969f66d3ff25c173d30b8b4a4"
+    },
+    {
+      "name": "release-1.2.3",
+      "sha": "f8e6b4ee9289499d813f108067b20226573f11ac"
+    },
+    {
+      "name": "release-1.2.2",
+      "sha": "1e77b03f2aa2a406f7982958e58711b44f8f8c9a"
+    },
+    {
+      "name": "release-1.2.1",
+      "sha": "597fa80ec10f9c98e1d330abf735773b2459f2ea"
+    },
+    {
+      "name": "pre-touch-removal",
+      "sha": "861f7cd38af4658084f0478b6a3b909b2068db83"
+    },
+    {
+      "name": "macosx_10_4_supported",
+      "sha": "9747d8daf0fe134619a2d071996f77016cde3ae0"
+    }
+  ],
+  "STB": [],
+  "glm": [
+    {
+      "name": "release-closed",
+      "sha": "485700a54648d43ea977c15af73bcf3e56e271be"
+    },
+    {
+      "name": "preview1",
+      "sha": "e8f0499e2a5c5cd6d26f4ed8b20a77e2da36d7c6"
+    },
+    {
+      "name": "precision-closed",
+      "sha": "604405e9413a4cd2bfdce8df64db32995b4b5aa4"
+    },
+    {
+      "name": "packing-closed",
+      "sha": "5be36e0ddc971cbd0ff6557f5583bfd532827225"
+    },
+    {
+      "name": "nohalf-closed",
+      "sha": "eb7059ff26f71ad6bcb462491098924a2025ebd0"
+    },
+    {
+      "name": "io-closed",
+      "sha": "83f594b5ed2689f4e4ec6845396c46032b6ccacb"
+    },
+    {
+      "name": "bug-214-closed",
+      "sha": "7fe8a1944c66fb9acf3aa2930966cfafa4ee9e09"
+    },
+    {
+      "name": "0.9.9.8",
+      "sha": "bf71a834948186f4097caa076cd2663c69a10e1e"
+    },
+    {
+      "name": "0.9.9.7",
+      "sha": "13724cfae64a8b5313d1cabc9a963d2c9dbeda12"
+    },
+    {
+      "name": "0.9.9.6",
+      "sha": "4db8f89aace8f04c839b606e15b39fb8383ec732"
+    },
+    {
+      "name": "0.9.9.5",
+      "sha": "d162eee1e6f7c317a09229fe6ceab8ec6ab9a4b4"
+    },
+    {
+      "name": "0.9.9.4",
+      "sha": "658d8960d081e0c9c312d49758c7ef919371b428"
+    },
+    {
+      "name": "0.9.9.3",
+      "sha": "9749727c2db4742369219e1d452f43e918734b4e"
+    },
+    {
+      "name": "0.9.9.2",
+      "sha": "21a30e11164c6ffc1ec12811cf7ce82c9f3b2d1f"
+    },
+    {
+      "name": "0.9.9.1",
+      "sha": "416fa93e42f8fe1d85a93888a113fecd79e01453"
+    },
+    {
+      "name": "0.9.9.0",
+      "sha": "fe7c7b5ac15ba8d5c9c45984831dc2e830726b33"
+    },
+    {
+      "name": "0.9.9-a2",
+      "sha": "fcbedf5058ef8613dd02aac62ef00d55dcfeadd7"
+    },
+    {
+      "name": "0.9.9-a1",
+      "sha": "8a8a6c2b76180a3c65d11467c79270bfcc75bb25"
+    },
+    {
+      "name": "0.9.8.5",
+      "sha": "6fa203eeb7fbcbb6f620501fad40359c8a456049"
+    },
+    {
+      "name": "0.9.8.4",
+      "sha": "5dcc56489e1b66dfd5bca751fa9b8dc68059e008"
+    },
+    {
+      "name": "0.9.8.3",
+      "sha": "6a1e2ec5d5e79e6d869c947cbdbcbb297bdf9d32"
+    },
+    {
+      "name": "0.9.8.2",
+      "sha": "c4f52dc98f3e5c87e4a3077fad2b7fe611135aae"
+    },
+    {
+      "name": "0.9.8.1",
+      "sha": "48f896bad9ec5e822d581b0793e514e240824008"
+    },
+    {
+      "name": "0.9.8.0",
+      "sha": "454d480ceb4ac10ca76ac24b49836b7d5a35f786"
+    },
+    {
+      "name": "0.9.7.6",
+      "sha": "dff3af56a884e31d21eae7ab3eb72a8d192adc54"
+    },
+    {
+      "name": "0.9.7.5",
+      "sha": "767aa16e5bf25a92d6cb1da2a3062d4ccde91774"
+    },
+    {
+      "name": "0.9.7.4",
+      "sha": "407d671954030b5875f3ad0328f2810ab7839f37"
+    },
+    {
+      "name": "0.9.7.3",
+      "sha": "5809830f641c570f88e6ada2dcb3f94be840d6b8"
+    },
+    {
+      "name": "0.9.7.2",
+      "sha": "eb4a19805a68d77ede6bed6fb51987838b9cf6b2"
+    },
+    {
+      "name": "0.9.7.1",
+      "sha": "8f39bb8730d45570384f3156eb0126b835024d69"
+    }
+  ]
+}

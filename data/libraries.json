@@ -4,6 +4,8 @@
     "selected": false,
     "ssh": "git@github.com:Dav1dde/glad.git",
     "https": "https://github.com/Dav1dde/glad.git",
+    "owner": "Dav1dde",
+    "repo": "glad",
     "incompatible": [
       "GLEW"
     ],
@@ -20,6 +22,8 @@
     "selected": true,
     "https": "https://github.com/Perlmint/glew-cmake.git",
     "ssh": "git@github.com:Perlmint/glew-cmake.git",
+    "owner": "Perlmint",
+    "repo": "glew-cmake",
     "incompatible": [
       "GLAD"
     ],
@@ -40,6 +44,8 @@
     "selected": true,
     "https": "https://github.com/glfw/glfw.git",
     "ssh": "git@github.com:glfw/glfw.git",
+    "owner": "glfw",
+    "repo": "glfw",
     "incompatible": [
       "SDL"
     ],
@@ -52,6 +58,8 @@
     "selected": false,
     "https": "https://github.com/ocornut/imgui.git",
     "ssh": "git@github.com:ocornut/imgui.git",
+    "owner": "ocornut",
+    "repo": "imgui",
     "require": [
       "GLEW|GLAD",
       "GLFW|SDL"
@@ -69,6 +77,8 @@
     "selected": false,
     "https": "https://github.com/SDL-mirror/SDL.git",
     "ssh": "git@github.com:SDL-mirror/SDL.git",
+    "owner": "SDL-mirror",
+    "repo": "SDL",
     "incompatible": [
       "GLFW"
     ],
@@ -84,6 +94,8 @@
     "selected": true,
     "https": "https://github.com/nothings/stb.git",
     "ssh": "git@github.com:nothings/stb.git",
+    "owner": "nothings",
+    "repo": "stb",
     "setup": "include_directories(lib/stb)",
     "linkLib": " ",
     "include": "#define STB_IMAGE_IMPLEMENTATION\n#include <stb_image.h>\n#define STB_IMAGE_WRITE_IMPLEMENTATION\n#include <stb_image_write.h>",
@@ -94,6 +106,8 @@
     "selected": true,
     "https": "https://github.com/g-truc/glm.git",
     "ssh": "git@github.com:g-truc/glm.git",
+    "owner": "g-truc",
+    "repo": "glm",
     "setup": "include_directories(lib/glm/glm)",
     "linkLib": " "
   },
@@ -102,6 +116,8 @@
     "selected": false,
     "https": "https://github.com/google/mathfu.git",
     "ssh": "git@github.com:google/mathfu.git",
+    "owner": "google",
+    "repo": "mathfu",
     "setup": "include_directories(lib/mathfu/include)\ninclude_directories(lib/mathfu/dependencies/vectorial/include)",
     "linkLib": " "
   }
